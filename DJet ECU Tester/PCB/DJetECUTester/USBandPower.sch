@@ -3,11 +3,11 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 2 7
+Sheet 2 6
 Title "D-Jetronic ECU Tester"
-Date "2021-04-04"
-Rev "1.1"
-Comp "(C) Britishideas 2021"
+Date "2022-09-17"
+Rev "2.0"
+Comp "(C) Britishideas 2021-2022"
 Comment1 ""
 Comment2 ""
 Comment3 ""
@@ -418,7 +418,7 @@ $EndComp
 Wire Wire Line
 	3150 2350 3150 2450
 $Comp
-L Connector:USB_B_Mini J?
+L DJetECUTester-rescue:USB_B_Mini-Connector J?
 U 1 1 6049775F
 P 2450 3200
 AR Path="/6049775F" Ref="J?"  Part="1" 

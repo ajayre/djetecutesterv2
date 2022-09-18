@@ -5,9 +5,9 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 7 7
 Title "D-Jetronic ECU Tester"
-Date "2021-04-04"
-Rev "1.1"
-Comp "(C) Britishideas 2021"
+Date "2022-09-15"
+Rev "2.0"
+Comp "(C) Britishideas 2021-2022"
 Comment1 ""
 Comment2 ""
 Comment3 ""
