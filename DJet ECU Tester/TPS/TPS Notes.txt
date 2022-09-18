@@ -1,0 +1,20 @@
+TPS full throttle E2-TPS
+  10V, 5.1k resistor
+  I = V/R = 10 / 5.1 = 1.96mA
+  switch connects to ground
+  When not at full throttle, line is pulled to 10V
+  
+TPS acceleration contact 1 E9-TPS
+TPS acceleration contact 2 E20-TPS
+  I = V/R = 12 / (1.8+10) = 1mA
+  signals take turns to go to ground as accelerator is pressed
+  10 fingers per signal for acceleration
+  floating/no connection when releasing accelerator
+    https://www.sw-em.com/bosch_d-jetronic_injection.htm#reference_information_tps
+
+TPS idle contact E17-TPS
+  10V, 22k resistor
+  I = V/R = 10 / 22 = 0.4mA
+  When throttle is closed switch is closed (0 Ohms)
+  When throttle is open more than 2 deg switch is open
+  

@@ -1,0 +1,27 @@
+Coolant temp E23-T2
+1k -> 4.5k
+
+At 104F, 1k:
+I = V/R
+12 / (1.5k + 1k)
+4.8mA
+
+V = IR
+4.8mA x 1k = 4.8V
+
+At 50F, 4.5k:
+I = V/R
+12 / (1.5k + 4.5k)
+2mA
+
+V = IR
+2mA x 4.5k = 9V
+
+
+
+pspice:
+At 104F, 1k:
+Vout = 4.63V
+
+At 50F, 4.5k:
+Vout = 8.71V
