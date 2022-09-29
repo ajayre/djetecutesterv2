@@ -12,7 +12,7 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug",
-            "executable": "C:/Users/andy/OneDrive/Documents/DJet/trunk/DJet ECU Tester/Firmware/DJetECUTester/.pio/build/nanoatmega328new/firmware.elf",
+            "executable": "c:/Users/andy/OneDrive/Documents/DJet ECU Tester V2/trunk/DJet ECU Tester/Firmware/DJetECUTester/.pio/build/nanoatmega328new/firmware.elf",
             "projectEnvName": "nanoatmega328new",
             "toolchainBinDir": "C:/Users/andy/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart",
@@ -25,10 +25,20 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (skip Pre-Debug)",
-            "executable": "C:/Users/andy/OneDrive/Documents/DJet/trunk/DJet ECU Tester/Firmware/DJetECUTester/.pio/build/nanoatmega328new/firmware.elf",
+            "executable": "c:/Users/andy/OneDrive/Documents/DJet ECU Tester V2/trunk/DJet ECU Tester/Firmware/DJetECUTester/.pio/build/nanoatmega328new/firmware.elf",
             "projectEnvName": "nanoatmega328new",
             "toolchainBinDir": "C:/Users/andy/.platformio/packages/toolchain-atmelavr/bin",
             "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "platformio-debug",
+            "request": "launch",
+            "name": "PIO Debug (without uploading)",
+            "executable": "c:/Users/andy/OneDrive/Documents/DJet ECU Tester V2/trunk/DJet ECU Tester/Firmware/DJetECUTester/.pio/build/nanoatmega328new/firmware.elf",
+            "projectEnvName": "nanoatmega328new",
+            "toolchainBinDir": "C:/Users/andy/.platformio/packages/toolchain-atmelavr/bin",
+            "internalConsoleOptions": "openOnSessionStart",
+            "loadMode": "manual"
         }
     ]
 }

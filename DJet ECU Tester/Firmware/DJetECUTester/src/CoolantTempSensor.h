@@ -1,5 +1,5 @@
 // Mercedes V8 DJet Engine Simulator
-// (C) andy@britishideas.com 2021
+// (C) andy@britishideas.com 2021-2022
 
 #ifndef _COOLANTTEMPSENSORH_
 #define _COOLANTTEMPSENSORH_
