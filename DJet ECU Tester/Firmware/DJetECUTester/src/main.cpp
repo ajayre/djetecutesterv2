@@ -2,18 +2,20 @@
 // (C) andy@britishideas.com 2021-2022
 
 #include <Arduino.h>
-#include <Firmata.h>
 #include "Engine.h"
-#include "Menu.h"
+#include "Serial.h"
+
+#define MAJOR_VERSION 2
+#define MINOR_VERSION 0
 
 // initialization
 void setup() {
-  Menu_Init();
+  Serial_Init(MAJOR_VERSION, MINOR_VERSION);
   Engine_Init();
 }
 
 // continually called
 void loop() {
-  Menu_Process();
+  Serial_Process();
   Engine_Process();
 }
