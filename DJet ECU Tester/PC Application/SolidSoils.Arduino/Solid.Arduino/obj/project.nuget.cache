@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "FAX8LbXgM4MXbgr2SyPu6U/FTgoyH2G2FANojrg5zrxv8Gn2N0P+wxPIUrliAVfoc8jOokIse1IV5Ho8Z0fYSQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\andy\\OneDrive\\Documents\\DJet ECU Tester V2\\trunk\\DJet ECU Tester\\PC Application\\SolidSoils.Arduino\\Solid.Arduino\\Solid.Arduino.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\andy\\.nuget\\packages\\system.io.ports\\5.0.1\\system.io.ports.5.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

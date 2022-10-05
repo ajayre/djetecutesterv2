@@ -1,0 +1,53 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\andy\\OneDrive\\Documents\\DJet ECU Tester V2\\trunk\\DJet ECU Tester\\PC Application\\SolidSoils.Arduino\\Solid.Arduino\\Solid.Arduino.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\andy\\OneDrive\\Documents\\DJet ECU Tester V2\\trunk\\DJet ECU Tester\\PC Application\\SolidSoils.Arduino\\Solid.Arduino\\Solid.Arduino.csproj": {
+      "version": "1.1.1",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\andy\\OneDrive\\Documents\\DJet ECU Tester V2\\trunk\\DJet ECU Tester\\PC Application\\SolidSoils.Arduino\\Solid.Arduino\\Solid.Arduino.csproj",
+        "projectName": "SolidSoils.Arduino.Client",
+        "projectPath": "C:\\Users\\andy\\OneDrive\\Documents\\DJet ECU Tester V2\\trunk\\DJet ECU Tester\\PC Application\\SolidSoils.Arduino\\Solid.Arduino\\Solid.Arduino.csproj",
+        "packagesPath": "C:\\Users\\andy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\andy\\OneDrive\\Documents\\DJet ECU Tester V2\\trunk\\DJet ECU Tester\\PC Application\\SolidSoils.Arduino\\Solid.Arduino\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\andy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net462"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net462": {
+            "targetAlias": "net462",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net462": {
+          "targetAlias": "net462",
+          "dependencies": {
+            "System.IO.Ports": {
+              "target": "Package",
+              "version": "[5.0.1, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

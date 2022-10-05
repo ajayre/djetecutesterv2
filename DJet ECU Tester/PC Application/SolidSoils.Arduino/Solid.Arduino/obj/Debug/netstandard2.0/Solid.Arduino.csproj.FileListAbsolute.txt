@@ -1,0 +1,13 @@
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\bin\Debug\netstandard2.0\Solid.Arduino.deps.json
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\bin\Debug\netstandard2.0\Solid.Arduino.dll
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\bin\Debug\netstandard2.0\Solid.Arduino.pdb
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\bin\Debug\netstandard2.0\Solid.Arduino.xml
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\obj\Debug\netstandard2.0\Solid.Arduino.csproj.AssemblyReference.cache
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\obj\Debug\netstandard2.0\Solid.Arduino.Messages.resources
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\obj\Debug\netstandard2.0\Solid.Arduino.csproj.GenerateResource.cache
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\obj\Debug\netstandard2.0\Solid.Arduino.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\obj\Debug\netstandard2.0\Solid.Arduino.AssemblyInfoInputs.cache
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\obj\Debug\netstandard2.0\Solid.Arduino.AssemblyInfo.cs
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\obj\Debug\netstandard2.0\Solid.Arduino.csproj.CoreCompileInputs.cache
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\obj\Debug\netstandard2.0\Solid.Arduino.dll
+C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PC Application\SolidSoils.Arduino\Solid.Arduino\obj\Debug\netstandard2.0\Solid.Arduino.pdb
