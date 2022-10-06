@@ -144,11 +144,11 @@ namespace DJetronicECUTester
 
             if (Tester.IsConnected)
             {
-                TesterInfoBox.BackColor = Orange;
+                TesterInfoBoxPanel.BackColor = TesterInfoBox.BackColor = Orange;
             }
             else
             {
-                TesterInfoBox.BackColor = Color.LightGray;
+                TesterInfoBoxPanel.BackColor = TesterInfoBox.BackColor = Color.LightGray;
             }
 
             RecordBtn.Enabled = Tester.IsConnected;

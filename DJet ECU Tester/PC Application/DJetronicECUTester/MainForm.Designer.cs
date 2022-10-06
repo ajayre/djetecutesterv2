@@ -38,6 +38,8 @@
             this.StaticPage = new System.Windows.Forms.TabPage();
             this.DynamicPage = new System.Windows.Forms.TabPage();
             this.TestPage = new System.Windows.Forms.TabPage();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.OutputBox = new System.Windows.Forms.TextBox();
             this.TesterInfoBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -52,25 +54,26 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.CopyInfoBtn = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.ConnectBtn = new System.Windows.Forms.ToolStripButton();
             this.DisconnectBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.RecordBtn = new System.Windows.Forms.ToolStripButton();
             this.StopBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.CopyInfoBtn = new System.Windows.Forms.Button();
+            this.OutputPage = new System.Windows.Forms.TabPage();
+            this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.StaticPage.SuspendLayout();
             this.TestPage.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.OutputPage.SuspendLayout();
+            this.TesterInfoBoxPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // button2
@@ -102,19 +105,15 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 93);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 101);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.Tabs);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.OutputBox);
-            this.splitContainer1.Size = new System.Drawing.Size(979, 547);
-            this.splitContainer1.SplitterDistance = 206;
+            this.splitContainer1.Size = new System.Drawing.Size(979, 539);
+            this.splitContainer1.SplitterDistance = 202;
             this.splitContainer1.TabIndex = 4;
             // 
             // Tabs
@@ -122,11 +121,12 @@
             this.Tabs.Controls.Add(this.StaticPage);
             this.Tabs.Controls.Add(this.DynamicPage);
             this.Tabs.Controls.Add(this.TestPage);
+            this.Tabs.Controls.Add(this.OutputPage);
             this.Tabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Tabs.Location = new System.Drawing.Point(0, 0);
             this.Tabs.Name = "Tabs";
             this.Tabs.SelectedIndex = 0;
-            this.Tabs.Size = new System.Drawing.Size(979, 206);
+            this.Tabs.Size = new System.Drawing.Size(979, 202);
             this.Tabs.TabIndex = 2;
             // 
             // StaticPage
@@ -135,7 +135,7 @@
             this.StaticPage.Location = new System.Drawing.Point(4, 22);
             this.StaticPage.Name = "StaticPage";
             this.StaticPage.Padding = new System.Windows.Forms.Padding(3);
-            this.StaticPage.Size = new System.Drawing.Size(971, 180);
+            this.StaticPage.Size = new System.Drawing.Size(971, 176);
             this.StaticPage.TabIndex = 0;
             this.StaticPage.Text = "Static";
             this.StaticPage.UseVisualStyleBackColor = true;
@@ -157,33 +157,53 @@
             this.TestPage.Location = new System.Drawing.Point(4, 22);
             this.TestPage.Name = "TestPage";
             this.TestPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TestPage.Size = new System.Drawing.Size(971, 180);
+            this.TestPage.Size = new System.Drawing.Size(971, 176);
             this.TestPage.TabIndex = 2;
             this.TestPage.Text = "Automated Testing";
             this.TestPage.UseVisualStyleBackColor = true;
             // 
+            // button3
+            // 
+            this.button3.Image = global::DJetronicECUTester.Properties.Resources.stop_64;
+            this.button3.Location = new System.Drawing.Point(94, 6);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(80, 80);
+            this.button3.TabIndex = 2;
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Image = global::DJetronicECUTester.Properties.Resources.examine_64;
+            this.button1.Location = new System.Drawing.Point(8, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(80, 80);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // OutputBox
             // 
-            this.OutputBox.Location = new System.Drawing.Point(12, 15);
+            this.OutputBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OutputBox.Location = new System.Drawing.Point(3, 3);
             this.OutputBox.Multiline = true;
             this.OutputBox.Name = "OutputBox";
             this.OutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.OutputBox.Size = new System.Drawing.Size(143, 116);
+            this.OutputBox.Size = new System.Drawing.Size(965, 170);
             this.OutputBox.TabIndex = 0;
             // 
             // TesterInfoBox
             // 
             this.TesterInfoBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(81)))), ((int)(((byte)(0)))));
-            this.TesterInfoBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TesterInfoBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TesterInfoBox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.TesterInfoBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TesterInfoBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TesterInfoBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TesterInfoBox.ForeColor = System.Drawing.Color.White;
-            this.TesterInfoBox.Location = new System.Drawing.Point(0, 63);
+            this.TesterInfoBox.Location = new System.Drawing.Point(5, 5);
             this.TesterInfoBox.Multiline = true;
             this.TesterInfoBox.Name = "TesterInfoBox";
             this.TesterInfoBox.ReadOnly = true;
-            this.TesterInfoBox.Size = new System.Drawing.Size(979, 30);
+            this.TesterInfoBox.Size = new System.Drawing.Size(969, 28);
             this.TesterInfoBox.TabIndex = 5;
             this.TesterInfoBox.Text = "This is a test\r\nLine 2";
             // 
@@ -291,42 +311,6 @@
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
-            // 
-            // CopyInfoBtn
-            // 
-            this.CopyInfoBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CopyInfoBtn.Image = global::DJetronicECUTester.Properties.Resources.copy;
-            this.CopyInfoBtn.Location = new System.Drawing.Point(952, 66);
-            this.CopyInfoBtn.Name = "CopyInfoBtn";
-            this.CopyInfoBtn.Size = new System.Drawing.Size(23, 23);
-            this.CopyInfoBtn.TabIndex = 8;
-            this.toolTip1.SetToolTip(this.CopyInfoBtn, "Copy to clipboard");
-            this.CopyInfoBtn.UseVisualStyleBackColor = true;
-            this.CopyInfoBtn.Click += new System.EventHandler(this.CopyInfoBtn_Click);
-            // 
-            // button3
-            // 
-            this.button3.Image = global::DJetronicECUTester.Properties.Resources.stop_64;
-            this.button3.Location = new System.Drawing.Point(94, 6);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(80, 80);
-            this.button3.TabIndex = 2;
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Image = global::DJetronicECUTester.Properties.Resources.examine_64;
-            this.button1.Location = new System.Drawing.Point(8, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(80, 80);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // ConnectBtn
             // 
             this.ConnectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -347,6 +331,11 @@
             this.DisconnectBtn.Text = "Disconnect from tester";
             this.DisconnectBtn.Click += new System.EventHandler(this.DisconnectBtn_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
+            // 
             // RecordBtn
             // 
             this.RecordBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -365,14 +354,48 @@
             this.StopBtn.Size = new System.Drawing.Size(36, 36);
             this.StopBtn.Text = "Stop recording pulse widths";
             // 
+            // CopyInfoBtn
+            // 
+            this.CopyInfoBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CopyInfoBtn.Image = global::DJetronicECUTester.Properties.Resources.copy;
+            this.CopyInfoBtn.Location = new System.Drawing.Point(952, 66);
+            this.CopyInfoBtn.Name = "CopyInfoBtn";
+            this.CopyInfoBtn.Size = new System.Drawing.Size(23, 23);
+            this.CopyInfoBtn.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.CopyInfoBtn, "Copy to clipboard");
+            this.CopyInfoBtn.UseVisualStyleBackColor = true;
+            this.CopyInfoBtn.Click += new System.EventHandler(this.CopyInfoBtn_Click);
+            // 
+            // OutputPage
+            // 
+            this.OutputPage.Controls.Add(this.OutputBox);
+            this.OutputPage.Location = new System.Drawing.Point(4, 22);
+            this.OutputPage.Name = "OutputPage";
+            this.OutputPage.Padding = new System.Windows.Forms.Padding(3);
+            this.OutputPage.Size = new System.Drawing.Size(971, 176);
+            this.OutputPage.TabIndex = 3;
+            this.OutputPage.Text = "Tester Output";
+            this.OutputPage.UseVisualStyleBackColor = true;
+            // 
+            // TesterInfoBoxPanel
+            // 
+            this.TesterInfoBoxPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(81)))), ((int)(((byte)(0)))));
+            this.TesterInfoBoxPanel.Controls.Add(this.TesterInfoBox);
+            this.TesterInfoBoxPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TesterInfoBoxPanel.Location = new System.Drawing.Point(0, 63);
+            this.TesterInfoBoxPanel.Name = "TesterInfoBoxPanel";
+            this.TesterInfoBoxPanel.Padding = new System.Windows.Forms.Padding(5);
+            this.TesterInfoBoxPanel.Size = new System.Drawing.Size(979, 38);
+            this.TesterInfoBoxPanel.TabIndex = 9;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(979, 662);
-            this.Controls.Add(this.CopyInfoBtn);
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.TesterInfoBox);
+            this.Controls.Add(this.TesterInfoBoxPanel);
+            this.Controls.Add(this.CopyInfoBtn);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -383,8 +406,6 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.Tabs.ResumeLayout(false);
@@ -394,6 +415,10 @@
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.OutputPage.ResumeLayout(false);
+            this.OutputPage.PerformLayout();
+            this.TesterInfoBoxPanel.ResumeLayout(false);
+            this.TesterInfoBoxPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -431,6 +456,8 @@
         private System.Windows.Forms.ToolStripMenuItem stopRecordingPulseWidthsToolStripMenuItem;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TabPage OutputPage;
+        private System.Windows.Forms.Panel TesterInfoBoxPanel;
     }
 }
 
