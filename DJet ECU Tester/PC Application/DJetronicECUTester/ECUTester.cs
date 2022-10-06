@@ -30,7 +30,7 @@ namespace DJetronicECUTester
 
         private enum MessageIds
         {
-            GetSettings = 0x01,
+            RequestStatus = 0x01,
             EngineOff = 0x02,
             Cranking = 0x03,
             ColdIdle = 0x04,
@@ -44,7 +44,8 @@ namespace DJetronicECUTester
             SetAirTemp = 0x0C,
             SetEngineSpeed = 0x0D,
             SetThrottle = 0x0E,
-            SetPulseAngle = 0x0F
+            SetPulseAngle = 0x0F,
+            CurrentStatus = 0x10
         }
 
         public delegate void OnConnectedHandler(object sender, string PortName, int Baudrate, int MajorVersion, int MinorVersion);
@@ -55,6 +56,9 @@ namespace DJetronicECUTester
 
         public delegate void OnShowMessageHandler(object sender, string Message);
         public event OnShowMessageHandler OnShowMessage = null;
+
+        public delegate void OnReceivedStatusHandler(object sender, Status CurrentStatus);
+        public event OnReceivedStatusHandler OnReceivedStatus = null;
 
         /// <summary>
         /// true if connected to the tester
@@ -94,6 +98,8 @@ namespace DJetronicECUTester
             {
                 OnConnected(this, Connection.PortName, Connection.BaudRate, firmware.MajorVersion, firmware.MinorVersion);
             }
+
+            RequestStatus();
         }
 
         /// <summary>
@@ -117,6 +123,17 @@ namespace DJetronicECUTester
             {
                 OnDisconnected(this);
             }
+        }
+
+        /// <summary>
+        /// Tells the tester to send the current status
+        /// </summary>
+        private void RequestStatus
+            (
+            )
+        {
+            byte[] Buffer = new byte[3] { SysExStart, (byte)MessageIds.RequestStatus, SysExEnd };
+            Connection.Write(Buffer, 0, 3);
         }
 
         /// <summary>
@@ -263,6 +280,25 @@ namespace DJetronicECUTester
             else if (eventArgs.Value.Type == MessageType.SysEx)
             {
                 byte[] Buffer = eventArgs.Value.Value as byte[];
+
+                if ((Buffer[0] == (byte)MessageIds.CurrentStatus) && (Buffer.Length == 37))
+                {
+                    Status CurrentStatus = new Status();
+                    CurrentStatus.EngineSpeed = (uint)BitConverter.ToInt32(Buffer, 1);
+                    CurrentStatus.CoolantTemperature = (int)BitConverter.ToInt32(Buffer, 5);
+                    CurrentStatus.AirTemperature = (int)BitConverter.ToInt32(Buffer, 9);
+                    CurrentStatus.Throttle = (uint)BitConverter.ToInt32(Buffer, 13);
+                    CurrentStatus.PulseAngle = (uint)BitConverter.ToInt32(Buffer, 17);
+                    CurrentStatus.FuelPumpOn = (uint)BitConverter.ToInt32(Buffer, 21) > 0 ? true : false;
+                    CurrentStatus.ColdStartOn = (uint)BitConverter.ToInt32(Buffer, 25) > 0 ? true : false;
+                    CurrentStatus.PulseWidth = (uint)BitConverter.ToInt32(Buffer, 29);
+                    CurrentStatus.Cranking = (uint)BitConverter.ToInt32(Buffer, 33) > 0 ? true : false;
+
+                    if (OnReceivedStatus != null)
+                    {
+                        OnReceivedStatus(this, CurrentStatus);
+                    }
+                }
             }
         }
     }

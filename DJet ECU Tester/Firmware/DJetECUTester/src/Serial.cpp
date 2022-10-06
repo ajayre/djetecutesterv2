@@ -11,7 +11,7 @@
 // sysex message identifiers
 typedef enum _messageids_t
 {
-  GetSettings = 0x01,
+  RequestStatus = 0x01,
   EngineOff = 0x02,
   Cranking = 0x03,
   ColdIdle = 0x04,
@@ -25,8 +25,22 @@ typedef enum _messageids_t
   SetAirTemp = 0x0C,
   SetEngineSpeed = 0x0D,
   SetThrottle = 0x0E,
-  SetPulseAngle = 0x0F
+  SetPulseAngle = 0x0F,
+  CurrentStatus = 0x10
 } messageids_t;
+
+typedef struct _status_t
+{
+  uint32_t EngineSpeed;
+  int32_t CoolantTemperature;
+  int32_t AirTemperature;
+  uint32_t Throttle;
+  uint32_t PulseAngle;
+  uint32_t FuelPumpOn;
+  uint32_t ColdStartOn;
+  uint32_t PulseWidth;
+  uint32_t Cranking;
+} status_t __attribute__ ((aligned (1)));
 
 // func: debug_printf
 // desc: outputs a debug line and has the same prototype as printf
@@ -51,16 +65,52 @@ static int Serial_printf(char *format, ...)
 //  Firmata.sendString(myString);
 //}
 
+// sends the current status
+static void SendStatus
+  (
+  void  
+  )
+{
+  status_t Status;
+  int EngineSpeed;
+  int CoolantTemp;
+  int ThrottlePos;
+  throttledirection_t ThrottleDirection;
+  int Pressure;
+  int AirTemp;
+  bool Cranking;
+  int PulseAngle;
+
+  Engine_Get(&EngineSpeed, &CoolantTemp, &ThrottlePos, &ThrottleDirection, &Pressure,
+    &AirTemp, &Cranking, &PulseAngle);
+
+  Status.AirTemperature = AirTemp;
+  Status.CoolantTemperature = CoolantTemp;
+  Status.EngineSpeed = EngineSpeed;
+  Status.PulseAngle = PulseAngle;
+  Status.Throttle = ThrottlePos;
+  Status.ColdStartOn = 0;
+  Status.FuelPumpOn = 0;
+  Status.PulseWidth = 0;
+  Status.Cranking = Cranking ? 1 : 0;
+  Firmata.sendSysex(CurrentStatus, sizeof(status_t), (byte *)&Status);
+}
+
 // called when a sysex message is received
 // processes the message
 static void sysexCallback(byte command, byte argc, byte *argv)
 {
   switch (command)
   {
+    case RequestStatus:
+      SendStatus();
+      break;
+
     case SetCoolantTemp:
       int Temp = argv[0] | ((int)argv[1] << 8);
-      Serial_printf("Setting coolant temp to %d F", Temp);
       Engine_SetCoolantTempF(Temp);
+      Serial_printf("Set coolant temp to %d F", Temp);
+      SendStatus();
       break;
   }
 

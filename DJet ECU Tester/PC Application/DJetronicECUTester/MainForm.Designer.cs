@@ -28,35 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.button2 = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.ConnectionStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.Tabs = new System.Windows.Forms.TabControl();
+            this.StaticPage = new System.Windows.Forms.TabPage();
+            this.DynamicPage = new System.Windows.Forms.TabPage();
+            this.TestPage = new System.Windows.Forms.TabPage();
             this.OutputBox = new System.Windows.Forms.TextBox();
             this.TesterInfoBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hardwareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.Tabs = new System.Windows.Forms.TabControl();
-            this.StaticPage = new System.Windows.Forms.TabPage();
-            this.DynamicPage = new System.Windows.Forms.TabPage();
-            this.CopyInfoBtn = new System.Windows.Forms.Button();
             this.ConnectBtn = new System.Windows.Forms.ToolStripButton();
             this.DisconnectBtn = new System.Windows.Forms.ToolStripButton();
-            this.TestPage = new System.Windows.Forms.TabPage();
+            this.CopyInfoBtn = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.StaticPage.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button2
@@ -88,7 +93,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 85);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 93);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -99,9 +104,52 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.OutputBox);
-            this.splitContainer1.Size = new System.Drawing.Size(848, 311);
-            this.splitContainer1.SplitterDistance = 230;
+            this.splitContainer1.Size = new System.Drawing.Size(848, 303);
+            this.splitContainer1.SplitterDistance = 224;
             this.splitContainer1.TabIndex = 4;
+            // 
+            // Tabs
+            // 
+            this.Tabs.Controls.Add(this.StaticPage);
+            this.Tabs.Controls.Add(this.DynamicPage);
+            this.Tabs.Controls.Add(this.TestPage);
+            this.Tabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Tabs.Location = new System.Drawing.Point(0, 0);
+            this.Tabs.Name = "Tabs";
+            this.Tabs.SelectedIndex = 0;
+            this.Tabs.Size = new System.Drawing.Size(848, 224);
+            this.Tabs.TabIndex = 2;
+            // 
+            // StaticPage
+            // 
+            this.StaticPage.Controls.Add(this.button2);
+            this.StaticPage.Location = new System.Drawing.Point(4, 22);
+            this.StaticPage.Name = "StaticPage";
+            this.StaticPage.Padding = new System.Windows.Forms.Padding(3);
+            this.StaticPage.Size = new System.Drawing.Size(840, 198);
+            this.StaticPage.TabIndex = 0;
+            this.StaticPage.Text = "Static";
+            this.StaticPage.UseVisualStyleBackColor = true;
+            // 
+            // DynamicPage
+            // 
+            this.DynamicPage.Location = new System.Drawing.Point(4, 22);
+            this.DynamicPage.Name = "DynamicPage";
+            this.DynamicPage.Padding = new System.Windows.Forms.Padding(3);
+            this.DynamicPage.Size = new System.Drawing.Size(840, 198);
+            this.DynamicPage.TabIndex = 1;
+            this.DynamicPage.Text = "Dynamic";
+            this.DynamicPage.UseVisualStyleBackColor = true;
+            // 
+            // TestPage
+            // 
+            this.TestPage.Location = new System.Drawing.Point(4, 22);
+            this.TestPage.Name = "TestPage";
+            this.TestPage.Padding = new System.Windows.Forms.Padding(3);
+            this.TestPage.Size = new System.Drawing.Size(840, 198);
+            this.TestPage.TabIndex = 2;
+            this.TestPage.Text = "Automated Testing";
+            this.TestPage.UseVisualStyleBackColor = true;
             // 
             // OutputBox
             // 
@@ -110,7 +158,7 @@
             this.OutputBox.Multiline = true;
             this.OutputBox.Name = "OutputBox";
             this.OutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.OutputBox.Size = new System.Drawing.Size(848, 77);
+            this.OutputBox.Size = new System.Drawing.Size(848, 75);
             this.OutputBox.TabIndex = 0;
             // 
             // TesterInfoBox
@@ -119,8 +167,9 @@
             this.TesterInfoBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TesterInfoBox.Cursor = System.Windows.Forms.Cursors.Default;
             this.TesterInfoBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TesterInfoBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TesterInfoBox.ForeColor = System.Drawing.Color.White;
-            this.TesterInfoBox.Location = new System.Drawing.Point(0, 55);
+            this.TesterInfoBox.Location = new System.Drawing.Point(0, 63);
             this.TesterInfoBox.Multiline = true;
             this.TesterInfoBox.Name = "TesterInfoBox";
             this.TesterInfoBox.ReadOnly = true;
@@ -132,6 +181,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.hardwareToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -154,6 +204,29 @@
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // hardwareToolStripMenuItem
+            // 
+            this.hardwareToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectToolStripMenuItem,
+            this.disconnectToolStripMenuItem});
+            this.hardwareToolStripMenuItem.Name = "hardwareToolStripMenuItem";
+            this.hardwareToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.hardwareToolStripMenuItem.Text = "&Hardware";
+            // 
+            // connectToolStripMenuItem
+            // 
+            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.connectToolStripMenuItem.Text = "&Connect";
+            this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
+            // 
+            // disconnectToolStripMenuItem
+            // 
+            this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
+            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.disconnectToolStripMenuItem.Text = "&Disconnect";
+            this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -165,94 +238,54 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ConnectBtn,
             this.DisconnectBtn});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(848, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(848, 39);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // Tabs
-            // 
-            this.Tabs.Controls.Add(this.StaticPage);
-            this.Tabs.Controls.Add(this.DynamicPage);
-            this.Tabs.Controls.Add(this.TestPage);
-            this.Tabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Tabs.Location = new System.Drawing.Point(0, 0);
-            this.Tabs.Name = "Tabs";
-            this.Tabs.SelectedIndex = 0;
-            this.Tabs.Size = new System.Drawing.Size(848, 230);
-            this.Tabs.TabIndex = 2;
-            // 
-            // StaticPage
-            // 
-            this.StaticPage.Controls.Add(this.button2);
-            this.StaticPage.Location = new System.Drawing.Point(4, 22);
-            this.StaticPage.Name = "StaticPage";
-            this.StaticPage.Padding = new System.Windows.Forms.Padding(3);
-            this.StaticPage.Size = new System.Drawing.Size(840, 204);
-            this.StaticPage.TabIndex = 0;
-            this.StaticPage.Text = "Static";
-            this.StaticPage.UseVisualStyleBackColor = true;
-            // 
-            // DynamicPage
-            // 
-            this.DynamicPage.Location = new System.Drawing.Point(4, 22);
-            this.DynamicPage.Name = "DynamicPage";
-            this.DynamicPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DynamicPage.Size = new System.Drawing.Size(840, 204);
-            this.DynamicPage.TabIndex = 1;
-            this.DynamicPage.Text = "Dynamic";
-            this.DynamicPage.UseVisualStyleBackColor = true;
-            // 
-            // CopyInfoBtn
-            // 
-            this.CopyInfoBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CopyInfoBtn.Location = new System.Drawing.Point(821, 58);
-            this.CopyInfoBtn.Name = "CopyInfoBtn";
-            this.CopyInfoBtn.Size = new System.Drawing.Size(23, 23);
-            this.CopyInfoBtn.TabIndex = 8;
-            this.CopyInfoBtn.UseVisualStyleBackColor = true;
             // 
             // ConnectBtn
             // 
             this.ConnectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ConnectBtn.Image = global::DJetronicECUTester.Properties.Resources.connect_24;
+            this.ConnectBtn.Image = global::DJetronicECUTester.Properties.Resources.connect;
             this.ConnectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ConnectBtn.Name = "ConnectBtn";
-            this.ConnectBtn.Size = new System.Drawing.Size(28, 28);
+            this.ConnectBtn.Size = new System.Drawing.Size(36, 36);
             this.ConnectBtn.Text = "Connect to tester";
             this.ConnectBtn.Click += new System.EventHandler(this.ConnectBtn_Click);
             // 
             // DisconnectBtn
             // 
             this.DisconnectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DisconnectBtn.Image = global::DJetronicECUTester.Properties.Resources.disconnect_24;
+            this.DisconnectBtn.Image = global::DJetronicECUTester.Properties.Resources.disconnect;
             this.DisconnectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DisconnectBtn.Name = "DisconnectBtn";
-            this.DisconnectBtn.Size = new System.Drawing.Size(28, 28);
+            this.DisconnectBtn.Size = new System.Drawing.Size(36, 36);
             this.DisconnectBtn.Text = "Disconnect from tester";
             this.DisconnectBtn.Click += new System.EventHandler(this.DisconnectBtn_Click);
             // 
-            // TestPage
+            // CopyInfoBtn
             // 
-            this.TestPage.Location = new System.Drawing.Point(4, 22);
-            this.TestPage.Name = "TestPage";
-            this.TestPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TestPage.Size = new System.Drawing.Size(840, 204);
-            this.TestPage.TabIndex = 2;
-            this.TestPage.Text = "Automated Testing";
-            this.TestPage.UseVisualStyleBackColor = true;
+            this.CopyInfoBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CopyInfoBtn.Image = global::DJetronicECUTester.Properties.Resources.copy;
+            this.CopyInfoBtn.Location = new System.Drawing.Point(821, 66);
+            this.CopyInfoBtn.Name = "CopyInfoBtn";
+            this.CopyInfoBtn.Size = new System.Drawing.Size(23, 23);
+            this.CopyInfoBtn.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.CopyInfoBtn, "Copy to clipboard");
+            this.CopyInfoBtn.UseVisualStyleBackColor = true;
+            this.CopyInfoBtn.Click += new System.EventHandler(this.CopyInfoBtn_Click);
             // 
             // MainForm
             // 
@@ -276,12 +309,12 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.Tabs.ResumeLayout(false);
+            this.StaticPage.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.Tabs.ResumeLayout(false);
-            this.StaticPage.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -307,6 +340,10 @@
         private System.Windows.Forms.TabPage DynamicPage;
         private System.Windows.Forms.Button CopyInfoBtn;
         private System.Windows.Forms.TabPage TestPage;
+        private System.Windows.Forms.ToolStripMenuItem hardwareToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
