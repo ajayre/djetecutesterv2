@@ -37,11 +37,38 @@
     <ApplicationIcon>DJetECUTesterV2.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiveChartsCore">
+      <HintPath>DLLs\LiveChartsCore.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveChartsCore.SkiaSharpView">
+      <HintPath>DLLs\LiveChartsCore.SkiaSharpView.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveChartsCore.SkiaSharpView.WinForms">
+      <HintPath>DLLs\LiveChartsCore.SkiaSharpView.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp">
+      <HintPath>DLLs\SkiaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp.HarfBuzz">
+      <HintPath>DLLs\SkiaSharp.HarfBuzz.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp.Views.Desktop.Common">
+      <HintPath>DLLs\SkiaSharp.Views.Desktop.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp.Views.WindowsForms">
+      <HintPath>DLLs\SkiaSharp.Views.WindowsForms.dll</HintPath>
+    </Reference>
     <Reference Include="Solid.Arduino">
       <HintPath>DLLs\Solid.Arduino.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory">
+      <HintPath>DLLs\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>DLLs\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />

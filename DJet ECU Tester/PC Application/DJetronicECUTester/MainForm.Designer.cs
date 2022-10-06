@@ -40,6 +40,7 @@
             this.TestPage = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.OutputPage = new System.Windows.Forms.TabPage();
             this.OutputBox = new System.Windows.Forms.TextBox();
             this.TesterInfoBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -61,18 +62,19 @@
             this.StopBtn = new System.Windows.Forms.ToolStripButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.CopyInfoBtn = new System.Windows.Forms.Button();
-            this.OutputPage = new System.Windows.Forms.TabPage();
             this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
+            this.cartesianChart1 = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.StaticPage.SuspendLayout();
             this.TestPage.SuspendLayout();
+            this.OutputPage.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.OutputPage.SuspendLayout();
             this.TesterInfoBoxPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -112,6 +114,10 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.Tabs);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.cartesianChart1);
             this.splitContainer1.Size = new System.Drawing.Size(979, 539);
             this.splitContainer1.SplitterDistance = 202;
             this.splitContainer1.TabIndex = 4;
@@ -145,7 +151,7 @@
             this.DynamicPage.Location = new System.Drawing.Point(4, 22);
             this.DynamicPage.Name = "DynamicPage";
             this.DynamicPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DynamicPage.Size = new System.Drawing.Size(971, 180);
+            this.DynamicPage.Size = new System.Drawing.Size(971, 176);
             this.DynamicPage.TabIndex = 1;
             this.DynamicPage.Text = "Dynamic";
             this.DynamicPage.UseVisualStyleBackColor = true;
@@ -180,6 +186,17 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
+            // 
+            // OutputPage
+            // 
+            this.OutputPage.Controls.Add(this.OutputBox);
+            this.OutputPage.Location = new System.Drawing.Point(4, 22);
+            this.OutputPage.Name = "OutputPage";
+            this.OutputPage.Padding = new System.Windows.Forms.Padding(3);
+            this.OutputPage.Size = new System.Drawing.Size(971, 176);
+            this.OutputPage.TabIndex = 3;
+            this.OutputPage.Text = "Tester Output";
+            this.OutputPage.UseVisualStyleBackColor = true;
             // 
             // OutputBox
             // 
@@ -246,6 +263,7 @@
             // 
             // connectToolStripMenuItem
             // 
+            this.connectToolStripMenuItem.Image = global::DJetronicECUTester.Properties.Resources.connect;
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
             this.connectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.connectToolStripMenuItem.Text = "&Connect";
@@ -253,6 +271,7 @@
             // 
             // disconnectToolStripMenuItem
             // 
+            this.disconnectToolStripMenuItem.Image = global::DJetronicECUTester.Properties.Resources.disconnect;
             this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
             this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.disconnectToolStripMenuItem.Text = "&Disconnect";
@@ -269,6 +288,7 @@
             // 
             // startRecordingPulseWidthsToolStripMenuItem
             // 
+            this.startRecordingPulseWidthsToolStripMenuItem.Image = global::DJetronicECUTester.Properties.Resources.record;
             this.startRecordingPulseWidthsToolStripMenuItem.Name = "startRecordingPulseWidthsToolStripMenuItem";
             this.startRecordingPulseWidthsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.startRecordingPulseWidthsToolStripMenuItem.Text = "Start &Recording Pulse Widths";
@@ -276,6 +296,7 @@
             // 
             // stopRecordingPulseWidthsToolStripMenuItem
             // 
+            this.stopRecordingPulseWidthsToolStripMenuItem.Image = global::DJetronicECUTester.Properties.Resources.stop;
             this.stopRecordingPulseWidthsToolStripMenuItem.Name = "stopRecordingPulseWidthsToolStripMenuItem";
             this.stopRecordingPulseWidthsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.stopRecordingPulseWidthsToolStripMenuItem.Text = "&Stop Recording Pulse Widths";
@@ -366,17 +387,6 @@
             this.CopyInfoBtn.UseVisualStyleBackColor = true;
             this.CopyInfoBtn.Click += new System.EventHandler(this.CopyInfoBtn_Click);
             // 
-            // OutputPage
-            // 
-            this.OutputPage.Controls.Add(this.OutputBox);
-            this.OutputPage.Location = new System.Drawing.Point(4, 22);
-            this.OutputPage.Name = "OutputPage";
-            this.OutputPage.Padding = new System.Windows.Forms.Padding(3);
-            this.OutputPage.Size = new System.Drawing.Size(971, 176);
-            this.OutputPage.TabIndex = 3;
-            this.OutputPage.Text = "Tester Output";
-            this.OutputPage.UseVisualStyleBackColor = true;
-            // 
             // TesterInfoBoxPanel
             // 
             this.TesterInfoBoxPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(81)))), ((int)(((byte)(0)))));
@@ -387,6 +397,16 @@
             this.TesterInfoBoxPanel.Padding = new System.Windows.Forms.Padding(5);
             this.TesterInfoBoxPanel.Size = new System.Drawing.Size(979, 38);
             this.TesterInfoBoxPanel.TabIndex = 9;
+            // 
+            // cartesianChart1
+            // 
+            this.cartesianChart1.AllowPanning = true;
+            this.cartesianChart1.BackColor = System.Drawing.Color.White;
+            this.cartesianChart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cartesianChart1.Location = new System.Drawing.Point(0, 0);
+            this.cartesianChart1.Name = "cartesianChart1";
+            this.cartesianChart1.Size = new System.Drawing.Size(979, 333);
+            this.cartesianChart1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -406,17 +426,18 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.Tabs.ResumeLayout(false);
             this.StaticPage.ResumeLayout(false);
             this.TestPage.ResumeLayout(false);
+            this.OutputPage.ResumeLayout(false);
+            this.OutputPage.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.OutputPage.ResumeLayout(false);
-            this.OutputPage.PerformLayout();
             this.TesterInfoBoxPanel.ResumeLayout(false);
             this.TesterInfoBoxPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -458,6 +479,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TabPage OutputPage;
         private System.Windows.Forms.Panel TesterInfoBoxPanel;
+        private LiveChartsCore.SkiaSharpView.WinForms.CartesianChart cartesianChart1;
     }
 }
 
