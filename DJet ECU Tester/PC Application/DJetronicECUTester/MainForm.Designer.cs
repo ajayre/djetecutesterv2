@@ -46,13 +46,21 @@
             this.hardwareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startRecordingPulseWidthsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopRecordingPulseWidthsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.CopyInfoBtn = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.ConnectBtn = new System.Windows.Forms.ToolStripButton();
             this.DisconnectBtn = new System.Windows.Forms.ToolStripButton();
-            this.CopyInfoBtn = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.RecordBtn = new System.Windows.Forms.ToolStripButton();
+            this.StopBtn = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -60,6 +68,7 @@
             this.splitContainer1.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.StaticPage.SuspendLayout();
+            this.TestPage.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -78,9 +87,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ConnectionStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 396);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 640);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(848, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(979, 22);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "StatusStrip";
             // 
@@ -104,8 +113,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.OutputBox);
-            this.splitContainer1.Size = new System.Drawing.Size(848, 303);
-            this.splitContainer1.SplitterDistance = 224;
+            this.splitContainer1.Size = new System.Drawing.Size(979, 547);
+            this.splitContainer1.SplitterDistance = 206;
             this.splitContainer1.TabIndex = 4;
             // 
             // Tabs
@@ -117,7 +126,7 @@
             this.Tabs.Location = new System.Drawing.Point(0, 0);
             this.Tabs.Name = "Tabs";
             this.Tabs.SelectedIndex = 0;
-            this.Tabs.Size = new System.Drawing.Size(848, 224);
+            this.Tabs.Size = new System.Drawing.Size(979, 206);
             this.Tabs.TabIndex = 2;
             // 
             // StaticPage
@@ -126,7 +135,7 @@
             this.StaticPage.Location = new System.Drawing.Point(4, 22);
             this.StaticPage.Name = "StaticPage";
             this.StaticPage.Padding = new System.Windows.Forms.Padding(3);
-            this.StaticPage.Size = new System.Drawing.Size(840, 198);
+            this.StaticPage.Size = new System.Drawing.Size(971, 180);
             this.StaticPage.TabIndex = 0;
             this.StaticPage.Text = "Static";
             this.StaticPage.UseVisualStyleBackColor = true;
@@ -136,34 +145,35 @@
             this.DynamicPage.Location = new System.Drawing.Point(4, 22);
             this.DynamicPage.Name = "DynamicPage";
             this.DynamicPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DynamicPage.Size = new System.Drawing.Size(840, 198);
+            this.DynamicPage.Size = new System.Drawing.Size(971, 180);
             this.DynamicPage.TabIndex = 1;
             this.DynamicPage.Text = "Dynamic";
             this.DynamicPage.UseVisualStyleBackColor = true;
             // 
             // TestPage
             // 
+            this.TestPage.Controls.Add(this.button3);
+            this.TestPage.Controls.Add(this.button1);
             this.TestPage.Location = new System.Drawing.Point(4, 22);
             this.TestPage.Name = "TestPage";
             this.TestPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TestPage.Size = new System.Drawing.Size(840, 198);
+            this.TestPage.Size = new System.Drawing.Size(971, 180);
             this.TestPage.TabIndex = 2;
             this.TestPage.Text = "Automated Testing";
             this.TestPage.UseVisualStyleBackColor = true;
             // 
             // OutputBox
             // 
-            this.OutputBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OutputBox.Location = new System.Drawing.Point(0, 0);
+            this.OutputBox.Location = new System.Drawing.Point(12, 15);
             this.OutputBox.Multiline = true;
             this.OutputBox.Name = "OutputBox";
             this.OutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.OutputBox.Size = new System.Drawing.Size(848, 75);
+            this.OutputBox.Size = new System.Drawing.Size(143, 116);
             this.OutputBox.TabIndex = 0;
             // 
             // TesterInfoBox
             // 
-            this.TesterInfoBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.TesterInfoBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(81)))), ((int)(((byte)(0)))));
             this.TesterInfoBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TesterInfoBox.Cursor = System.Windows.Forms.Cursors.Default;
             this.TesterInfoBox.Dock = System.Windows.Forms.DockStyle.Top;
@@ -173,7 +183,7 @@
             this.TesterInfoBox.Multiline = true;
             this.TesterInfoBox.Name = "TesterInfoBox";
             this.TesterInfoBox.ReadOnly = true;
-            this.TesterInfoBox.Size = new System.Drawing.Size(848, 30);
+            this.TesterInfoBox.Size = new System.Drawing.Size(979, 30);
             this.TesterInfoBox.TabIndex = 5;
             this.TesterInfoBox.Text = "This is a test\r\nLine 2";
             // 
@@ -182,10 +192,11 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.hardwareToolStripMenuItem,
+            this.optionsToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(848, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(979, 24);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -227,6 +238,28 @@
             this.disconnectToolStripMenuItem.Text = "&Disconnect";
             this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
             // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startRecordingPulseWidthsToolStripMenuItem,
+            this.stopRecordingPulseWidthsToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "&Options";
+            // 
+            // startRecordingPulseWidthsToolStripMenuItem
+            // 
+            this.startRecordingPulseWidthsToolStripMenuItem.Name = "startRecordingPulseWidthsToolStripMenuItem";
+            this.startRecordingPulseWidthsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.startRecordingPulseWidthsToolStripMenuItem.Text = "Start &Recording Pulse Widths";
+            this.startRecordingPulseWidthsToolStripMenuItem.Click += new System.EventHandler(this.startRecordingPulseWidthsToolStripMenuItem_Click);
+            // 
+            // stopRecordingPulseWidthsToolStripMenuItem
+            // 
+            this.stopRecordingPulseWidthsToolStripMenuItem.Name = "stopRecordingPulseWidthsToolStripMenuItem";
+            this.stopRecordingPulseWidthsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.stopRecordingPulseWidthsToolStripMenuItem.Text = "&Stop Recording Pulse Widths";
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -248,12 +281,51 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ConnectBtn,
-            this.DisconnectBtn});
+            this.DisconnectBtn,
+            this.toolStripSeparator1,
+            this.RecordBtn,
+            this.StopBtn});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(848, 39);
+            this.toolStrip1.Size = new System.Drawing.Size(979, 39);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
+            // 
+            // CopyInfoBtn
+            // 
+            this.CopyInfoBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CopyInfoBtn.Image = global::DJetronicECUTester.Properties.Resources.copy;
+            this.CopyInfoBtn.Location = new System.Drawing.Point(952, 66);
+            this.CopyInfoBtn.Name = "CopyInfoBtn";
+            this.CopyInfoBtn.Size = new System.Drawing.Size(23, 23);
+            this.CopyInfoBtn.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.CopyInfoBtn, "Copy to clipboard");
+            this.CopyInfoBtn.UseVisualStyleBackColor = true;
+            this.CopyInfoBtn.Click += new System.EventHandler(this.CopyInfoBtn_Click);
+            // 
+            // button3
+            // 
+            this.button3.Image = global::DJetronicECUTester.Properties.Resources.stop_64;
+            this.button3.Location = new System.Drawing.Point(94, 6);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(80, 80);
+            this.button3.TabIndex = 2;
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Image = global::DJetronicECUTester.Properties.Resources.examine_64;
+            this.button1.Location = new System.Drawing.Point(8, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(80, 80);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // ConnectBtn
             // 
@@ -275,23 +347,29 @@
             this.DisconnectBtn.Text = "Disconnect from tester";
             this.DisconnectBtn.Click += new System.EventHandler(this.DisconnectBtn_Click);
             // 
-            // CopyInfoBtn
+            // RecordBtn
             // 
-            this.CopyInfoBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CopyInfoBtn.Image = global::DJetronicECUTester.Properties.Resources.copy;
-            this.CopyInfoBtn.Location = new System.Drawing.Point(821, 66);
-            this.CopyInfoBtn.Name = "CopyInfoBtn";
-            this.CopyInfoBtn.Size = new System.Drawing.Size(23, 23);
-            this.CopyInfoBtn.TabIndex = 8;
-            this.toolTip1.SetToolTip(this.CopyInfoBtn, "Copy to clipboard");
-            this.CopyInfoBtn.UseVisualStyleBackColor = true;
-            this.CopyInfoBtn.Click += new System.EventHandler(this.CopyInfoBtn_Click);
+            this.RecordBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RecordBtn.Image = global::DJetronicECUTester.Properties.Resources.record;
+            this.RecordBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RecordBtn.Name = "RecordBtn";
+            this.RecordBtn.Size = new System.Drawing.Size(36, 36);
+            this.RecordBtn.Text = "Start recording pulse widths";
+            // 
+            // StopBtn
+            // 
+            this.StopBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.StopBtn.Image = global::DJetronicECUTester.Properties.Resources.stop;
+            this.StopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.StopBtn.Name = "StopBtn";
+            this.StopBtn.Size = new System.Drawing.Size(36, 36);
+            this.StopBtn.Text = "Stop recording pulse widths";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(848, 418);
+            this.ClientSize = new System.Drawing.Size(979, 662);
             this.Controls.Add(this.CopyInfoBtn);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.TesterInfoBox);
@@ -311,6 +389,7 @@
             this.splitContainer1.ResumeLayout(false);
             this.Tabs.ResumeLayout(false);
             this.StaticPage.ResumeLayout(false);
+            this.TestPage.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -344,6 +423,14 @@
         private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton RecordBtn;
+        private System.Windows.Forms.ToolStripButton StopBtn;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startRecordingPulseWidthsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopRecordingPulseWidthsToolStripMenuItem;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button3;
     }
 }
 

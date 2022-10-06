@@ -15,7 +15,7 @@ namespace DJetronicECUTester
     {
         private ECUTester Tester = new ECUTester();
 
-        private Color Orange = Color.FromArgb(255, 128, 0);
+        private Color Orange = Color.FromArgb(202, 81, 0);
 
         public MainForm()
         {
@@ -50,7 +50,8 @@ namespace DJetronicECUTester
                 CurrentStatus.PulseAngle, CurrentStatus.FuelPumpOn ? "on" : "off", CurrentStatus.ColdStartOn ? "on" : "off",
                 CurrentStatus.Cranking ? "yes" : "no");
 
-            StatusText += Environment.NewLine + string.Format("Pulse width={0}ms", CurrentStatus.PulseWidth);
+            StatusText += Environment.NewLine + string.Format("Pulse widths I={0}ms II={1}ms III={2}ms IV={0}ms",
+                CurrentStatus.PulseWidth_I, CurrentStatus.PulseWidth_II, CurrentStatus.PulseWidth_III, CurrentStatus.PulseWidth_IV);
 
             if (Tester.IsConnected)
             {
@@ -149,6 +150,11 @@ namespace DJetronicECUTester
             {
                 TesterInfoBox.BackColor = Color.LightGray;
             }
+
+            RecordBtn.Enabled = Tester.IsConnected;
+            startRecordingPulseWidthsToolStripMenuItem.Enabled = Tester.IsConnected;
+            StopBtn.Enabled = Tester.IsConnected;
+            stopRecordingPulseWidthsToolStripMenuItem.Enabled = Tester.IsConnected;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -216,6 +222,11 @@ namespace DJetronicECUTester
         private void CopyInfoBtn_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(TesterInfoBox.Text);
+        }
+
+        private void startRecordingPulseWidthsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

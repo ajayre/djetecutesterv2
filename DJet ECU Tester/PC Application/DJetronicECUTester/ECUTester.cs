@@ -281,7 +281,7 @@ namespace DJetronicECUTester
             {
                 byte[] Buffer = eventArgs.Value.Value as byte[];
 
-                if ((Buffer[0] == (byte)MessageIds.CurrentStatus) && (Buffer.Length == 37))
+                if ((Buffer[0] == (byte)MessageIds.CurrentStatus) && (Buffer.Length == 49))
                 {
                     Status CurrentStatus = new Status();
                     CurrentStatus.EngineSpeed = (uint)BitConverter.ToInt32(Buffer, 1);
@@ -291,8 +291,11 @@ namespace DJetronicECUTester
                     CurrentStatus.PulseAngle = (uint)BitConverter.ToInt32(Buffer, 17);
                     CurrentStatus.FuelPumpOn = (uint)BitConverter.ToInt32(Buffer, 21) > 0 ? true : false;
                     CurrentStatus.ColdStartOn = (uint)BitConverter.ToInt32(Buffer, 25) > 0 ? true : false;
-                    CurrentStatus.PulseWidth = (uint)BitConverter.ToInt32(Buffer, 29);
-                    CurrentStatus.Cranking = (uint)BitConverter.ToInt32(Buffer, 33) > 0 ? true : false;
+                    CurrentStatus.Cranking = (uint)BitConverter.ToInt32(Buffer, 29) > 0 ? true : false;
+                    CurrentStatus.PulseWidth_I = (uint)BitConverter.ToInt32(Buffer, 33);
+                    CurrentStatus.PulseWidth_II = (uint)BitConverter.ToInt32(Buffer, 37);
+                    CurrentStatus.PulseWidth_III = (uint)BitConverter.ToInt32(Buffer, 41);
+                    CurrentStatus.PulseWidth_IV = (uint)BitConverter.ToInt32(Buffer, 45);
 
                     if (OnReceivedStatus != null)
                     {

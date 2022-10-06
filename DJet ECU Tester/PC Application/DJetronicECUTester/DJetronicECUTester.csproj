@@ -100,6 +100,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DJetECUTesterV2.ico" />
+    <None Include="Graphics\stop_64.png" />
+    <None Include="Graphics\examine_64.png" />
+    <None Include="Graphics\check_box_cross_64.png" />
+    <None Include="Graphics\check_box_check_64.png" />
+    <None Include="Graphics\check_box_64.png" />
+    <None Include="Graphics\stop.png" />
+    <None Include="Graphics\record.png" />
     <None Include="Graphics\copy.png" />
     <None Include="Graphics\disconnect.png" />
     <None Include="Graphics\connect.png" />
