@@ -38,8 +38,11 @@ typedef struct _status_t
   uint32_t PulseAngle;
   uint32_t FuelPumpOn;
   uint32_t ColdStartOn;
-  uint32_t PulseWidth;
   uint32_t Cranking;
+  uint32_t PulseWidth_I;
+  uint32_t PulseWidth_II;
+  uint32_t PulseWidth_III;
+  uint32_t PulseWidth_IV;
 } status_t __attribute__ ((aligned (1)));
 
 // func: debug_printf
@@ -91,8 +94,11 @@ static void SendStatus
   Status.Throttle = ThrottlePos;
   Status.ColdStartOn = 0;
   Status.FuelPumpOn = 0;
-  Status.PulseWidth = 0;
   Status.Cranking = Cranking ? 1 : 0;
+  Status.PulseWidth_I = 0;
+  Status.PulseWidth_II = 0;
+  Status.PulseWidth_III = 0;
+  Status.PulseWidth_IV = 0;
   Firmata.sendSysex(CurrentStatus, sizeof(status_t), (byte *)&Status);
 }
 
