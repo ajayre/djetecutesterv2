@@ -174,7 +174,7 @@ namespace DJetronicECUTester
         /// <param name="SpeedRPM">New speed in RPM</param>
         public void SetEngineSpeed
             (
-            int SpeedRPM
+            uint SpeedRPM
             )
         {
             if (SpeedRPM < MIN_ENGINE_SPEED_RPM) SpeedRPM = MIN_ENGINE_SPEED_RPM;
@@ -190,7 +190,7 @@ namespace DJetronicECUTester
         /// <param name="PositionPcent">New position in percentage</param>
         public void SetThrottle
             (
-            int PositionPcent
+            uint PositionPcent
             )
         {
             if (PositionPcent < 0) PositionPcent = 0;
@@ -201,12 +201,12 @@ namespace DJetronicECUTester
         }
 
         /// <summary>
-        /// Sets the pulse generate dwell angle
+        /// Sets the pulse generator dwell angle
         /// </summary>
         /// <param name="AngleDeg">New angle in degrees</param>
-        public void SetPulseAngle
+        public void SetDwellAngle
             (
-            int AngleDeg
+            uint AngleDeg
             )
         {
             if (AngleDeg < MIN_PULSE_ANGLE_DEG) AngleDeg = MIN_PULSE_ANGLE_DEG;
@@ -288,7 +288,7 @@ namespace DJetronicECUTester
                     CurrentStatus.CoolantTemperature = (int)BitConverter.ToInt32(Buffer, 5);
                     CurrentStatus.AirTemperature = (int)BitConverter.ToInt32(Buffer, 9);
                     CurrentStatus.Throttle = (uint)BitConverter.ToInt32(Buffer, 13);
-                    CurrentStatus.PulseAngle = (uint)BitConverter.ToInt32(Buffer, 17);
+                    CurrentStatus.DwellAngle = (uint)BitConverter.ToInt32(Buffer, 17);
                     CurrentStatus.FuelPumpOn = (uint)BitConverter.ToInt32(Buffer, 21) > 0 ? true : false;
                     CurrentStatus.ColdStartOn = (uint)BitConverter.ToInt32(Buffer, 25) > 0 ? true : false;
                     CurrentStatus.Cranking = (uint)BitConverter.ToInt32(Buffer, 29) > 0 ? true : false;

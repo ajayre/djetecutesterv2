@@ -30,18 +30,27 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.button2 = new System.Windows.Forms.Button();
+            this.CustomSettingsApplyBtn = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.ConnectionStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.Tabs = new System.Windows.Forms.TabControl();
             this.StaticPage = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.CoolantTempInput = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ApplyPresetBtn = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.PresetSelector = new System.Windows.Forms.ComboBox();
             this.DynamicPage = new System.Windows.Forms.TabPage();
             this.TestPage = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.OutputPage = new System.Windows.Forms.TabPage();
             this.OutputBox = new System.Windows.Forms.TextBox();
+            this.cartesianChart1 = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
             this.TesterInfoBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,7 +72,18 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.CopyInfoBtn = new System.Windows.Forms.Button();
             this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
-            this.cartesianChart1 = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.AirTempInput = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.ThrottlePositionInput = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.DwellAngleInput = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.EngineSpeedInput = new System.Windows.Forms.TextBox();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -71,6 +91,8 @@
             this.splitContainer1.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.StaticPage.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.TestPage.SuspendLayout();
             this.OutputPage.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -78,15 +100,16 @@
             this.TesterInfoBoxPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button2
+            // CustomSettingsApplyBtn
             // 
-            this.button2.Location = new System.Drawing.Point(6, 6);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Test";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.CustomSettingsApplyBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CustomSettingsApplyBtn.Location = new System.Drawing.Point(876, 237);
+            this.CustomSettingsApplyBtn.Name = "CustomSettingsApplyBtn";
+            this.CustomSettingsApplyBtn.Size = new System.Drawing.Size(75, 23);
+            this.CustomSettingsApplyBtn.TabIndex = 1;
+            this.CustomSettingsApplyBtn.Text = "Apply";
+            this.CustomSettingsApplyBtn.UseVisualStyleBackColor = true;
+            this.CustomSettingsApplyBtn.Click += new System.EventHandler(this.CustomSettingsApplyBtn_Click);
             // 
             // statusStrip1
             // 
@@ -119,7 +142,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.cartesianChart1);
             this.splitContainer1.Size = new System.Drawing.Size(979, 539);
-            this.splitContainer1.SplitterDistance = 202;
+            this.splitContainer1.SplitterDistance = 366;
             this.splitContainer1.TabIndex = 4;
             // 
             // Tabs
@@ -132,19 +155,126 @@
             this.Tabs.Location = new System.Drawing.Point(0, 0);
             this.Tabs.Name = "Tabs";
             this.Tabs.SelectedIndex = 0;
-            this.Tabs.Size = new System.Drawing.Size(979, 202);
+            this.Tabs.Size = new System.Drawing.Size(979, 366);
             this.Tabs.TabIndex = 2;
             // 
             // StaticPage
             // 
-            this.StaticPage.Controls.Add(this.button2);
+            this.StaticPage.Controls.Add(this.groupBox2);
+            this.StaticPage.Controls.Add(this.groupBox1);
             this.StaticPage.Location = new System.Drawing.Point(4, 22);
             this.StaticPage.Name = "StaticPage";
             this.StaticPage.Padding = new System.Windows.Forms.Padding(3);
-            this.StaticPage.Size = new System.Drawing.Size(971, 176);
+            this.StaticPage.Size = new System.Drawing.Size(971, 340);
             this.StaticPage.TabIndex = 0;
             this.StaticPage.Text = "Static";
             this.StaticPage.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.EngineSpeedInput);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.DwellAngleInput);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.ThrottlePositionInput);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.AirTempInput);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.CoolantTempInput);
+            this.groupBox2.Controls.Add(this.CustomSettingsApplyBtn);
+            this.groupBox2.Location = new System.Drawing.Point(6, 68);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(957, 266);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Customize";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(227, 24);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(17, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "°F";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(109, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Coolant Temperature:";
+            // 
+            // CoolantTempInput
+            // 
+            this.CoolantTempInput.Location = new System.Drawing.Point(121, 21);
+            this.CoolantTempInput.Name = "CoolantTempInput";
+            this.CoolantTempInput.Size = new System.Drawing.Size(100, 20);
+            this.CoolantTempInput.TabIndex = 2;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.ApplyPresetBtn);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.PresetSelector);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(957, 56);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Presets";
+            // 
+            // ApplyPresetBtn
+            // 
+            this.ApplyPresetBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ApplyPresetBtn.Location = new System.Drawing.Point(876, 17);
+            this.ApplyPresetBtn.Name = "ApplyPresetBtn";
+            this.ApplyPresetBtn.Size = new System.Drawing.Size(75, 23);
+            this.ApplyPresetBtn.TabIndex = 2;
+            this.ApplyPresetBtn.Text = "Apply";
+            this.ApplyPresetBtn.UseVisualStyleBackColor = true;
+            this.ApplyPresetBtn.Click += new System.EventHandler(this.ApplyPresetBtn_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(75, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(40, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Preset:";
+            // 
+            // PresetSelector
+            // 
+            this.PresetSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.PresetSelector.FormattingEnabled = true;
+            this.PresetSelector.Items.AddRange(new object[] {
+            "Engine Off",
+            "Cranking",
+            "Cold Idle",
+            "Hot Idle",
+            "Cruise 30MPH",
+            "Cruise 70MPH",
+            "Gentle Acceleration",
+            "Moderate Acceleration",
+            "Hard Acceleration"});
+            this.PresetSelector.Location = new System.Drawing.Point(121, 19);
+            this.PresetSelector.Name = "PresetSelector";
+            this.PresetSelector.Size = new System.Drawing.Size(749, 21);
+            this.PresetSelector.TabIndex = 0;
             // 
             // DynamicPage
             // 
@@ -207,6 +337,16 @@
             this.OutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.OutputBox.Size = new System.Drawing.Size(965, 170);
             this.OutputBox.TabIndex = 0;
+            // 
+            // cartesianChart1
+            // 
+            this.cartesianChart1.AllowPanning = true;
+            this.cartesianChart1.BackColor = System.Drawing.Color.White;
+            this.cartesianChart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cartesianChart1.Location = new System.Drawing.Point(0, 0);
+            this.cartesianChart1.Name = "cartesianChart1";
+            this.cartesianChart1.Size = new System.Drawing.Size(979, 169);
+            this.cartesianChart1.TabIndex = 0;
             // 
             // TesterInfoBox
             // 
@@ -398,15 +538,105 @@
             this.TesterInfoBoxPanel.Size = new System.Drawing.Size(979, 38);
             this.TesterInfoBoxPanel.TabIndex = 9;
             // 
-            // cartesianChart1
+            // label4
             // 
-            this.cartesianChart1.AllowPanning = true;
-            this.cartesianChart1.BackColor = System.Drawing.Color.White;
-            this.cartesianChart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cartesianChart1.Location = new System.Drawing.Point(0, 0);
-            this.cartesianChart1.Name = "cartesianChart1";
-            this.cartesianChart1.Size = new System.Drawing.Size(979, 333);
-            this.cartesianChart1.TabIndex = 0;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(491, 24);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(17, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "°F";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(294, 24);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(85, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Air Temperature:";
+            // 
+            // AirTempInput
+            // 
+            this.AirTempInput.Location = new System.Drawing.Point(385, 21);
+            this.AirTempInput.Name = "AirTempInput";
+            this.AirTempInput.Size = new System.Drawing.Size(100, 20);
+            this.AirTempInput.TabIndex = 5;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(227, 50);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(15, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "%";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(29, 50);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(86, 13);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Throttle Position:";
+            // 
+            // ThrottlePositionInput
+            // 
+            this.ThrottlePositionInput.Location = new System.Drawing.Point(121, 47);
+            this.ThrottlePositionInput.Name = "ThrottlePositionInput";
+            this.ThrottlePositionInput.Size = new System.Drawing.Size(100, 20);
+            this.ThrottlePositionInput.TabIndex = 8;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(491, 53);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(11, 13);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "°";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(313, 53);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(66, 13);
+            this.label9.TabIndex = 12;
+            this.label9.Text = "Dwell Angle:";
+            // 
+            // DwellAngleInput
+            // 
+            this.DwellAngleInput.Location = new System.Drawing.Point(385, 50);
+            this.DwellAngleInput.Name = "DwellAngleInput";
+            this.DwellAngleInput.Size = new System.Drawing.Size(100, 20);
+            this.DwellAngleInput.TabIndex = 11;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(227, 76);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(31, 13);
+            this.label10.TabIndex = 16;
+            this.label10.Text = "RPM";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(38, 76);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(77, 13);
+            this.label11.TabIndex = 15;
+            this.label11.Text = "Engine Speed:";
+            // 
+            // EngineSpeedInput
+            // 
+            this.EngineSpeedInput.Location = new System.Drawing.Point(121, 73);
+            this.EngineSpeedInput.Name = "EngineSpeedInput";
+            this.EngineSpeedInput.Size = new System.Drawing.Size(100, 20);
+            this.EngineSpeedInput.TabIndex = 14;
             // 
             // MainForm
             // 
@@ -431,6 +661,10 @@
             this.splitContainer1.ResumeLayout(false);
             this.Tabs.ResumeLayout(false);
             this.StaticPage.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.TestPage.ResumeLayout(false);
             this.OutputPage.ResumeLayout(false);
             this.OutputPage.PerformLayout();
@@ -446,7 +680,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button CustomSettingsApplyBtn;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel ConnectionStatus;
         private System.Windows.Forms.SplitContainer splitContainer1;
@@ -480,6 +714,26 @@
         private System.Windows.Forms.TabPage OutputPage;
         private System.Windows.Forms.Panel TesterInfoBoxPanel;
         private LiveChartsCore.SkiaSharpView.WinForms.CartesianChart cartesianChart1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button ApplyPresetBtn;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox PresetSelector;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox CoolantTempInput;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox AirTempInput;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox DwellAngleInput;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox ThrottlePositionInput;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox EngineSpeedInput;
     }
 }
 

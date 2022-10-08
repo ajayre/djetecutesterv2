@@ -47,7 +47,7 @@ namespace DJetronicECUTester
 
             string StatusText = string.Format("Air temp={0}°F, Coolant temp={1}°F, Eng speed={2}RPM, Throttle={3}% PG Angle={4}°, Fuel pump={5}, Cold start={6}, Cranking={7}",
                 CurrentStatus.AirTemperature, CurrentStatus.CoolantTemperature, CurrentStatus.EngineSpeed, CurrentStatus.Throttle,
-                CurrentStatus.PulseAngle, CurrentStatus.FuelPumpOn ? "on" : "off", CurrentStatus.ColdStartOn ? "on" : "off",
+                CurrentStatus.DwellAngle, CurrentStatus.FuelPumpOn ? "on" : "off", CurrentStatus.ColdStartOn ? "on" : "off",
                 CurrentStatus.Cranking ? "yes" : "no");
 
             StatusText += Environment.NewLine + string.Format("Pulse widths I={0}ms II={1}ms III={2}ms IV={0}ms",
@@ -57,6 +57,12 @@ namespace DJetronicECUTester
             {
                 TesterInfoBox.Text = StatusText;
             }
+
+            AirTempInput.Text = CurrentStatus.AirTemperature.ToString();
+            CoolantTempInput.Text = CurrentStatus.CoolantTemperature.ToString();
+            EngineSpeedInput.Text = CurrentStatus.EngineSpeed.ToString();
+            ThrottlePositionInput.Text = CurrentStatus.Throttle.ToString();
+            DwellAngleInput.Text = CurrentStatus.DwellAngle.ToString();
         }
 
         /// <summary>
@@ -157,9 +163,33 @@ namespace DJetronicECUTester
             stopRecordingPulseWidthsToolStripMenuItem.Enabled = Tester.IsConnected;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Called when user applies the custom settings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CustomSettingsApplyBtn_Click(object sender, EventArgs e)
         {
-            Tester.SetCoolantTemperature(50);
+            int CoolantTemp = 0;
+            int.TryParse(CoolantTempInput.Text, out CoolantTemp);
+
+            int AirTemp = 0;
+            int.TryParse(AirTempInput.Text, out AirTemp);
+
+            uint ThrottlePosition = 0;
+            uint.TryParse(ThrottlePositionInput.Text, out ThrottlePosition);
+
+            uint DwellAngle = 135;
+            uint.TryParse(DwellAngleInput.Text, out DwellAngle);
+
+            uint EngineSpeed = 1200;
+            uint.TryParse(EngineSpeedInput.Text, out EngineSpeed);
+
+            Tester.SetCoolantTemperature(CoolantTemp);
+            Tester.SetAirTemperature(AirTemp);
+            Tester.SetThrottle(ThrottlePosition);
+            Tester.SetDwellAngle(DwellAngle);
+            Tester.SetEngineSpeed(EngineSpeed);
         }
 
         /// <summary>
@@ -227,6 +257,26 @@ namespace DJetronicECUTester
         private void startRecordingPulseWidthsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// Called when user clicks on apply to set a preset
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ApplyPresetBtn_Click(object sender, EventArgs e)
+        {
+            string Preset = (string)PresetSelector.SelectedItem;
+
+            if (Preset == "Engine Off") Tester.UsePreset_EngineOff();
+            else if (Preset == "Cranking") Tester.UsePreset_Cranking();
+            else if (Preset == "Cold Idle") Tester.UsePreset_ColdIdle();
+            else if (Preset == "Hot Idle") Tester.UsePreset_HotIdle();
+            else if (Preset == "Cruise 30MPH") Tester.UsePreset_Cruise30MPH();
+            else if (Preset == "Cruise 70MPH") Tester.UsePreset_Cruise70MPH();
+            else if (Preset == "Gentle Acceleration") Tester.UsePreset_GentleAcceleration();
+            else if (Preset == "Moderate Acceleration") Tester.UsePreset_ModerateAcceleration();
+            else if (Preset == "Hard Acceleration") Tester.UsePreset_HardAcceleration();
         }
     }
 }

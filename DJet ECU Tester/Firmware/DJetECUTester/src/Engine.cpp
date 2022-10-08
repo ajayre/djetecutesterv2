@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "AirTempSensor.h"
 #include "CoolantTempSensor.h"
+#include "Serial.h"
 #include "arduino-mcp4xxx-master/mcp4xxx.h"
 #include "TimerOne-master/TimerOne.h"
 
@@ -21,13 +22,13 @@ using namespace icecave::arduino;
 
 // pins
 #define PIN_STATUS_LED    A3  // PC3
-#define PIN_START         7   // PD7
-#define PIN_TPSWOT        8   // PB0
-#define PIN_TPSIDLE       A0  // PC0
-#define PIN_TPSACCEL1     A2  // PC2
-#define PIN_TPSACCEL2     A1  // PC1
-#define PIN_VAC1          4   // PD4
-#define PIN_VAC2          2   // PD2
+//#define PIN_START         7   // PD7
+//#define PIN_TPSWOT        8   // PB0
+//#define PIN_TPSIDLE       A0  // PC0
+//#define PIN_TPSACCEL1     A2  // PC2
+//#define PIN_TPSACCEL2     A1  // PC1
+//#define PIN_VAC1          4   // PD4
+//#define PIN_VAC2          2   // PD2
 #define PIN_AIRTEMPCS     A5  // PC5
 #define PIN_COOLANTTEMPCS A4  // PC4
 
@@ -36,9 +37,9 @@ using namespace icecave::arduino;
 #define PORT_TRIGGERGROUP3 PORTD
 #define PORT_TRIGGERGROUP4 PORTD
 
-#define PIN_TRIGGERGROUP1 1
-#define PIN_TRIGGERGROUP2 6
-#define PIN_TRIGGERGROUP3 5
+#define PIN_TRIGGERGROUP1 9
+#define PIN_TRIGGERGROUP2 5
+#define PIN_TRIGGERGROUP3 6
 #define PIN_TRIGGERGROUP4 3
 
 #define DIR_TRIGGERGROUP1 DDRB
@@ -54,26 +55,30 @@ using namespace icecave::arduino;
 #define STATUS_LED_OFF         digitalWrite(PIN_STATUS_LED, HIGH);
 #define IS_STATUS_LED_ON       (digitalRead(PIN_STATUS_LED) == 1 ? FALSE : TRUE)
 
-#define STARTING               digitalWrite(PIN_START, HIGH);
-#define NOTSTARTING            digitalWrite(PIN_START, LOW);
+//#define STARTING               digitalWrite(PIN_START, HIGH);
+//#define NOTSTARTING            digitalWrite(PIN_START, LOW);
+#define STARTING
+#define NOTSTARTING
 
-#define TPS_WOT                digitalWrite(PIN_TPSWOT, HIGH);
-#define TPS_NOTWOT             digitalWrite(PIN_TPSWOT, LOW);
+//#define TPS_WOT                digitalWrite(PIN_TPSWOT, HIGH);
+//#define TPS_NOTWOT             digitalWrite(PIN_TPSWOT, LOW);
+#define TPS_WOT
+#define TPS_NOTWOT
 
-#define TPS_IDLE               digitalWrite(PIN_TPSIDLE, HIGH);
-#define TPS_NOTIDLE            digitalWrite(PIN_TPSIDLE, LOW);
+//#define TPS_IDLE               digitalWrite(PIN_TPSIDLE, HIGH);
+//#define TPS_NOTIDLE            digitalWrite(PIN_TPSIDLE, LOW);
+#define TPS_IDLE
+#define TPS_NOTIDLE
 
-#define TPS_ACCEL1_ASSERT      digitalWrite(PIN_TPSACCEL1, HIGH);
-#define TPS_ACCEL1_DEASSERT    digitalWrite(PIN_TPSACCEL1, LOW);
+//#define TPS_ACCEL1_ASSERT      digitalWrite(PIN_TPSACCEL1, HIGH);
+//#define TPS_ACCEL1_DEASSERT    digitalWrite(PIN_TPSACCEL1, LOW);
+#define TPS_ACCEL1_ASSERT
+#define TPS_ACCEL1_DEASSERT
 
-#define TPS_ACCEL2_ASSERT      digitalWrite(PIN_TPSACCEL2, HIGH);
-#define TPS_ACCEL2_DEASSERT    digitalWrite(PIN_TPSACCEL2, LOW);
-
-#define VAC1_ASSERT            digitalWrite(PIN_VAC1, HIGH);
-#define VAC1_DEASSERT          digitalWrite(PIN_VAC1, LOW);
-
-#define VAC2_ASSERT            digitalWrite(PIN_VAC2, HIGH);
-#define VAC2_DEASSERT          digitalWrite(PIN_VAC2, LOW);
+//#define TPS_ACCEL2_ASSERT      digitalWrite(PIN_TPSACCEL2, HIGH);
+//#define TPS_ACCEL2_DEASSERT    digitalWrite(PIN_TPSACCEL2, LOW);
+#define TPS_ACCEL2_ASSERT
+#define TPS_ACCEL2_DEASSERT
 
 #define AIRTEMPCS_DEASSERT     digitalWrite(PIN_AIRTEMPCS, HIGH);
 #define COOLANTTEMPCS_DEASSERT digitalWrite(PIN_COOLANTTEMPCS, HIGH);
@@ -557,7 +562,13 @@ void Engine_SetThrottle
       UpdateThrottleEnrichment(Throttle);
 
       Timestamp = GetTime();
-      while (!IsTimeExpired(Timestamp + THROTTLE_STEP_TIME_MS));
+      while (!IsTimeExpired(Timestamp + THROTTLE_STEP_TIME_MS))
+      {
+        Serial_Process();
+      }
+
+      Serial_SendThrottle(Throttle);
+      Serial_Process();
     }
   }
   else
@@ -707,8 +718,8 @@ void Engine_Init
   // set up outputs
   pinMode(PIN_STATUS_LED,    OUTPUT);
   STATUS_LED_OFF;
-  pinMode(PIN_START,         OUTPUT);
-  NOTSTARTING;
+  //pinMode(PIN_START,         OUTPUT);
+  //NOTSTARTING;
   DIR_TRIGGERGROUP1 |= (1 << PIN_TRIGGERGROUP1);
   TRIGGERGROUP1_HIGH;
   DIR_TRIGGERGROUP2 |= (1 << PIN_TRIGGERGROUP2);
@@ -717,18 +728,18 @@ void Engine_Init
   TRIGGERGROUP3_HIGH;
   DIR_TRIGGERGROUP4 |= (1 << PIN_TRIGGERGROUP4);
   TRIGGERGROUP4_HIGH;
-  pinMode(PIN_TPSWOT,        OUTPUT);
-  TPS_NOTWOT;
-  pinMode(PIN_TPSIDLE,       OUTPUT);
-  TPS_NOTIDLE;
-  pinMode(PIN_TPSACCEL1,     OUTPUT);
-  TPS_ACCEL1_DEASSERT;
-  pinMode(PIN_TPSACCEL2,     OUTPUT);
-  TPS_ACCEL2_DEASSERT;
-  pinMode(PIN_VAC1,          OUTPUT);
-  VAC1_DEASSERT;
-  pinMode(PIN_VAC2,          OUTPUT);
-  VAC2_DEASSERT;
+  //pinMode(PIN_TPSWOT,        OUTPUT);
+  //TPS_NOTWOT;
+  //pinMode(PIN_TPSIDLE,       OUTPUT);
+  //TPS_NOTIDLE;
+  //pinMode(PIN_TPSACCEL1,     OUTPUT);
+  //TPS_ACCEL1_DEASSERT;
+  //pinMode(PIN_TPSACCEL2,     OUTPUT);
+  //TPS_ACCEL2_DEASSERT;
+  //pinMode(PIN_VAC1,          OUTPUT);
+  //VAC1_DEASSERT;
+  //pinMode(PIN_VAC2,          OUTPUT);
+  //VAC2_DEASSERT;
   pinMode(PIN_AIRTEMPCS,     OUTPUT);
   AIRTEMPCS_DEASSERT;
   pinMode(PIN_COOLANTTEMPCS, OUTPUT);

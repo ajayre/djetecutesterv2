@@ -13,7 +13,7 @@ namespace DJetronicECUTester
         public Int32 CoolantTemperature;
         public Int32 AirTemperature;
         public UInt32 Throttle;
-        public UInt32 PulseAngle;
+        public UInt32 DwellAngle;
         public bool FuelPumpOn;
         public bool ColdStartOn;
         public bool Cranking;

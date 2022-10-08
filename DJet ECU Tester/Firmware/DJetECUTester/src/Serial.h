@@ -17,4 +17,24 @@ extern void Serial_Process
   void
   );
 
+// sends the current status
+extern void Serial_SendStatus
+  (
+  void  
+  );
+
+// sends the throttle status
+extern void Serial_SendThrottle
+  (
+  int Throttle   // throttle position as a percentage
+  );
+
+// func: debug_printf
+// desc: outputs a debug line and has the same prototype as printf
+extern int Serial_printf
+  (
+  char *format,
+  ...
+  );
+
 #endif // _SERIALH_
