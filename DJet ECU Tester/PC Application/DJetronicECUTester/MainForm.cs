@@ -45,10 +45,9 @@ namespace DJetronicECUTester
                 return;
             }
 
-            string StatusText = string.Format("Air temp={0}°F, Coolant temp={1}°F, Eng speed={2}RPM, Throttle={3}% PG Angle={4}°, Fuel pump={5}, Cold start={6}, Cranking={7}",
+            string StatusText = string.Format("Air temp={0}°F, Coolant temp={1}°F, Eng speed={2}RPM, Throttle={3}% PG Angle={4}°, Vacuum={5}inHg, Fuel pump={6}, Cold start={7}",
                 CurrentStatus.AirTemperature, CurrentStatus.CoolantTemperature, CurrentStatus.EngineSpeed, CurrentStatus.Throttle,
-                CurrentStatus.DwellAngle, CurrentStatus.FuelPumpOn ? "on" : "off", CurrentStatus.ColdStartOn ? "on" : "off",
-                CurrentStatus.Cranking ? "yes" : "no");
+                CurrentStatus.DwellAngle, CurrentStatus.Pressure, CurrentStatus.FuelPumpOn ? "on" : "off", CurrentStatus.ColdStartOn ? "on" : "off");
 
             StatusText += Environment.NewLine + string.Format("Pulse widths I={0}ms II={1}ms III={2}ms IV={0}ms",
                 CurrentStatus.PulseWidth_I, CurrentStatus.PulseWidth_II, CurrentStatus.PulseWidth_III, CurrentStatus.PulseWidth_IV);

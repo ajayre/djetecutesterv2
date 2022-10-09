@@ -39,11 +39,11 @@ typedef struct _status_t
   uint32_t PulseAngle;
   uint32_t FuelPumpOn;
   uint32_t ColdStartOn;
-  uint32_t Cranking;
   uint32_t PulseWidth_I;
   uint32_t PulseWidth_II;
   uint32_t PulseWidth_III;
   uint32_t PulseWidth_IV;
+  uint32_t Pressure;
 } status_t __attribute__ ((aligned (1)));
 
 // called when a sysex message is received
@@ -167,7 +167,6 @@ static void SendStatus
   throttledirection_t ThrottleDirection,
   int Pressure,
   int AirTemp,
-  bool Cranking,
   int PulseAngle
   )
 {
@@ -180,11 +179,11 @@ static void SendStatus
   Status.Throttle = ThrottlePos;
   Status.ColdStartOn = 0;
   Status.FuelPumpOn = 0;
-  Status.Cranking = Cranking ? 1 : 0;
   Status.PulseWidth_I = 0;
   Status.PulseWidth_II = 0;
   Status.PulseWidth_III = 0;
   Status.PulseWidth_IV = 0;
+  Status.Pressure = Pressure;
   Firmata.sendSysex(CurrentStatus, sizeof(status_t), (byte *)&Status);
 }
 
@@ -244,21 +243,19 @@ void Serial_SendThrottle
   int Throttle   // throttle position as a percentage
   )
 {
-  status_t Status;
   int EngineSpeed;
   int CoolantTemp;
   int ThrottlePos;
   throttledirection_t ThrottleDirection;
   int Pressure;
   int AirTemp;
-  bool Cranking;
   int PulseAngle;
 
   Engine_Get(&EngineSpeed, &CoolantTemp, &ThrottlePos, &ThrottleDirection, &Pressure,
-    &AirTemp, &Cranking, &PulseAngle);
+    &AirTemp, &PulseAngle);
 
   SendStatus(EngineSpeed, CoolantTemp, Throttle, ThrottleDirection, Pressure,
-    AirTemp, Cranking, PulseAngle);
+    AirTemp, PulseAngle);
 }
 
 // sends the current status
@@ -267,19 +264,17 @@ void Serial_SendStatus
   void  
   )
 {
-  status_t Status;
   int EngineSpeed;
   int CoolantTemp;
   int ThrottlePos;
   throttledirection_t ThrottleDirection;
   int Pressure;
   int AirTemp;
-  bool Cranking;
   int PulseAngle;
 
   Engine_Get(&EngineSpeed, &CoolantTemp, &ThrottlePos, &ThrottleDirection, &Pressure,
-    &AirTemp, &Cranking, &PulseAngle);
+    &AirTemp, &PulseAngle);
 
   SendStatus(EngineSpeed, CoolantTemp, ThrottlePos, ThrottleDirection, Pressure,
-    AirTemp, Cranking, PulseAngle);
+    AirTemp, PulseAngle);
 }

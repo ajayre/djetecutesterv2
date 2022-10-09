@@ -227,7 +227,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(491, 53);
+            this.label8.Location = new System.Drawing.Point(535, 53);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(11, 13);
             this.label8.TabIndex = 13;
@@ -236,7 +236,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(313, 53);
+            this.label9.Location = new System.Drawing.Point(357, 53);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(66, 13);
             this.label9.TabIndex = 12;
@@ -244,7 +244,7 @@
             // 
             // DwellAngleInput
             // 
-            this.DwellAngleInput.Location = new System.Drawing.Point(385, 50);
+            this.DwellAngleInput.Location = new System.Drawing.Point(429, 50);
             this.DwellAngleInput.Name = "DwellAngleInput";
             this.DwellAngleInput.Size = new System.Drawing.Size(100, 20);
             this.DwellAngleInput.TabIndex = 11;
@@ -277,16 +277,16 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(491, 24);
+            this.label4.Location = new System.Drawing.Point(535, 24);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 13);
             this.label4.TabIndex = 7;
-            this.label4.Text = "°F (-20°F to 32°F)";
+            this.label4.Text = "°F (-21°F to 32°F)";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(294, 24);
+            this.label5.Location = new System.Drawing.Point(338, 24);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(85, 13);
             this.label5.TabIndex = 6;
@@ -294,7 +294,7 @@
             // 
             // AirTempInput
             // 
-            this.AirTempInput.Location = new System.Drawing.Point(385, 21);
+            this.AirTempInput.Location = new System.Drawing.Point(429, 21);
             this.AirTempInput.Name = "AirTempInput";
             this.AirTempInput.Size = new System.Drawing.Size(100, 20);
             this.AirTempInput.TabIndex = 5;
@@ -304,9 +304,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(227, 24);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(17, 13);
+            this.label3.Size = new System.Drawing.Size(91, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "°F";
+            this.label3.Text = "°F (15°F to 101°F)";
             // 
             // label2
             // 
@@ -427,7 +427,7 @@
             this.OutputPage.Padding = new System.Windows.Forms.Padding(3);
             this.OutputPage.Size = new System.Drawing.Size(971, 340);
             this.OutputPage.TabIndex = 3;
-            this.OutputPage.Text = "Tester Output";
+            this.OutputPage.Text = "Tester Debug Output";
             this.OutputPage.UseVisualStyleBackColor = true;
             // 
             // OutputBox
@@ -646,7 +646,7 @@
             this.EngineTestBtn.Name = "EngineTestBtn";
             this.EngineTestBtn.Size = new System.Drawing.Size(75, 23);
             this.EngineTestBtn.TabIndex = 1;
-            this.EngineTestBtn.Text = "Engine Test";
+            this.EngineTestBtn.Text = "Debug Test";
             this.EngineTestBtn.UseVisualStyleBackColor = true;
             this.EngineTestBtn.Click += new System.EventHandler(this.EngineTestBtn_Click);
             // 

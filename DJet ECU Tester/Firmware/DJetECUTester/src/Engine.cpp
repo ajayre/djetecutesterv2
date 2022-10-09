@@ -17,9 +17,13 @@ using namespace icecave::arduino;
 // default air temperature at start of simulation
 #define DEFAULT_AIRTEMPF 32
 
-// allowed range of air temperature if F
-#define MIN_AIRTEMPF -20
+// allowed range of air temperature in F
+#define MIN_AIRTEMPF -21
 #define MAX_AIRTEMPF 32
+
+// allows range of coolant temperature in F
+#define MIN_COOLANTTEMPF 15
+#define MAX_COOLANTTEMPF 101
 
 // default pulse generator pulse angle in degrees of distributor rotation
 #define DEFAULT_PULSEANGLE 135
@@ -109,17 +113,6 @@ using namespace icecave::arduino;
 // obtained by trial and error
 #define DIGITAL_POT_WIPER_R_COOLANT 233
 
-// minimum and maximum resistance in ohms that the hardware can generate
-// these values correspond to a wiper position of 0 -> max_value()-1
-// and were obtained by measurement
-// from the Steinhart-Hart spreadsheets:
-// Air:     4960 Ohms = -46.3F, 248 Ohms = 77.5F
-// Coolant: 4960 Ohms = 39F,    248 Ohms = 193F
-// the corresponding temp ranges must be reflected in MIN_xxx_TEMP and
-// MAX_xxx_TEMP in Menu.cpp
-#define COOLANTTEMP_MIN_R (248  - DIGITAL_POT_WIPER_R_COOLANT)
-#define COOLANTTEMP_MAX_R (4960 - DIGITAL_POT_WIPER_R_COOLANT)
-
 // number of bits of resolution for digital pot
 #define DIGITAL_POT_RESOLUTION 128
 
@@ -141,11 +134,18 @@ typedef struct _enrichment
   int Accel2State;
 } enrichment_t;
 
-typedef struct _digitalpotvalue_t
+typedef struct _airpotvalue_t
 {
   byte     Wiper;
   uint16_t Resistance;
-} digitalpotvalue_t;
+} airpotvalue_t;
+
+typedef struct _coolantpotvalue_t
+{
+  byte     Wiper1;
+  byte     Wiper2;
+  uint16_t Resistance;
+} coolantpotvalue_t;
 
 // pulse generator trigger states for state machine
 typedef enum _triggerstates { G1START, G1END, G2START, G2END, G3START, G3END, G4START, G4END } triggerstates_t;
@@ -156,7 +156,6 @@ static int CoolantTempF;
 static int ThrottlePosition;                               // %
 static throttledirection_t ThrottleDirection;
 static int Pressure;                                       // manifold, inHg
-static bool Cranking;
 // source: https://github.com/jmalloc/arduino-mcp4xxx
 static MCP4XXX *AirTempPot;
 static MCP4XXX *CoolantTempPot1;
@@ -225,7 +224,7 @@ static const enrichment_t Enrichment[] = {
 };
 
 // look-up table for air temperature resistance
-static const digitalpotvalue_t AirTempTable[] = {
+static const airpotvalue_t AirTempTable[] PROGMEM = {
   // wiper, resistance
   {0, 643},
   {1, 681},
@@ -271,136 +270,263 @@ static const digitalpotvalue_t AirTempTable[] = {
 };
 
 // look-up table for coolant temperature resistance
-static const digitalpotvalue_t CoolantTempTable[] = {
-  // wiper, resistance
-  {0, 692},
-  {1, 745},
-  {2, 779},
-  {3, 827},
-  {4, 868},
-  {5, 898},
-  {6, 932},
-  {7, 966},
-  {8, 1004},
-  {9, 1040},
-  {10, 1079},
-  {11, 1115},
-  {12, 1156},
-  {13, 1191},
-  {14, 1229},
-  {15, 1267},
-  {16, 1308},
-  {17, 1343},
-  {18, 1381},
-  {19, 1426},
-  {20, 1458},
-  {21, 1494},
-  {22, 1521},
-  {23, 1570},
-  {24, 1611},
-  {25, 1644},
-  {26, 1683},
-  {27, 1722},
-  {28, 1750},
-  {29, 1798},
-  {30, 1837},
-  {31, 1873},
-  {32, 1909},
-  {33, 1945},
-  {34, 1974},
-  {35, 2000},
-  {36, 2050},
-  {37, 2080},
-  {38, 2120},
-  {39, 2140},
-  {40, 2190},
-  {41, 2240},
-  {42, 2270},
-  {43, 2300},
-  {44, 2350},
-  {45, 2380},
-  {46, 2420},
-  {47, 2460},
-  {48, 2480},
-  {49, 2530},
-  {50, 2580},
-  {51, 2610},
-  {52, 2640},
-  {53, 2690},
-  {54, 2720},
-  {55, 2760},
-  {56, 2790},
-  {57, 2830},
-  {58, 2870},
-  {59, 2910},
-  {60, 2950},
-  {61, 2980},
-  {62, 3020},
-  {63, 3060},
-  {64, 3090},
-  {65, 3130},
-  {66, 3170},
-  {67, 3210},
-  {68, 3240},
-  {69, 3280},
-  {70, 3320},
-  {71, 3360},
-  {72, 3400},
-  {73, 3420},
-  {74, 3460},
-  {75, 3500},
-  {76, 3540},
-  {77, 3580},
-  {78, 3620},
-  {79, 3660},
-  {80, 3680},
-  {81, 3730},
-  {82, 3770},
-  {83, 3800},
-  {84, 3840},
-  {85, 3890},
-  {86, 3930},
-  {87, 3960},
-  {88, 4000},
-  {89, 4040},
-  {90, 4070},
-  {91, 4100},
-  {92, 4150},
-  {93, 4180},
-  {94, 4220},
-  {95, 4260},
-  {96, 4300},
-  {97, 4340},
-  {98, 4370},
-  {99, 4410},
-  {100, 4450},
-  {101, 4470},
-  {102, 4520},
-  {103, 4550},
-  {104, 4590},
-  {105, 4620},
-  {106, 4670},
-  {107, 4710},
-  {108, 4750},
-  {109, 4790},
-  {110, 4830},
-  {111, 4870},
-  {112, 4910},
-  {113, 4940},
-  {114, 4980},
-  {115, 5010},
-  {116, 5050},
-  {117, 5080},
-  {118, 5120},
-  {119, 5160},
-  {120, 5200},
-  {121, 5230},
-  {122, 5270},
-  {123, 5310},
-  {124, 5350},
-  {125, 5390},
-  {16, 5420},
-  {127, 5460}
+static const coolantpotvalue_t CoolantTempTable[] PROGMEM = {
+  // wiper1, wiper2, resistance
+  {0, 0, 1276},
+  {1, 0, 1314},
+  {2, 0, 1351},
+  {3, 0, 1388},
+  {4, 0, 1425},
+  {5, 0, 1461},
+  {6, 0, 1498},
+  {7, 0, 1535},
+  {8, 0, 1568},
+  {9, 0, 1603},
+  {10, 0, 1640},
+  {11, 0, 1676},
+  {12, 0, 1710},
+  {13, 0, 1745},
+  {14, 0, 1779},
+  {15, 0, 1812},
+  {16, 0, 1845},
+  {17, 0, 1878},
+  {18, 0, 1911},
+  {19, 0, 1943},
+  {20, 0, 1976},
+  {21, 0, 2080},
+  {22, 0, 2120},
+  {23, 0, 2160},
+  {24, 0, 2200},
+  {25, 0, 2230},
+  {26, 0, 2270},
+  {27, 0, 2310},
+  {28, 0, 2350},
+  {29, 0, 2380},
+  {30, 0, 2420},
+  {31, 0, 2460},
+  {32, 0, 2500},
+  {33, 0, 2530},
+  {34, 0, 2570},
+  {35, 0, 2610},
+  {36, 0, 2650},
+  {37, 0, 2680},
+  {38, 0, 2720},
+  {39, 0, 2760},
+  {40, 0, 2800},
+  {41, 0, 2830},
+  {42, 0, 2870},
+  {43, 0, 2910},
+  {44, 0, 2950},
+  {45, 0, 2980},
+  {46, 0, 3020},
+  {47, 0, 3060},
+  {48, 0, 3090},
+  {49, 0, 3130},
+  {50, 0, 3170},
+  {51, 0, 3200},
+  {52, 0, 3240},
+  {53, 0, 3280},
+  {54, 0, 3320},
+  {55, 0, 3360},
+  {56, 0, 3390},
+  {57, 0, 3430},
+  {58, 0, 3470},
+  {59, 0, 3500},
+  {60, 0, 3540},
+  {61, 0, 3580},
+  {62, 0, 3610},
+  {63, 0, 3650},
+  {64, 0, 3690},
+  {65, 0, 3720},
+  {66, 0, 3760},
+  {67, 0, 3800},
+  {68, 0, 3830},
+  {69, 0, 3870},
+  {70, 0, 3910},
+  {71, 0, 3950},
+  {72, 0, 3980},
+  {73, 0, 4020},
+  {74, 0, 4060},
+  {75, 0, 4090},
+  {76, 0, 4130},
+  {77, 0, 4170},
+  {78, 0, 4200},
+  {79, 0, 4240},
+  {80, 0, 4280},
+  {81, 0, 4310},
+  {82, 0, 4350},
+  {83, 0, 4390},
+  {84, 0, 4420},
+  {85, 0, 4460},
+  {86, 0, 4500},
+  {87, 0, 4530},
+  {88, 0, 4570},
+  {89, 0, 4610},
+  {90, 0, 4640},
+  {91, 0, 4680},
+  {92, 0, 4720},
+  {93, 0, 4750},
+  {94, 0, 4790},
+  {95, 0, 4820},
+  {96, 0, 4860},
+  {97, 0, 4900},
+  {98, 0, 4930},
+  {99, 0, 4970},
+  {100, 0, 5000},
+  {101, 0, 5040},
+  {102, 0, 5080},
+  {103, 0, 5110},
+  {104, 0, 5150},
+  {105, 0, 5180},
+  {106, 0, 5220},
+  {107, 0, 5250},
+  {108, 0, 5290},
+  {109, 0, 5320},
+  {110, 0, 5360},
+  {111, 0, 5400},
+  {112, 0, 5430},
+  {113, 0, 5460},
+  {114, 0, 5500},
+  {115, 0, 5530},
+  {116, 0, 5570},
+  {117, 0, 5600},
+  {118, 0, 5640},
+  {119, 0, 5670},
+  {120, 0, 5710},
+  {121, 0, 5740},
+  {122, 0, 5780},
+  {123, 0, 5810},
+  {124, 0, 5850},
+  {125, 0, 5880},
+  {126, 0, 5910},
+  {127, 0, 5950},
+  {127, 1, 5990},
+  {127, 2, 6020},
+  {127, 3, 6050},
+  {127, 4, 6090},
+  {127, 5, 6120},
+  {127, 6, 6160},
+  {127, 7, 6190},
+  {127, 8, 6220},
+  {127, 9, 6250},
+  {127, 10, 6290},
+  {127, 11, 6320},
+  {127, 12, 6350},
+  {127, 13, 6380},
+  {127, 14, 6420},
+  {127, 15, 6450},
+  {127, 16, 6480},
+  {127, 17, 6510},
+  {127, 18, 6540},
+  {127, 19, 6570},
+  {127, 20, 6610},
+  {127, 21, 6640},
+  {127, 22, 6670},
+  {127, 23, 6700},
+  {127, 24, 6720},
+  {127, 25, 6760},
+  {127, 26, 6790},
+  {127, 27, 6810},
+  {127, 28, 6850},
+  {127, 29, 6880},
+  {127, 30, 6910},
+  {127, 31, 6940},
+  {127, 32, 6960},
+  {127, 33, 6990},
+  {127, 34, 7020},
+  {127, 35, 7050},
+  {127, 36, 7080},
+  {127, 37, 7110},
+  {127, 38, 7140},
+  {127, 39, 7160},
+  {127, 40, 7190},
+  {127, 41, 7220},
+  {127, 42, 7240},
+  {127, 43, 7270},
+  {127, 44, 7300},
+  {127, 45, 7330},
+  {127, 46, 7350},
+  {127, 47, 7380},
+  {127, 48, 7400},
+  {127, 49, 7430},
+  {127, 50, 7450},
+  {127, 51, 7480},
+  {127, 52, 7510},
+  {127, 53, 7530},
+  {127, 54, 7560},
+  {127, 55, 7580},
+  {127, 56, 7600},
+  {127, 57, 7630},
+  {127, 58, 7650},
+  {127, 59, 7670},
+  {127, 60, 7700},
+  {127, 61, 7720},
+  {127, 62, 7750},
+  {127, 63, 7770},
+  {127, 64, 7790},
+  {127, 65, 7810},
+  {127, 66, 7840},
+  {127, 67, 7860},
+  {127, 68, 7880},
+  {127, 69, 7900},
+  {127, 70, 7920},
+  {127, 71, 7950},
+  {127, 72, 7970},
+  {127, 73, 7990},
+  {127, 74, 8010},
+  {127, 75, 8030},
+  {127, 76, 8050},
+  {127, 77, 8070},
+  {127, 78, 8090},
+  {127, 79, 8110},
+  {127, 80, 8130},
+  {127, 81, 8150},
+  {127, 82, 8170},
+  {127, 83, 8190},
+  {127, 84, 8210},
+  {127, 85, 8230},
+  {127, 86, 8250},
+  {127, 87, 8270},
+  {127, 88, 8290},
+  {127, 89, 8310},
+  {127, 90, 8320},
+  {127, 91, 8340},
+  {127, 92, 8360},
+  {127, 93, 8380},
+  {127, 94, 8400},
+  {127, 95, 8410},
+  {127, 96, 8430},
+  {127, 97, 8450},
+  {127, 98, 8470},
+  {127, 99, 8480},
+  {127, 100, 8500},
+  {127, 101, 8520},
+  {127, 102, 8530},
+  {127, 103, 8550},
+  {127, 104, 8570},
+  {127, 105, 8590},
+  {127, 106, 8600},
+  {127, 107, 8620},
+  {127, 108, 8630},
+  {127, 109, 8650},
+  {127, 110, 8660},
+  {127, 111, 8680},
+  {127, 112, 8690},
+  {127, 113, 8710},
+  {127, 114, 8720},
+  {127, 115, 8740},
+  {127, 116, 8750},
+  {127, 117, 8770},
+  {127, 118, 8780},
+  {127, 119, 8800},
+  {127, 120, 8810},
+  {127, 121, 8820},
+  {127, 122, 8840},
+  {127, 123, 8850},
+  {127, 124, 8870},
+  {127, 125, 8880},
+  {127, 126, 8890},
+  {127, 127, 8910}
 };
 
 /////////////////////////////////////////////////////////////////////
@@ -575,6 +701,113 @@ static void UpdateThrottleEnrichment
   }
 }
 
+// gets the wiper value for a resistance for air temperature
+// by using a lookup table
+static void GetAirWiperForResistance
+  (
+  const airpotvalue_t *Table,        // lookup table,
+  int NumTableEntries,               // number of entries in table
+  uint16_t Resistance,               // resistance in ohms
+  int *pWiper                        // filled with wiper value
+  )
+{
+  int t;
+  airpotvalue_t TableEntry;
+
+  *pWiper = -1;
+
+  Serial_printf("Getting air wiper for resistance=%d", Resistance);
+
+  // smaller than the lowest value so use the lowest value
+  memcpy_P(&TableEntry, &Table[0], sizeof(airpotvalue_t));
+  if (Resistance <= TableEntry.Resistance)
+  {
+    *pWiper = TableEntry.Wiper;
+    Serial_printf("Matched R=%d", TableEntry.Resistance);
+    return;
+  }
+
+  // search table
+  for (t = 0; t < NumTableEntries; t++)
+  {
+    memcpy_P(&TableEntry, &Table[t], sizeof(airpotvalue_t));
+    if (Resistance <= TableEntry.Resistance)
+    {
+      *pWiper = TableEntry.Wiper;
+      Serial_printf("Matched R=%d", TableEntry.Resistance);
+      return;
+    }
+  }
+      
+  // not found in table so must be larger than the largest value
+  // so use the largest value
+  if (*pWiper == -1)
+  {
+    memcpy_P(&TableEntry, &Table[NumTableEntries - 1], sizeof(airpotvalue_t));
+    *pWiper = TableEntry.Wiper;
+    Serial_printf("Matched R=%d", TableEntry.Resistance);
+  }
+}
+
+// gets the wiper value for a resistance for coolant temperature
+// by using a lookup table
+static void GetCoolantWiperForResistance
+  (
+  const coolantpotvalue_t *Table,    // lookup table,
+  int NumTableEntries,               // number of entries in table
+  uint16_t Resistance,               // resistance in ohms
+  int *pWiper1,                      // filled with wiper 1 value
+  int *pWiper2                       // filled with wiper 1 value
+  )
+{
+  int t;
+  coolantpotvalue_t TableEntry;
+
+  *pWiper1 = *pWiper2 = -1;
+
+  Serial_printf("Getting coolant wipers for resistance=%d", Resistance);
+
+  Serial_printf("Lowest R=%d NumTableEntries=%d", Table[0].Resistance, NumTableEntries);
+
+  // smaller than the lowest value so use the lowest value
+  memcpy_P(&TableEntry, &Table[0], sizeof(coolantpotvalue_t));
+  if (Resistance <= TableEntry.Resistance)
+  {
+    Serial_printf("%d <= %d", Resistance, TableEntry.Resistance);
+    *pWiper1 = TableEntry.Wiper1;
+    *pWiper2 = TableEntry.Wiper2;
+    Serial_printf("Matched R=%d (0)", TableEntry.Resistance);
+    return;
+  }
+
+  // search table
+  for (t = 0; t < NumTableEntries; t++)
+  {
+    memcpy_P(&TableEntry, &Table[t], sizeof(coolantpotvalue_t));
+    if (Resistance <= TableEntry.Resistance)
+    {
+      //Serial_printf("%d", Table[t].Resistance);
+      //Serial_printf("%d", Table[t].Resistance);
+      Serial_printf("%d <= %d", Resistance, TableEntry.Resistance);
+      *pWiper1 = TableEntry.Wiper1;
+      *pWiper2 = TableEntry.Wiper2;
+      Serial_printf("Matched R=%d (%d) Wiper1=%d Wiper2=%d", TableEntry.Resistance, t, *pWiper1, *pWiper2);
+      return;
+    }
+  }
+      
+  // not found in table so must be larger than the largest value
+  // so use the largest value
+  if (*pWiper1 == -1)
+  {
+    Serial_printf("No match, use largest value");
+    memcpy_P(&TableEntry, &Table[NumTableEntries - 1], sizeof(coolantpotvalue_t));
+    *pWiper1 = TableEntry.Wiper1;
+    *pWiper2 = TableEntry.Wiper2;
+    Serial_printf("Matched R=%d (%d)", TableEntry.Resistance, NumTableEntries - 1);
+  }
+}
+
 /////////////////////////////////////////////////////////////////////
 // PUBLIC FUNCTIONS
 
@@ -584,15 +817,13 @@ void Engine_Set
   int EngineSpeed,                                         // new speed in RPM
   int CoolantTempF,                                        // new coolant temperature in F
   int ThrottlePosition,                                    // new throttle position 0% -> 100%
-  int Pressure,                                            // new manifold pressure
-  bool Cranking                                            // new cranking state
+  int Pressure                                             // new manifold pressure
   )
 {
   Engine_SetEngineSpeed(EngineSpeed);
   Engine_SetCoolantTempF(CoolantTempF);
   Engine_SetThrottle(ThrottlePosition);
   Engine_SetManifoldPressure(Pressure);
-  Engine_SetCranking(Cranking);
 }
 
 // get current engine parameters
@@ -604,7 +835,6 @@ void Engine_Get
   throttledirection_t *pThrottleDirection,                 // throttle direction
   int *pPressure,                                          // manifold pressure
   int *pAirTempF,                                          // air temperature
-  bool *pCranking,                                         // cranking state
   int *pPulseAngle                                         // pulse angle for pulse generator in degrees
   )
 {
@@ -614,7 +844,6 @@ void Engine_Get
   *pThrottleDirection = ThrottleDirection;
   *pPressure          = Pressure;
   *pAirTempF          = AirTempF;
-  *pCranking          = Cranking;
   *pPulseAngle        = PulseAngle;
 }
 
@@ -631,7 +860,6 @@ void Engine_SetPulseAngle
   // update calculations for pulse generation
   Engine_SetEngineSpeed(EngineSpeed);
 }
-
 
 // sets the engine speed
 void Engine_SetEngineSpeed
@@ -667,55 +895,11 @@ void Engine_Test
 {
   static int Wiper = 0;
 
-  CoolantTempPot2->set(Wiper);
+  CoolantTempPot1->set(Wiper);
+  CoolantTempPot2->set(0);
   Serial_printf("Coolant temp 2 wiper=%d", Wiper);
 
   Wiper++;
-}
-
-// gets the wiper value for a resistance
-// by using a lookup table
-// returns the wiper value
-static int GetWiperForResistance
-  (
-  const digitalpotvalue_t *Table,    // lookup table,
-  int NumTableEntries,               // number of entries in table
-  uint16_t Resistance                // resistance in ohms
-  )
-{
-  int Wiper = -1;
-  int t;
-
-  Serial_printf("Getting wiper for resistance=%d", Resistance);
-
-  // smaller than the lowest value so use the lowest value
-  if (Resistance <= Table[0].Resistance)
-  {
-    Wiper = Table[0].Wiper;
-    Serial_printf("Matched R=%d", Table[0].Resistance);
-    return Wiper;
-  }
-
-  // search table
-  for (t = 0; t < NumTableEntries; t++)
-  {
-    if (Resistance <= Table[t].Resistance)
-    {
-      Wiper = Table[t].Wiper;
-      Serial_printf("Matched R=%d", Table[t].Resistance);
-      return Wiper;
-    }
-  }
-      
-  // not found in table so must be larger than the largest value
-  // so use the largest value
-  if (Wiper == -1)
-  {
-    Wiper = Table[NumTableEntries - 1].Wiper;
-    Serial_printf("Matched R=%d", Table[NumTableEntries - 1].Resistance);
-  }
-
-  return Wiper;
 }
 
 // sets the air temperature
@@ -729,22 +913,19 @@ void Engine_SetAirTempF
   if (NewAirTempF < MIN_AIRTEMPF) NewAirTempF = MIN_AIRTEMPF;
   if (NewAirTempF > MAX_AIRTEMPF) NewAirTempF = MAX_AIRTEMPF;
 
-  if (NewAirTempF != AirTempF)
-  {
-    AirTempF = NewAirTempF;
+  AirTempF = NewAirTempF;
 
-    Serial_printf("airtemp=%d", AirTempF);
+  Serial_printf("airtemp=%d", AirTempF);
 
-    int R = AirTempSensor_GetResistance(AirTempF);
+  int R = AirTempSensor_GetResistance(AirTempF);
 
-    Serial_printf("Calc R = %d", R);
+  Serial_printf("Calc R = %d", R);
 
-    Wiper = GetWiperForResistance(AirTempTable, sizeof(AirTempTable) / sizeof(digitalpotvalue_t), R);
+  GetAirWiperForResistance(AirTempTable, sizeof(AirTempTable) / sizeof(airpotvalue_t), R, &Wiper);
 
-    Serial_printf("Wiper=%d", Wiper);
+  Serial_printf("Wiper=%d", Wiper);
 
-    AirTempPot->set(Wiper);
-  }
+  AirTempPot->set(Wiper);
 }
 
 // sets the coolant temperature 
@@ -753,86 +934,27 @@ void Engine_SetCoolantTempF
   int NewCoolantTempF                                      // new coolant temperature in F
   )
 {
-  int NumTableEntries;
-  int Wiper1 = -1;
-  int Wiper2 = -1;
+  int Wiper1;
+  int Wiper2;
   int R;
-  int DigPotMinR;
-  int DigPotMaxR;
 
-  if (NewCoolantTempF != CoolantTempF)
-  {
-    CoolantTempF = NewCoolantTempF;
+  if (NewCoolantTempF < MIN_COOLANTTEMPF) NewCoolantTempF = MIN_COOLANTTEMPF;
+  if (NewCoolantTempF > MAX_COOLANTTEMPF) NewCoolantTempF = MAX_COOLANTTEMPF;
 
-    Serial_printf("coolanttemp=%d", CoolantTempF);
+  CoolantTempF = NewCoolantTempF;
 
-    R = CoolantTempSensor_GetResistance(CoolantTempF);
+  Serial_printf("coolanttemp=%d", CoolantTempF);
 
-    Serial_printf("Calc R = %d", R);
+  R = CoolantTempSensor_GetResistance(CoolantTempF);
 
-    NumTableEntries = sizeof(CoolantTempTable) / sizeof(digitalpotvalue_t);
+  Serial_printf("Calc R = %d", R);
 
-    Serial_printf("Table entries=%d %d %d", NumTableEntries, sizeof(CoolantTempTable), sizeof(digitalpotvalue_t));
+  GetCoolantWiperForResistance(CoolantTempTable, sizeof(CoolantTempTable) / sizeof(coolantpotvalue_t), R, &Wiper1, &Wiper2);
 
-    // supported resistance range of single digital pot
-    DigPotMinR = CoolantTempTable[0].Resistance;
-    DigPotMaxR = CoolantTempTable[NumTableEntries - 1].Resistance;
+  Serial_printf("Wiper1=%d Wiper2=%d", Wiper1, Wiper2);
 
-    // lower than the smallest value supported so use the smallest value
-    if (R <= (DigPotMinR * 2))
-    {
-      Wiper1 = Wiper2 = CoolantTempTable[0].Wiper;
-      Serial_printf("Matched min R=%d", DigPotMinR * 2);
-
-      Serial_printf("Wiper1=%d Wiper2=%d", Wiper1, Wiper2);
-
-      CoolantTempPot1->set(Wiper1);
-      CoolantTempPot2->set(Wiper2);
-
-      return;
-    }
-    
-    // larger than the biggest value supported so use the biggest value
-    if (R >= (DigPotMaxR * 2))
-    {
-      Serial_printf("R=%d DigPotMaxR=%d (%d)", R, DigPotMaxR, DigPotMaxR * 2);
-
-      Wiper1 = Wiper2 = CoolantTempTable[NumTableEntries - 1].Wiper;
-      Serial_printf("Matched max R=%d", DigPotMaxR * 2);
-
-      Serial_printf("Wiper1=%d Wiper2=%d", Wiper1, Wiper2);
-
-      CoolantTempPot1->set(Wiper1);
-      CoolantTempPot2->set(Wiper2);
-
-      return;
-    }
-
-    // value is in single table
-    // pot1 = DigPotMinR, pot2 = DigPotMinR->DigPotMaxR
-    if (R <= (DigPotMaxR + DigPotMinR))
-    {
-      Wiper1 = 0;
-      Wiper2 = GetWiperForResistance(CoolantTempTable, sizeof(CoolantTempTable) / sizeof(digitalpotvalue_t), R - DigPotMinR);
-
-      Serial_printf("Matched total R=%d", DigPotMinR + (R - DigPotMinR));
-      Serial_printf("Wiper1=%d Wiper2=%d", Wiper1, Wiper2);
-
-      CoolantTempPot1->set(Wiper1);
-      CoolantTempPot2->set(Wiper2);
-
-      return;
-    }
-
-    Wiper1 = GetWiperForResistance(CoolantTempTable, sizeof(CoolantTempTable) / sizeof(digitalpotvalue_t), DigPotMaxR);
-    Wiper2 = GetWiperForResistance(CoolantTempTable, sizeof(CoolantTempTable) / sizeof(digitalpotvalue_t), R - DigPotMaxR);
-
-    Serial_printf("Matched total R=%d", DigPotMaxR + (R - DigPotMaxR));
-    Serial_printf("Wiper1=%d Wiper2=%d", Wiper1, Wiper2);
-
-    CoolantTempPot1->set(Wiper1);
-    CoolantTempPot2->set(Wiper2);
-  }
+  CoolantTempPot1->set(Wiper1);
+  CoolantTempPot2->set(Wiper2);
 }
 
 // sets the throttle position and direction
@@ -910,36 +1032,7 @@ void Engine_SetManifoldPressure
   int NewPressure                                          // new pressure level in inHg
   )
 {
-  if (NewPressure != NO_PRESSURE)
-  {
-    Serial.print(F("*** ACTION: MANUALLY SET PRESSURE TO "));
-    Serial.print(NewPressure);
-    Serial.println(F(" INHG ***"));
-  }
-  else if (NewPressure == 0)
-  {
-    Serial.println(F("*** ACTION: RELEASE ALL PRESSURE ***"));
-  }
-
    Pressure = NewPressure;
-}
-
-// sets the cranking state
-extern void Engine_SetCranking
-  (
-  bool NewCranking                                         // true if cranking
-  )
-{
-  Cranking = NewCranking;
-
-  if (Cranking)
-  {
-    STARTING;
-  }
-  else
-  {
-    NOTSTARTING;
-  }
 }
 
 // sets the engine to cold idle state
@@ -948,7 +1041,7 @@ void Engine_ColdIdle
   void  
   )
 {
-  Engine_Set(1200, DEFAULT_AIRTEMPF, 0, 15, false);
+  Engine_Set(1200, DEFAULT_AIRTEMPF, 0, 15);
 }
 
 // sets the engine to hot idle state
@@ -957,7 +1050,7 @@ void Engine_HotIdle
   void  
   )
 {
-  Engine_Set(700, 185, 0, 15, false);
+  Engine_Set(700, 185, 0, 15);
 }
 
 // sets the engine to cruising at 30 MPH
@@ -967,7 +1060,7 @@ void Engine_Cruise30MPH
   )
 {
 
-  Engine_Set(1400, 185, 17, 11, false);
+  Engine_Set(1400, 185, 17, 11);
 }
 
 // sets the engine to cruising at 70 MPH
@@ -976,7 +1069,7 @@ void Engine_Cruise70MPH
   void  
   )
 {
-  Engine_Set(3000, 185, 25, 11, false);
+  Engine_Set(3000, 185, 25, 11);
 }
 
 // sets the engine to gentle acceleration
@@ -985,7 +1078,7 @@ void Engine_GentleAcceleration
   void  
   )
 {
-  Engine_Set(1800, 185, 30, 9, false);
+  Engine_Set(1800, 185, 30, 9);
 }
 
 // sets the engine to moderate acceleration
@@ -994,7 +1087,7 @@ void Engine_ModerateAcceleration
   void  
   )
 {
-  Engine_Set(3500, 185, 50, 7, false);
+  Engine_Set(3500, 185, 50, 7);
 }
 
 // sets the engine to hard acceleration
@@ -1003,7 +1096,7 @@ void Engine_HardAcceleration
   void  
   )
 {
-  Engine_Set(6000, 185, 95, 2, false);
+  Engine_Set(6000, 185, 95, 2);
 }
 
 // turns the engine off
@@ -1012,7 +1105,7 @@ void Engine_Off
   void  
   )
 {
-  Engine_Set(0, DEFAULT_AIRTEMPF, 0, NO_PRESSURE, false);
+  Engine_Set(0, DEFAULT_AIRTEMPF, 0, 0);
 }
 
 // sets the engine to cranking
@@ -1021,7 +1114,7 @@ void Engine_Cranking
   int EngineSpeed                                          // new speed in RPM
   )
 {
-  Engine_Set(EngineSpeed, DEFAULT_AIRTEMPF, 0, NO_PRESSURE, true);
+  Engine_Set(EngineSpeed, DEFAULT_AIRTEMPF, 0, 0);
 }
 
 // initializes engine simulation
@@ -1033,8 +1126,6 @@ void Engine_Init
   // set up outputs
   pinMode(PIN_STATUS_LED,    OUTPUT);
   STATUS_LED_OFF;
-  //pinMode(PIN_START,         OUTPUT);
-  //NOTSTARTING;
   DIR_TRIGGERGROUP1 |= (1 << PIN_TRIGGERGROUP1);
   TRIGGERGROUP1_HIGH;
   DIR_TRIGGERGROUP2 |= (1 << PIN_TRIGGERGROUP2);
@@ -1051,10 +1142,6 @@ void Engine_Init
   //TPS_ACCEL1_DEASSERT;
   //pinMode(PIN_TPSACCEL2,     OUTPUT);
   //TPS_ACCEL2_DEASSERT;
-  //pinMode(PIN_VAC1,          OUTPUT);
-  //VAC1_DEASSERT;
-  //pinMode(PIN_VAC2,          OUTPUT);
-  //VAC2_DEASSERT;
   pinMode(PIN_AIRTEMPCS,     OUTPUT);
   AIRTEMPCS_DEASSERT;
   pinMode(PIN_COOLANTTEMPCS1, OUTPUT);

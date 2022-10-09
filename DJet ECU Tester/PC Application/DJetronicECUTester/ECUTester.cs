@@ -19,10 +19,10 @@ namespace DJetronicECUTester
         // limits
         // note that temp limits come from the resistance range of the
         // hardware
-        private const int MIN_COOLANT_TEMP_F = -200;
-        private const int MAX_COOLANT_TEMP_F = 97;
-        private const int MIN_AIR_TEMP_F = -46;
-        private const int MAX_AIR_TEMP_F = 77;
+        private const int MIN_COOLANT_TEMP_F = 15;
+        private const int MAX_COOLANT_TEMP_F = 101;
+        private const int MIN_AIR_TEMP_F = -21;
+        private const int MAX_AIR_TEMP_F = 32;
         private const int MIN_ENGINE_SPEED_RPM = 500;
         private const int MAX_ENGINE_SPEED_RPM = 6500;
         private const int MIN_PULSE_ANGLE_DEG = 100;
@@ -304,11 +304,11 @@ namespace DJetronicECUTester
                     CurrentStatus.DwellAngle = (uint)BitConverter.ToInt32(Buffer, 17);
                     CurrentStatus.FuelPumpOn = (uint)BitConverter.ToInt32(Buffer, 21) > 0 ? true : false;
                     CurrentStatus.ColdStartOn = (uint)BitConverter.ToInt32(Buffer, 25) > 0 ? true : false;
-                    CurrentStatus.Cranking = (uint)BitConverter.ToInt32(Buffer, 29) > 0 ? true : false;
-                    CurrentStatus.PulseWidth_I = (uint)BitConverter.ToInt32(Buffer, 33);
-                    CurrentStatus.PulseWidth_II = (uint)BitConverter.ToInt32(Buffer, 37);
-                    CurrentStatus.PulseWidth_III = (uint)BitConverter.ToInt32(Buffer, 41);
-                    CurrentStatus.PulseWidth_IV = (uint)BitConverter.ToInt32(Buffer, 45);
+                    CurrentStatus.PulseWidth_I = (uint)BitConverter.ToInt32(Buffer, 29);
+                    CurrentStatus.PulseWidth_II = (uint)BitConverter.ToInt32(Buffer, 33);
+                    CurrentStatus.PulseWidth_III = (uint)BitConverter.ToInt32(Buffer, 37);
+                    CurrentStatus.PulseWidth_IV = (uint)BitConverter.ToInt32(Buffer, 41);
+                    CurrentStatus.Pressure = (uint)BitConverter.ToInt32(Buffer, 45);
 
                     if (OnReceivedStatus != null)
                     {

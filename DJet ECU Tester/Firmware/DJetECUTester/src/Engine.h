@@ -63,20 +63,13 @@ extern void Engine_SetManifoldPressure
   int NewPressure                                          // new pressure level in inHg
   );
 
-// sets the cranking state
-extern void Engine_SetCranking
-  (
-  bool Cranking                                            // true if cranking
-  );
-
 // set new engine parameters
 extern void Engine_Set
   (
   int EngineSpeed,                                         // new speed in RPM
   int CoolantTempF,                                        // new coolant temperature in F
   int ThrottlePosition,                                    // new throttle position 0% -> 100%
-  int Pressure,                                            // new manifold pressure
-  bool Cranking                                            // new cranking state
+  int Pressure                                             // new manifold pressure
   );
 
 // get current engine parameters
@@ -88,7 +81,6 @@ extern void Engine_Get
   throttledirection_t *pThrottleDirection,                 // throttle direction
   int *pPressure,                                          // manifold pressure
   int *pAirTempF,                                          // air temperature
-  bool *pCranking,                                         // cranking state
   int *pPulseAngle                                         // pulse angle for pulse generator in degrees
   );
 
