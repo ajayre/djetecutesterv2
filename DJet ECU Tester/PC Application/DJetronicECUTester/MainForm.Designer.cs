@@ -37,6 +37,18 @@
             this.Tabs = new System.Windows.Forms.TabControl();
             this.StaticPage = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.EngineSpeedInput = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.DwellAngleInput = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.ThrottlePositionInput = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.AirTempInput = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.CoolantTempInput = new System.Windows.Forms.TextBox();
@@ -72,18 +84,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.CopyInfoBtn = new System.Windows.Forms.Button();
             this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.AirTempInput = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.ThrottlePositionInput = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.DwellAngleInput = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.EngineSpeedInput = new System.Windows.Forms.TextBox();
+            this.EngineTestBtn = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -198,6 +199,106 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Customize";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(227, 76);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(31, 13);
+            this.label10.TabIndex = 16;
+            this.label10.Text = "RPM";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(38, 76);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(77, 13);
+            this.label11.TabIndex = 15;
+            this.label11.Text = "Engine Speed:";
+            // 
+            // EngineSpeedInput
+            // 
+            this.EngineSpeedInput.Location = new System.Drawing.Point(121, 73);
+            this.EngineSpeedInput.Name = "EngineSpeedInput";
+            this.EngineSpeedInput.Size = new System.Drawing.Size(100, 20);
+            this.EngineSpeedInput.TabIndex = 14;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(491, 53);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(11, 13);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "°";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(313, 53);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(66, 13);
+            this.label9.TabIndex = 12;
+            this.label9.Text = "Dwell Angle:";
+            // 
+            // DwellAngleInput
+            // 
+            this.DwellAngleInput.Location = new System.Drawing.Point(385, 50);
+            this.DwellAngleInput.Name = "DwellAngleInput";
+            this.DwellAngleInput.Size = new System.Drawing.Size(100, 20);
+            this.DwellAngleInput.TabIndex = 11;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(227, 50);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(15, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "%";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(29, 50);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(86, 13);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Throttle Position:";
+            // 
+            // ThrottlePositionInput
+            // 
+            this.ThrottlePositionInput.Location = new System.Drawing.Point(121, 47);
+            this.ThrottlePositionInput.Name = "ThrottlePositionInput";
+            this.ThrottlePositionInput.Size = new System.Drawing.Size(100, 20);
+            this.ThrottlePositionInput.TabIndex = 8;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(491, 24);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(88, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "°F (-20°F to 32°F)";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(294, 24);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(85, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Air Temperature:";
+            // 
+            // AirTempInput
+            // 
+            this.AirTempInput.Location = new System.Drawing.Point(385, 21);
+            this.AirTempInput.Name = "AirTempInput";
+            this.AirTempInput.Size = new System.Drawing.Size(100, 20);
+            this.AirTempInput.TabIndex = 5;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -281,7 +382,7 @@
             this.DynamicPage.Location = new System.Drawing.Point(4, 22);
             this.DynamicPage.Name = "DynamicPage";
             this.DynamicPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DynamicPage.Size = new System.Drawing.Size(971, 176);
+            this.DynamicPage.Size = new System.Drawing.Size(971, 340);
             this.DynamicPage.TabIndex = 1;
             this.DynamicPage.Text = "Dynamic";
             this.DynamicPage.UseVisualStyleBackColor = true;
@@ -293,7 +394,7 @@
             this.TestPage.Location = new System.Drawing.Point(4, 22);
             this.TestPage.Name = "TestPage";
             this.TestPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TestPage.Size = new System.Drawing.Size(971, 176);
+            this.TestPage.Size = new System.Drawing.Size(971, 340);
             this.TestPage.TabIndex = 2;
             this.TestPage.Text = "Automated Testing";
             this.TestPage.UseVisualStyleBackColor = true;
@@ -319,23 +420,23 @@
             // 
             // OutputPage
             // 
+            this.OutputPage.Controls.Add(this.EngineTestBtn);
             this.OutputPage.Controls.Add(this.OutputBox);
             this.OutputPage.Location = new System.Drawing.Point(4, 22);
             this.OutputPage.Name = "OutputPage";
             this.OutputPage.Padding = new System.Windows.Forms.Padding(3);
-            this.OutputPage.Size = new System.Drawing.Size(971, 176);
+            this.OutputPage.Size = new System.Drawing.Size(971, 340);
             this.OutputPage.TabIndex = 3;
             this.OutputPage.Text = "Tester Output";
             this.OutputPage.UseVisualStyleBackColor = true;
             // 
             // OutputBox
             // 
-            this.OutputBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.OutputBox.Location = new System.Drawing.Point(3, 3);
             this.OutputBox.Multiline = true;
             this.OutputBox.Name = "OutputBox";
             this.OutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.OutputBox.Size = new System.Drawing.Size(965, 170);
+            this.OutputBox.Size = new System.Drawing.Size(965, 302);
             this.OutputBox.TabIndex = 0;
             // 
             // cartesianChart1
@@ -538,105 +639,16 @@
             this.TesterInfoBoxPanel.Size = new System.Drawing.Size(979, 38);
             this.TesterInfoBoxPanel.TabIndex = 9;
             // 
-            // label4
+            // EngineTestBtn
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(491, 24);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(17, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "°F";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(294, 24);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(85, 13);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Air Temperature:";
-            // 
-            // AirTempInput
-            // 
-            this.AirTempInput.Location = new System.Drawing.Point(385, 21);
-            this.AirTempInput.Name = "AirTempInput";
-            this.AirTempInput.Size = new System.Drawing.Size(100, 20);
-            this.AirTempInput.TabIndex = 5;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(227, 50);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(15, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "%";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(29, 50);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(86, 13);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "Throttle Position:";
-            // 
-            // ThrottlePositionInput
-            // 
-            this.ThrottlePositionInput.Location = new System.Drawing.Point(121, 47);
-            this.ThrottlePositionInput.Name = "ThrottlePositionInput";
-            this.ThrottlePositionInput.Size = new System.Drawing.Size(100, 20);
-            this.ThrottlePositionInput.TabIndex = 8;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(491, 53);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(11, 13);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "°";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(313, 53);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(66, 13);
-            this.label9.TabIndex = 12;
-            this.label9.Text = "Dwell Angle:";
-            // 
-            // DwellAngleInput
-            // 
-            this.DwellAngleInput.Location = new System.Drawing.Point(385, 50);
-            this.DwellAngleInput.Name = "DwellAngleInput";
-            this.DwellAngleInput.Size = new System.Drawing.Size(100, 20);
-            this.DwellAngleInput.TabIndex = 11;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(227, 76);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(31, 13);
-            this.label10.TabIndex = 16;
-            this.label10.Text = "RPM";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(38, 76);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(77, 13);
-            this.label11.TabIndex = 15;
-            this.label11.Text = "Engine Speed:";
-            // 
-            // EngineSpeedInput
-            // 
-            this.EngineSpeedInput.Location = new System.Drawing.Point(121, 73);
-            this.EngineSpeedInput.Name = "EngineSpeedInput";
-            this.EngineSpeedInput.Size = new System.Drawing.Size(100, 20);
-            this.EngineSpeedInput.TabIndex = 14;
+            this.EngineTestBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.EngineTestBtn.Location = new System.Drawing.Point(8, 311);
+            this.EngineTestBtn.Name = "EngineTestBtn";
+            this.EngineTestBtn.Size = new System.Drawing.Size(75, 23);
+            this.EngineTestBtn.TabIndex = 1;
+            this.EngineTestBtn.Text = "Engine Test";
+            this.EngineTestBtn.UseVisualStyleBackColor = true;
+            this.EngineTestBtn.Click += new System.EventHandler(this.EngineTestBtn_Click);
             // 
             // MainForm
             // 
@@ -734,6 +746,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox EngineSpeedInput;
+        private System.Windows.Forms.Button EngineTestBtn;
     }
 }
 

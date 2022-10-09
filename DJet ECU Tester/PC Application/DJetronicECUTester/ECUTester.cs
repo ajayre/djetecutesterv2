@@ -19,9 +19,9 @@ namespace DJetronicECUTester
         // limits
         // note that temp limits come from the resistance range of the
         // hardware
-        private const int MIN_COOLANT_TEMP_F = 39;
-        private const int MAX_COOLANT_TEMP_F = 193;
-        private const int MIN_AIR_TEMP_F = 0;
+        private const int MIN_COOLANT_TEMP_F = -200;
+        private const int MAX_COOLANT_TEMP_F = 97;
+        private const int MIN_AIR_TEMP_F = -46;
         private const int MAX_AIR_TEMP_F = 77;
         private const int MIN_ENGINE_SPEED_RPM = 500;
         private const int MAX_ENGINE_SPEED_RPM = 6500;
@@ -45,7 +45,8 @@ namespace DJetronicECUTester
             SetEngineSpeed = 0x0D,
             SetThrottle = 0x0E,
             SetPulseAngle = 0x0F,
-            CurrentStatus = 0x10
+            CurrentStatus = 0x10,
+            EngineTest = 0x11
         }
 
         public delegate void OnConnectedHandler(object sender, string PortName, int Baudrate, int MajorVersion, int MinorVersion);
@@ -214,6 +215,18 @@ namespace DJetronicECUTester
 
             byte[] Buffer = new byte[4] { SysExStart, (byte)MessageIds.SetPulseAngle, (byte)AngleDeg, SysExEnd };
             Connection.Write(Buffer, 0, 4);
+        }
+
+        /// <summary>
+        /// Sends the engine test command
+        /// Used for debugging
+        /// </summary>
+        public void EngineTest
+            (
+            )
+        {
+            byte[] Buffer = new byte[3] { SysExStart, (byte)MessageIds.EngineTest, SysExEnd };
+            Connection.Write(Buffer, 0, 3);
         }
 
         /// <summary>

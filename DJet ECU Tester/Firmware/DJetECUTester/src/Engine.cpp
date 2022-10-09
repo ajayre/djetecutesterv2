@@ -15,22 +15,27 @@ using namespace icecave::arduino;
 #define NO_PRESSURE -1
 
 // default air temperature at start of simulation
-#define DEFAULT_AIRTEMPF 72
+#define DEFAULT_AIRTEMPF 32
+
+// allowed range of air temperature if F
+#define MIN_AIRTEMPF -20
+#define MAX_AIRTEMPF 32
 
 // default pulse generator pulse angle in degrees of distributor rotation
 #define DEFAULT_PULSEANGLE 135
 
 // pins
-#define PIN_STATUS_LED    A3  // PC3
-//#define PIN_START         7   // PD7
-//#define PIN_TPSWOT        8   // PB0
-//#define PIN_TPSIDLE       A0  // PC0
-//#define PIN_TPSACCEL1     A2  // PC2
-//#define PIN_TPSACCEL2     A1  // PC1
-//#define PIN_VAC1          4   // PD4
-//#define PIN_VAC2          2   // PD2
-#define PIN_AIRTEMPCS     A5  // PC5
-#define PIN_COOLANTTEMPCS A4  // PC4
+#define PIN_STATUS_LED     A3  // PC3
+//#define PIN_START          7   // PD7
+//#define PIN_TPSWOT         8   // PB0
+//#define PIN_TPSIDLE        A0  // PC0
+//#define PIN_TPSACCEL1      A2  // PC2
+//#define PIN_TPSACCEL2      A1  // PC1
+//#define PIN_VAC1           4   // PD4
+//#define PIN_VAC2           2   // PD2
+#define PIN_AIRTEMPCS      A5  // PC5
+#define PIN_COOLANTTEMPCS1 A4  // PC4
+#define PIN_COOLANTTEMPCS2 8   // PB0
 
 #define PORT_TRIGGERGROUP1 PORTB
 #define PORT_TRIGGERGROUP2 PORTD
@@ -80,8 +85,9 @@ using namespace icecave::arduino;
 #define TPS_ACCEL2_ASSERT
 #define TPS_ACCEL2_DEASSERT
 
-#define AIRTEMPCS_DEASSERT     digitalWrite(PIN_AIRTEMPCS, HIGH);
-#define COOLANTTEMPCS_DEASSERT digitalWrite(PIN_COOLANTTEMPCS, HIGH);
+#define AIRTEMPCS_DEASSERT      digitalWrite(PIN_AIRTEMPCS, HIGH);
+#define COOLANTTEMPCS1_DEASSERT digitalWrite(PIN_COOLANTTEMPCS1, HIGH);
+#define COOLANTTEMPCS2_DEASSERT digitalWrite(PIN_COOLANTTEMPCS2, HIGH);
 
 #define TRIGGERGROUP1_HIGH (PORT_TRIGGERGROUP1 &= ~(1 << PIN_TRIGGERGROUP1))
 #define TRIGGERGROUP1_LOW  (PORT_TRIGGERGROUP1 |=  (1 << PIN_TRIGGERGROUP1))
@@ -101,7 +107,6 @@ using namespace icecave::arduino;
 
 // resistance of wiper
 // obtained by trial and error
-#define DIGITAL_POT_WIPER_R_AIR     232
 #define DIGITAL_POT_WIPER_R_COOLANT 233
 
 // minimum and maximum resistance in ohms that the hardware can generate
@@ -112,13 +117,11 @@ using namespace icecave::arduino;
 // Coolant: 4960 Ohms = 39F,    248 Ohms = 193F
 // the corresponding temp ranges must be reflected in MIN_xxx_TEMP and
 // MAX_xxx_TEMP in Menu.cpp
-#define AIRTEMP_MIN_R     (248  - DIGITAL_POT_WIPER_R_AIR)
-#define AIRTEMP_MAX_R     (4960 - DIGITAL_POT_WIPER_R_AIR)
 #define COOLANTTEMP_MIN_R (248  - DIGITAL_POT_WIPER_R_COOLANT)
 #define COOLANTTEMP_MAX_R (4960 - DIGITAL_POT_WIPER_R_COOLANT)
 
 // number of bits of resolution for digital pot
-#define DIGITAL_POT_RESOLUTION 256
+#define DIGITAL_POT_RESOLUTION 128
 
 // macro to check if engine is on
 #define IS_ENGINE_ON (EngineSpeed > 0)
@@ -138,6 +141,12 @@ typedef struct _enrichment
   int Accel2State;
 } enrichment_t;
 
+typedef struct _digitalpotvalue_t
+{
+  byte     Wiper;
+  uint16_t Resistance;
+} digitalpotvalue_t;
+
 // pulse generator trigger states for state machine
 typedef enum _triggerstates { G1START, G1END, G2START, G2END, G3START, G3END, G4START, G4END } triggerstates_t;
 
@@ -150,11 +159,10 @@ static int Pressure;                                       // manifold, inHg
 static bool Cranking;
 // source: https://github.com/jmalloc/arduino-mcp4xxx
 static MCP4XXX *AirTempPot;
-static MCP4XXX *CoolantTempPot;
+static MCP4XXX *CoolantTempPot1;
+static MCP4XXX *CoolantTempPot2;
 static int PulseAngle;
 static unsigned long LEDTimestamp;
-static float AirRperW;
-static float CoolantRperW;
 static volatile unsigned int PGCounter;
 static unsigned int G1On;
 static unsigned int G1Off;
@@ -172,7 +180,7 @@ static unsigned int FiringPeriod;
 // Throttle percentages are multiplied by 10
 // accel1 = ECU pin 9
 // accel2 = ECU pin 20
-static enrichment_t Enrichment[] = {
+static const enrichment_t Enrichment[] = {
   // thr low, thr high, accel1, accel2
   {0,   29,   DEASSERT, ASSERT},    // accel 2 finger 1
   {30,  44,   DEASSERT, DEASSERT},
@@ -214,6 +222,185 @@ static enrichment_t Enrichment[] = {
   {569, 583,  DEASSERT, DEASSERT},
   {584, 606,  ASSERT, DEASSERT},    // accel 1 finger 10
   {607, 1000, ASSERT, DEASSERT}     // beyond 90% throttle accel 1 stays low
+};
+
+// look-up table for air temperature resistance
+static const digitalpotvalue_t AirTempTable[] = {
+  // wiper, resistance
+  {0, 643},
+  {1, 681},
+  {2, 718},
+  {3, 755},
+  {4, 794},
+  {5, 832},
+  {6, 869},
+  {7, 906},
+  {8, 941},
+  {9, 978},
+  {10, 1015},
+  {11, 1052},
+  {12, 1091},
+  {13, 1128},
+  {14, 1165},
+  {15, 1202},
+  {16, 1237},
+  {17, 1274},
+  {18, 1311},
+  {19, 1348},
+  {20, 1386},
+  {21, 1423},
+  {22, 1459},
+  {23, 1496},
+  {24, 1529},
+  {25, 1565},
+  {26, 1601},
+  {27, 1637},
+  {28, 1674},
+  {29, 1709},
+  {30, 1743},
+  {31, 1778},
+  {32, 1810},
+  {33, 1845},
+  {34, 1878},
+  {35, 1911},
+  {36, 1945},
+  {37, 1977},
+  {38, 2070},
+  {39, 2110},
+  {40, 2140}
+};
+
+// look-up table for coolant temperature resistance
+static const digitalpotvalue_t CoolantTempTable[] = {
+  // wiper, resistance
+  {0, 692},
+  {1, 745},
+  {2, 779},
+  {3, 827},
+  {4, 868},
+  {5, 898},
+  {6, 932},
+  {7, 966},
+  {8, 1004},
+  {9, 1040},
+  {10, 1079},
+  {11, 1115},
+  {12, 1156},
+  {13, 1191},
+  {14, 1229},
+  {15, 1267},
+  {16, 1308},
+  {17, 1343},
+  {18, 1381},
+  {19, 1426},
+  {20, 1458},
+  {21, 1494},
+  {22, 1521},
+  {23, 1570},
+  {24, 1611},
+  {25, 1644},
+  {26, 1683},
+  {27, 1722},
+  {28, 1750},
+  {29, 1798},
+  {30, 1837},
+  {31, 1873},
+  {32, 1909},
+  {33, 1945},
+  {34, 1974},
+  {35, 2000},
+  {36, 2050},
+  {37, 2080},
+  {38, 2120},
+  {39, 2140},
+  {40, 2190},
+  {41, 2240},
+  {42, 2270},
+  {43, 2300},
+  {44, 2350},
+  {45, 2380},
+  {46, 2420},
+  {47, 2460},
+  {48, 2480},
+  {49, 2530},
+  {50, 2580},
+  {51, 2610},
+  {52, 2640},
+  {53, 2690},
+  {54, 2720},
+  {55, 2760},
+  {56, 2790},
+  {57, 2830},
+  {58, 2870},
+  {59, 2910},
+  {60, 2950},
+  {61, 2980},
+  {62, 3020},
+  {63, 3060},
+  {64, 3090},
+  {65, 3130},
+  {66, 3170},
+  {67, 3210},
+  {68, 3240},
+  {69, 3280},
+  {70, 3320},
+  {71, 3360},
+  {72, 3400},
+  {73, 3420},
+  {74, 3460},
+  {75, 3500},
+  {76, 3540},
+  {77, 3580},
+  {78, 3620},
+  {79, 3660},
+  {80, 3680},
+  {81, 3730},
+  {82, 3770},
+  {83, 3800},
+  {84, 3840},
+  {85, 3890},
+  {86, 3930},
+  {87, 3960},
+  {88, 4000},
+  {89, 4040},
+  {90, 4070},
+  {91, 4100},
+  {92, 4150},
+  {93, 4180},
+  {94, 4220},
+  {95, 4260},
+  {96, 4300},
+  {97, 4340},
+  {98, 4370},
+  {99, 4410},
+  {100, 4450},
+  {101, 4470},
+  {102, 4520},
+  {103, 4550},
+  {104, 4590},
+  {105, 4620},
+  {106, 4670},
+  {107, 4710},
+  {108, 4750},
+  {109, 4790},
+  {110, 4830},
+  {111, 4870},
+  {112, 4910},
+  {113, 4940},
+  {114, 4980},
+  {115, 5010},
+  {116, 5050},
+  {117, 5080},
+  {118, 5120},
+  {119, 5160},
+  {120, 5200},
+  {121, 5230},
+  {122, 5270},
+  {123, 5310},
+  {124, 5350},
+  {125, 5390},
+  {16, 5420},
+  {127, 5460}
 };
 
 /////////////////////////////////////////////////////////////////////
@@ -472,25 +659,89 @@ void Engine_SetEngineSpeed
   }
 }
 
+// test function for debugging
+void Engine_Test
+  (
+  void
+  )
+{
+  static int Wiper = 0;
+
+  CoolantTempPot2->set(Wiper);
+  Serial_printf("Coolant temp 2 wiper=%d", Wiper);
+
+  Wiper++;
+}
+
+// gets the wiper value for a resistance
+// by using a lookup table
+// returns the wiper value
+static int GetWiperForResistance
+  (
+  const digitalpotvalue_t *Table,    // lookup table,
+  int NumTableEntries,               // number of entries in table
+  uint16_t Resistance                // resistance in ohms
+  )
+{
+  int Wiper = -1;
+  int t;
+
+  Serial_printf("Getting wiper for resistance=%d", Resistance);
+
+  // smaller than the lowest value so use the lowest value
+  if (Resistance <= Table[0].Resistance)
+  {
+    Wiper = Table[0].Wiper;
+    Serial_printf("Matched R=%d", Table[0].Resistance);
+    return Wiper;
+  }
+
+  // search table
+  for (t = 0; t < NumTableEntries; t++)
+  {
+    if (Resistance <= Table[t].Resistance)
+    {
+      Wiper = Table[t].Wiper;
+      Serial_printf("Matched R=%d", Table[t].Resistance);
+      return Wiper;
+    }
+  }
+      
+  // not found in table so must be larger than the largest value
+  // so use the largest value
+  if (Wiper == -1)
+  {
+    Wiper = Table[NumTableEntries - 1].Wiper;
+    Serial_printf("Matched R=%d", Table[NumTableEntries - 1].Resistance);
+  }
+
+  return Wiper;
+}
+
 // sets the air temperature
 void Engine_SetAirTempF
   (
   int NewAirTempF                                          // new air temperature in F
   )
 {
+  int Wiper = -1;
+
+  if (NewAirTempF < MIN_AIRTEMPF) NewAirTempF = MIN_AIRTEMPF;
+  if (NewAirTempF > MAX_AIRTEMPF) NewAirTempF = MAX_AIRTEMPF;
+
   if (NewAirTempF != AirTempF)
   {
     AirTempF = NewAirTempF;
 
+    Serial_printf("airtemp=%d", AirTempF);
+
     int R = AirTempSensor_GetResistance(AirTempF);
-    if (R < AIRTEMP_MIN_R) R = AIRTEMP_MIN_R;
-    if (R > AIRTEMP_MAX_R) R = AIRTEMP_MAX_R;
 
-    R -= DIGITAL_POT_WIPER_R_AIR;
+    Serial_printf("Calc R = %d", R);
 
-    int Wiper = (int)(R / AirRperW);
-    if (Wiper > (DIGITAL_POT_RESOLUTION - 1)) Wiper = DIGITAL_POT_RESOLUTION - 1;
-    if (Wiper < 0) Wiper = 0;
+    Wiper = GetWiperForResistance(AirTempTable, sizeof(AirTempTable) / sizeof(digitalpotvalue_t), R);
+
+    Serial_printf("Wiper=%d", Wiper);
 
     AirTempPot->set(Wiper);
   }
@@ -502,21 +753,85 @@ void Engine_SetCoolantTempF
   int NewCoolantTempF                                      // new coolant temperature in F
   )
 {
+  int NumTableEntries;
+  int Wiper1 = -1;
+  int Wiper2 = -1;
+  int R;
+  int DigPotMinR;
+  int DigPotMaxR;
+
   if (NewCoolantTempF != CoolantTempF)
   {
     CoolantTempF = NewCoolantTempF;
 
-    int R = CoolantTempSensor_GetResistance(CoolantTempF);
-    if (R < COOLANTTEMP_MIN_R) R = COOLANTTEMP_MIN_R;
-    if (R > COOLANTTEMP_MAX_R) R = COOLANTTEMP_MAX_R;
+    Serial_printf("coolanttemp=%d", CoolantTempF);
 
-    R -= DIGITAL_POT_WIPER_R_COOLANT;
+    R = CoolantTempSensor_GetResistance(CoolantTempF);
 
-    int Wiper = (int)(R / CoolantRperW);
-    if (Wiper > (DIGITAL_POT_RESOLUTION - 1)) Wiper = DIGITAL_POT_RESOLUTION - 1;
-    if (Wiper < 0) Wiper = 0;
+    Serial_printf("Calc R = %d", R);
 
-    CoolantTempPot->set(Wiper);
+    NumTableEntries = sizeof(CoolantTempTable) / sizeof(digitalpotvalue_t);
+
+    Serial_printf("Table entries=%d %d %d", NumTableEntries, sizeof(CoolantTempTable), sizeof(digitalpotvalue_t));
+
+    // supported resistance range of single digital pot
+    DigPotMinR = CoolantTempTable[0].Resistance;
+    DigPotMaxR = CoolantTempTable[NumTableEntries - 1].Resistance;
+
+    // lower than the smallest value supported so use the smallest value
+    if (R <= (DigPotMinR * 2))
+    {
+      Wiper1 = Wiper2 = CoolantTempTable[0].Wiper;
+      Serial_printf("Matched min R=%d", DigPotMinR * 2);
+
+      Serial_printf("Wiper1=%d Wiper2=%d", Wiper1, Wiper2);
+
+      CoolantTempPot1->set(Wiper1);
+      CoolantTempPot2->set(Wiper2);
+
+      return;
+    }
+    
+    // larger than the biggest value supported so use the biggest value
+    if (R >= (DigPotMaxR * 2))
+    {
+      Serial_printf("R=%d DigPotMaxR=%d (%d)", R, DigPotMaxR, DigPotMaxR * 2);
+
+      Wiper1 = Wiper2 = CoolantTempTable[NumTableEntries - 1].Wiper;
+      Serial_printf("Matched max R=%d", DigPotMaxR * 2);
+
+      Serial_printf("Wiper1=%d Wiper2=%d", Wiper1, Wiper2);
+
+      CoolantTempPot1->set(Wiper1);
+      CoolantTempPot2->set(Wiper2);
+
+      return;
+    }
+
+    // value is in single table
+    // pot1 = DigPotMinR, pot2 = DigPotMinR->DigPotMaxR
+    if (R <= (DigPotMaxR + DigPotMinR))
+    {
+      Wiper1 = 0;
+      Wiper2 = GetWiperForResistance(CoolantTempTable, sizeof(CoolantTempTable) / sizeof(digitalpotvalue_t), R - DigPotMinR);
+
+      Serial_printf("Matched total R=%d", DigPotMinR + (R - DigPotMinR));
+      Serial_printf("Wiper1=%d Wiper2=%d", Wiper1, Wiper2);
+
+      CoolantTempPot1->set(Wiper1);
+      CoolantTempPot2->set(Wiper2);
+
+      return;
+    }
+
+    Wiper1 = GetWiperForResistance(CoolantTempTable, sizeof(CoolantTempTable) / sizeof(digitalpotvalue_t), DigPotMaxR);
+    Wiper2 = GetWiperForResistance(CoolantTempTable, sizeof(CoolantTempTable) / sizeof(digitalpotvalue_t), R - DigPotMaxR);
+
+    Serial_printf("Matched total R=%d", DigPotMaxR + (R - DigPotMaxR));
+    Serial_printf("Wiper1=%d Wiper2=%d", Wiper1, Wiper2);
+
+    CoolantTempPot1->set(Wiper1);
+    CoolantTempPot2->set(Wiper2);
   }
 }
 
@@ -742,18 +1057,17 @@ void Engine_Init
   //VAC2_DEASSERT;
   pinMode(PIN_AIRTEMPCS,     OUTPUT);
   AIRTEMPCS_DEASSERT;
-  pinMode(PIN_COOLANTTEMPCS, OUTPUT);
-  COOLANTTEMPCS_DEASSERT;
+  pinMode(PIN_COOLANTTEMPCS1, OUTPUT);
+  COOLANTTEMPCS1_DEASSERT;
+  pinMode(PIN_COOLANTTEMPCS2, OUTPUT);
+  COOLANTTEMPCS2_DEASSERT;
  
   AirTempSensor_Init();
   CoolantTempSensor_Init();
 
-  AirTempPot     = new MCP4XXX(PIN_AIRTEMPCS);
-  CoolantTempPot = new MCP4XXX(PIN_COOLANTTEMPCS);
-
-  // calculate ratio of resistance (Ohms) per step in wiper position
-  AirRperW     = (AIRTEMP_MAX_R - AIRTEMP_MIN_R)         / (float)DIGITAL_POT_RESOLUTION;
-  CoolantRperW = (COOLANTTEMP_MAX_R - COOLANTTEMP_MIN_R) / (float)DIGITAL_POT_RESOLUTION;
+  AirTempPot      = new MCP4XXX(PIN_AIRTEMPCS, icecave::arduino::MCP4XXX::pot_0, icecave::arduino::MCP4XXX::res_7bit);
+  CoolantTempPot1 = new MCP4XXX(PIN_COOLANTTEMPCS1, icecave::arduino::MCP4XXX::pot_0, icecave::arduino::MCP4XXX::res_7bit);
+  CoolantTempPot2 = new MCP4XXX(PIN_COOLANTTEMPCS2, icecave::arduino::MCP4XXX::pot_0, icecave::arduino::MCP4XXX::res_7bit);
 
   // set up pulse generator
   Timer1.initialize(0);

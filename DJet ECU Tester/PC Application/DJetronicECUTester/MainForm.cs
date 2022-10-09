@@ -100,6 +100,8 @@ namespace DJetronicECUTester
         private void Tester_OnConnected(object sender, string PortName, int Baudrate, int MajorVersion, int MinorVersion)
         {
             ConnectionStatus.Text = string.Format("Connected to ECU tester V{0}.{1} on {2} at {3} baud", MajorVersion, MinorVersion, PortName, Baudrate);
+            Tester.UsePreset_EngineOff();
+            PresetSelector.SelectedIndex = PresetSelector.Items.IndexOf("Engine Off");
             UpdateUI();
         }
 
@@ -114,6 +116,7 @@ namespace DJetronicECUTester
             try
             {
                 TesterInfoBox.Text = "";
+                OutputBox.Text = "";
                 Tester.Connect();
             }
             catch (Exception Exc)
@@ -225,6 +228,7 @@ namespace DJetronicECUTester
             try
             {
                 TesterInfoBox.Text = "";
+                OutputBox.Text = "";
                 Tester.Connect();
             }
             catch (Exception Exc)
@@ -277,6 +281,16 @@ namespace DJetronicECUTester
             else if (Preset == "Gentle Acceleration") Tester.UsePreset_GentleAcceleration();
             else if (Preset == "Moderate Acceleration") Tester.UsePreset_ModerateAcceleration();
             else if (Preset == "Hard Acceleration") Tester.UsePreset_HardAcceleration();
+        }
+
+        /// <summary>
+        /// Called when user clicks on the engine test button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EngineTestBtn_Click(object sender, EventArgs e)
+        {
+            Tester.EngineTest();
         }
     }
 }

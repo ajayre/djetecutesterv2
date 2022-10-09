@@ -26,7 +26,8 @@ typedef enum _messageids_t
   SetEngineSpeed = 0x0D,
   SetThrottle = 0x0E,
   SetPulseAngle = 0x0F,
-  CurrentStatus = 0x10
+  CurrentStatus = 0x10,
+  EngineTest = 0x11
 } messageids_t;
 
 typedef struct _status_t
@@ -56,19 +57,23 @@ static void sysexCallback(byte command, byte argc, byte *argv)
 
   switch (command)
   {
+    case EngineTest:
+      Engine_Test();
+      break;
+
     case RequestStatus:
       Serial_SendStatus();
       break;
 
     case SetCoolantTemp:
-      Temp = argv[0] | ((int)argv[1] << 8);
+      Temp = (int)(argv[0] | ((int)argv[1] << 8));
       Engine_SetCoolantTempF(Temp);
       Serial_printf("Set coolant temp to %d F", Temp);
       Serial_SendStatus();
       break;
 
     case SetAirTemp:
-      Temp = argv[0] | ((int)argv[1] << 8);
+      Temp = (int)(argv[0] | ((int)argv[1] << 8));
       Engine_SetAirTempF(Temp);
       Serial_printf("Set air temp to %d F", Temp);
       Serial_SendStatus();
@@ -188,7 +193,11 @@ static void SendStatus
 
 // func: debug_printf
 // desc: outputs a debug line and has the same prototype as printf
-int Serial_printf(char *format, ...)
+int Serial_printf
+  (
+  char const *format,
+  ...
+  )
 {
   va_list args;
   int charswritten = 0;

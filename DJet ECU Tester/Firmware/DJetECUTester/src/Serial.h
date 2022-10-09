@@ -33,7 +33,7 @@ extern void Serial_SendThrottle
 // desc: outputs a debug line and has the same prototype as printf
 extern int Serial_printf
   (
-  char *format,
+  char const *format,
   ...
   );
 

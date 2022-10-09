@@ -146,4 +146,10 @@ extern void Engine_HardAcceleration
   void  
   );
 
+// test function for debugging
+extern void Engine_Test
+  (
+  void
+  );
+
 #endif // _ENGINEH_
