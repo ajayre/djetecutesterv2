@@ -16,6 +16,7 @@ namespace DJetronicECUTester
         private ECUTester Tester = new ECUTester();
 
         private Color Orange = Color.FromArgb(202, 81, 0);
+        private uint CurrentPressure = 0;
 
         public MainForm()
         {
@@ -62,6 +63,13 @@ namespace DJetronicECUTester
             EngineSpeedInput.Text = CurrentStatus.EngineSpeed.ToString();
             ThrottlePositionInput.Text = CurrentStatus.Throttle.ToString();
             DwellAngleInput.Text = CurrentStatus.DwellAngle.ToString();
+
+            if (CurrentStatus.Pressure != CurrentPressure)
+            {
+                string Msg = string.Format("Change vacuum to {0}inHg", CurrentStatus.Pressure);
+                MessageBox.Show(Msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CurrentPressure = CurrentStatus.Pressure;
+            }
         }
 
         /// <summary>

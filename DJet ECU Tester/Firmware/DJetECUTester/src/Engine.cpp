@@ -6,8 +6,11 @@
 #include "AirTempSensor.h"
 #include "CoolantTempSensor.h"
 #include "Serial.h"
+// source: https://github.com/jmalloc/arduino-mcp4xxx
 #include "arduino-mcp4xxx-master/mcp4xxx.h"
 #include "TimerOne-master/TimerOne.h"
+// https://github.com/kmpelectronics/KMP_MCP23S08
+#include "KMP_MCP23S08-main/KMP_MCP23S08.h"
 
 using namespace icecave::arduino;
 
@@ -28,25 +31,27 @@ using namespace icecave::arduino;
 // default pulse generator pulse angle in degrees of distributor rotation
 #define DEFAULT_PULSEANGLE 135
 
-// pins
+// mcu pins
 #define PIN_STATUS_LED     A3  // PC3
-//#define PIN_START          7   // PD7
-//#define PIN_TPSWOT         8   // PB0
-//#define PIN_TPSIDLE        A0  // PC0
-//#define PIN_TPSACCEL1      A2  // PC2
-//#define PIN_TPSACCEL2      A1  // PC1
-//#define PIN_VAC1           4   // PD4
-//#define PIN_VAC2           2   // PD2
 #define PIN_AIRTEMPCS      A5  // PC5
 #define PIN_COOLANTTEMPCS1 A4  // PC4
 #define PIN_COOLANTTEMPCS2 8   // PB0
+#define PIN_IOCS           A2  // PC2
+
+// io expander pins
+#define PIN_TPSACCEL2 2
+#define PIN_TPSACCEL1 3
+#define PIN_TPSIDLE   4
+#define PIN_TPSWOT    5
+#define PIN_START     6
+#define PIN_FUELPUMP  7
 
 #define PORT_TRIGGERGROUP1 PORTB
 #define PORT_TRIGGERGROUP2 PORTD
 #define PORT_TRIGGERGROUP3 PORTD
 #define PORT_TRIGGERGROUP4 PORTD
 
-#define PIN_TRIGGERGROUP1 9
+#define PIN_TRIGGERGROUP1 1
 #define PIN_TRIGGERGROUP2 5
 #define PIN_TRIGGERGROUP3 6
 #define PIN_TRIGGERGROUP4 3
@@ -60,38 +65,26 @@ using namespace icecave::arduino;
 #define TRUE  1
 
 // IO macros
-#define STATUS_LED_ON          digitalWrite(PIN_STATUS_LED, LOW)
-#define STATUS_LED_OFF         digitalWrite(PIN_STATUS_LED, HIGH);
-#define IS_STATUS_LED_ON       (digitalRead(PIN_STATUS_LED) == 1 ? FALSE : TRUE)
+#define STATUS_LED_ON           digitalWrite(PIN_STATUS_LED, LOW)
+#define STATUS_LED_OFF          digitalWrite(PIN_STATUS_LED, HIGH);
+#define IS_STATUS_LED_ON        (digitalRead(PIN_STATUS_LED) == 1 ? FALSE : TRUE)
 
-//#define STARTING               digitalWrite(PIN_START, HIGH);
-//#define NOTSTARTING            digitalWrite(PIN_START, LOW);
-#define STARTING
-#define NOTSTARTING
+#define TPS_WOT                 IOExpander.write(PIN_TPSWOT, 1);
+#define TPS_NOTWOT              IOExpander.write(PIN_TPSWOT, 0);
 
-//#define TPS_WOT                digitalWrite(PIN_TPSWOT, HIGH);
-//#define TPS_NOTWOT             digitalWrite(PIN_TPSWOT, LOW);
-#define TPS_WOT
-#define TPS_NOTWOT
+#define TPS_IDLE                IOExpander.write(PIN_TPSIDLE, 1);
+#define TPS_NOTIDLE             IOExpander.write(PIN_TPSIDLE, 0);
 
-//#define TPS_IDLE               digitalWrite(PIN_TPSIDLE, HIGH);
-//#define TPS_NOTIDLE            digitalWrite(PIN_TPSIDLE, LOW);
-#define TPS_IDLE
-#define TPS_NOTIDLE
+#define TPS_ACCEL1_ASSERT       IOExpander.write(PIN_TPSACCEL1, 1);
+#define TPS_ACCEL1_DEASSERT     IOExpander.write(PIN_TPSACCEL1, 0);
 
-//#define TPS_ACCEL1_ASSERT      digitalWrite(PIN_TPSACCEL1, HIGH);
-//#define TPS_ACCEL1_DEASSERT    digitalWrite(PIN_TPSACCEL1, LOW);
-#define TPS_ACCEL1_ASSERT
-#define TPS_ACCEL1_DEASSERT
+#define TPS_ACCEL2_ASSERT       IOExpander.write(PIN_TPSACCEL2, 1);
+#define TPS_ACCEL2_DEASSERT     IOExpander.write(PIN_TPSACCEL2, 0);
 
-//#define TPS_ACCEL2_ASSERT      digitalWrite(PIN_TPSACCEL2, HIGH);
-//#define TPS_ACCEL2_DEASSERT    digitalWrite(PIN_TPSACCEL2, LOW);
-#define TPS_ACCEL2_ASSERT
-#define TPS_ACCEL2_DEASSERT
-
-#define AIRTEMPCS_DEASSERT      digitalWrite(PIN_AIRTEMPCS, HIGH);
+#define AIRTEMPCS_DEASSERT      digitalWrite(PIN_AIRTEMPCS,      HIGH);
 #define COOLANTTEMPCS1_DEASSERT digitalWrite(PIN_COOLANTTEMPCS1, HIGH);
 #define COOLANTTEMPCS2_DEASSERT digitalWrite(PIN_COOLANTTEMPCS2, HIGH);
+#define IOCS_DEASSERT           digitalWrite(PIN_IOCS,           HIGH);
 
 #define TRIGGERGROUP1_HIGH (PORT_TRIGGERGROUP1 &= ~(1 << PIN_TRIGGERGROUP1))
 #define TRIGGERGROUP1_LOW  (PORT_TRIGGERGROUP1 |=  (1 << PIN_TRIGGERGROUP1))
@@ -108,13 +101,6 @@ using namespace icecave::arduino;
 // time between turning the status LED on or off in milliseconds
 #define LED_FLASH_PERIOD_ENGINEOFF 1000
 #define LED_FLASH_PERIOD_ENGINEON  250
-
-// resistance of wiper
-// obtained by trial and error
-#define DIGITAL_POT_WIPER_R_COOLANT 233
-
-// number of bits of resolution for digital pot
-#define DIGITAL_POT_RESOLUTION 128
 
 // macro to check if engine is on
 #define IS_ENGINE_ON (EngineSpeed > 0)
@@ -156,10 +142,10 @@ static int CoolantTempF;
 static int ThrottlePosition;                               // %
 static throttledirection_t ThrottleDirection;
 static int Pressure;                                       // manifold, inHg
-// source: https://github.com/jmalloc/arduino-mcp4xxx
 static MCP4XXX *AirTempPot;
 static MCP4XXX *CoolantTempPot1;
 static MCP4XXX *CoolantTempPot2;
+static KMP_MCP23S08 IOExpander(PIN_IOCS);
 static int PulseAngle;
 static unsigned long LEDTimestamp;
 static volatile unsigned int PGCounter;
@@ -893,13 +879,44 @@ void Engine_Test
   void
   )
 {
-  static int Wiper = 0;
+  static int call = 0;
+  byte b;
 
-  CoolantTempPot1->set(Wiper);
-  CoolantTempPot2->set(0);
-  Serial_printf("Coolant temp 2 wiper=%d", Wiper);
+  b = IOExpander.getPullup();
+  Serial_printf("pu=%2.2X", b);
 
-  Wiper++;
+  switch (call)
+  {
+    case 0:
+      TPS_NOTWOT;
+      TPS_NOTIDLE;
+      TPS_ACCEL1_DEASSERT;
+      TPS_ACCEL2_DEASSERT;
+      Serial_printf("WOT low, idle low, ac1 low, ac2 low");
+      break;
+
+    case 1:
+      TPS_WOT;
+      Serial_printf("WOT high");
+      break;
+
+    case 2:
+      TPS_IDLE;
+      Serial_printf("Idle high");
+      break;
+
+    case 3:
+      TPS_ACCEL1_ASSERT;
+      Serial_printf("Ac1 high");
+      break;
+
+    case 4:
+      TPS_ACCEL2_ASSERT;
+      Serial_printf("Ac2 high");
+      break; 
+  }
+
+   call++;
 }
 
 // sets the air temperature
@@ -1148,13 +1165,24 @@ void Engine_Init
   COOLANTTEMPCS1_DEASSERT;
   pinMode(PIN_COOLANTTEMPCS2, OUTPUT);
   COOLANTTEMPCS2_DEASSERT;
- 
+  pinMode(PIN_IOCS,           OUTPUT);
+  IOCS_DEASSERT;
+
   AirTempSensor_Init();
   CoolantTempSensor_Init();
 
   AirTempPot      = new MCP4XXX(PIN_AIRTEMPCS, icecave::arduino::MCP4XXX::pot_0, icecave::arduino::MCP4XXX::res_7bit);
   CoolantTempPot1 = new MCP4XXX(PIN_COOLANTTEMPCS1, icecave::arduino::MCP4XXX::pot_0, icecave::arduino::MCP4XXX::res_7bit);
   CoolantTempPot2 = new MCP4XXX(PIN_COOLANTTEMPCS2, icecave::arduino::MCP4XXX::pot_0, icecave::arduino::MCP4XXX::res_7bit);
+
+  //IOExpander.begin();
+  IOExpander.pinMode(PIN_TPSACCEL2, OUTPUT);
+  IOExpander.pinMode(PIN_TPSACCEL1, OUTPUT);
+  IOExpander.pinMode(PIN_TPSIDLE,   OUTPUT);
+  IOExpander.pinMode(PIN_TPSWOT,    OUTPUT);
+  IOExpander.pinMode(PIN_START,     INPUT);
+  IOExpander.pinMode(PIN_FUELPUMP,  INPUT);
+  IOExpander.setPullup((1 << PIN_TPSACCEL2) | (1 << PIN_TPSACCEL1) | (1 << PIN_TPSIDLE) | (1 << PIN_TPSWOT));
 
   // set up pulse generator
   Timer1.initialize(0);
