@@ -64,12 +64,12 @@ namespace DJetronicECUTester
             ThrottlePositionInput.Text = CurrentStatus.Throttle.ToString();
             DwellAngleInput.Text = CurrentStatus.DwellAngle.ToString();
 
-            if (CurrentStatus.Pressure != CurrentPressure)
+            /*if (CurrentStatus.Pressure != CurrentPressure)
             {
                 string Msg = string.Format("Change vacuum to {0}inHg", CurrentStatus.Pressure);
                 MessageBox.Show(Msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CurrentPressure = CurrentStatus.Pressure;
-            }
+            }*/
         }
 
         /// <summary>

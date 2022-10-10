@@ -111,6 +111,9 @@ using namespace icecave::arduino;
 // resolution of pulse generator timer in microseconds
 #define PG_TIMER_PERIOD_US 1000
 
+// time between samples of the ecu outputs, in milliseconds
+#define ECU_OUTPUT_PERIOD_MS 500
+
 // defines an acceleration enrichment state
 typedef struct _enrichment
 {
@@ -158,6 +161,7 @@ static unsigned int G3Off;
 static unsigned int G4On;
 static unsigned int G4Off;
 static unsigned int FiringPeriod;
+static unsigned long ECUOutputsSampleTimestamp;
 
 // this table represents the fingers inside the throttle
 // position sensor. As the throttle is increased the
@@ -879,14 +883,14 @@ void Engine_Test
   void
   )
 {
-  static uint32_t a = 100, b = 200, c = 300, d = 400;
+  /*static uint32_t a = 100, b = 200, c = 300, d = 400;
 
   Serial_SendPulseWidths2(a, b, c, d);
 
   a += 100;
   b += 100;
   c += 100;
-  d += 100;
+  d += 100;*/
 
   /*static int call = 0;
 
@@ -1048,6 +1052,7 @@ void Engine_SetThrottle
       while (!IsTimeExpired(Timestamp + THROTTLE_STEP_TIME_MS))
       {
         Serial_Process();
+        Engine_Process();
       }
 
       Serial_SendThrottle(Throttle);
@@ -1180,14 +1185,6 @@ void Engine_Init
   TRIGGERGROUP3_HIGH;
   DIR_TRIGGERGROUP4 |= (1 << PIN_TRIGGERGROUP4);
   TRIGGERGROUP4_HIGH;
-  //pinMode(PIN_TPSWOT,        OUTPUT);
-  //TPS_NOTWOT;
-  //pinMode(PIN_TPSIDLE,       OUTPUT);
-  //TPS_NOTIDLE;
-  //pinMode(PIN_TPSACCEL1,     OUTPUT);
-  //TPS_ACCEL1_DEASSERT;
-  //pinMode(PIN_TPSACCEL2,     OUTPUT);
-  //TPS_ACCEL2_DEASSERT;
   pinMode(PIN_AIRTEMPCS,     OUTPUT);
   AIRTEMPCS_DEASSERT;
   pinMode(PIN_COOLANTTEMPCS1, OUTPUT);
@@ -1204,7 +1201,6 @@ void Engine_Init
   CoolantTempPot1 = new MCP4XXX(PIN_COOLANTTEMPCS1, icecave::arduino::MCP4XXX::pot_0, icecave::arduino::MCP4XXX::res_7bit);
   CoolantTempPot2 = new MCP4XXX(PIN_COOLANTTEMPCS2, icecave::arduino::MCP4XXX::pot_0, icecave::arduino::MCP4XXX::res_7bit);
 
-  //IOExpander.begin();
   IOExpander.pinMode(PIN_TPSACCEL2, OUTPUT);
   IOExpander.pinMode(PIN_TPSACCEL1, OUTPUT);
   IOExpander.pinMode(PIN_TPSIDLE,   OUTPUT);
@@ -1222,10 +1218,13 @@ void Engine_Init
 
   ThrottlePosition = 0;
 
+  randomSeed(analogRead(6));
+
   Engine_Off();
   Engine_SetAirTempF(DEFAULT_AIRTEMPF);
 
   LEDTimestamp = GetTime() + LED_FLASH_PERIOD_ENGINEOFF;
+  ECUOutputsSampleTimestamp = GetTime() + ECU_OUTPUT_PERIOD_MS;
 }
 
 // call repeatedly to implement the engine simulation
@@ -1234,6 +1233,11 @@ void Engine_Process
   void
   )
 {
+  uint32_t Width_I;
+  uint32_t Width_II;
+  uint32_t Width_III;
+  uint32_t Width_IV;
+
   // flash status LED to show we are alive
   if (IsTimeExpired(LEDTimestamp))
   {
@@ -1254,5 +1258,21 @@ void Engine_Process
     {
       LEDTimestamp = GetTime() + LED_FLASH_PERIOD_ENGINEOFF;
     }
+  }
+
+  // sample ecu outputs
+  if (IsTimeExpired(ECUOutputsSampleTimestamp))
+  {
+    // fixme - read outputs
+    Width_I = random(9000, 10000);
+    Width_II = random(9000, 10000);
+    Width_III = random(9000, 10000);
+    Width_IV = random(9000, 10000);
+
+    Serial_SendPulseWidths2(Width_I, Width_II, Width_III, Width_IV);
+    Serial_SendStartOutput(false);
+    Serial_SendFuelPumpOutput(false);
+
+    ECUOutputsSampleTimestamp = GetTime() + ECU_OUTPUT_PERIOD_MS;
   }
 }

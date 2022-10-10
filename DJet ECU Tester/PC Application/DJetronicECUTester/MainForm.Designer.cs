@@ -61,6 +61,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.OutputPage = new System.Windows.Forms.TabPage();
+            this.EngineTestBtn = new System.Windows.Forms.Button();
             this.OutputBox = new System.Windows.Forms.TextBox();
             this.cartesianChart1 = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
             this.TesterInfoBox = new System.Windows.Forms.TextBox();
@@ -84,7 +85,8 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.CopyInfoBtn = new System.Windows.Forms.Button();
             this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
-            this.EngineTestBtn = new System.Windows.Forms.Button();
+            this.PressureValue = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -430,6 +432,17 @@
             this.OutputPage.Text = "Tester Debug Output";
             this.OutputPage.UseVisualStyleBackColor = true;
             // 
+            // EngineTestBtn
+            // 
+            this.EngineTestBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.EngineTestBtn.Location = new System.Drawing.Point(8, 311);
+            this.EngineTestBtn.Name = "EngineTestBtn";
+            this.EngineTestBtn.Size = new System.Drawing.Size(75, 23);
+            this.EngineTestBtn.TabIndex = 1;
+            this.EngineTestBtn.Text = "Debug Test";
+            this.EngineTestBtn.UseVisualStyleBackColor = true;
+            this.EngineTestBtn.Click += new System.EventHandler(this.EngineTestBtn_Click);
+            // 
             // OutputBox
             // 
             this.OutputBox.Location = new System.Drawing.Point(3, 3);
@@ -620,9 +633,9 @@
             // 
             this.CopyInfoBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CopyInfoBtn.Image = global::DJetronicECUTester.Properties.Resources.copy;
-            this.CopyInfoBtn.Location = new System.Drawing.Point(952, 66);
+            this.CopyInfoBtn.Location = new System.Drawing.Point(867, 5);
             this.CopyInfoBtn.Name = "CopyInfoBtn";
-            this.CopyInfoBtn.Size = new System.Drawing.Size(23, 23);
+            this.CopyInfoBtn.Size = new System.Drawing.Size(30, 30);
             this.CopyInfoBtn.TabIndex = 8;
             this.toolTip1.SetToolTip(this.CopyInfoBtn, "Copy to clipboard");
             this.CopyInfoBtn.UseVisualStyleBackColor = true;
@@ -631,6 +644,9 @@
             // TesterInfoBoxPanel
             // 
             this.TesterInfoBoxPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(81)))), ((int)(((byte)(0)))));
+            this.TesterInfoBoxPanel.Controls.Add(this.label13);
+            this.TesterInfoBoxPanel.Controls.Add(this.PressureValue);
+            this.TesterInfoBoxPanel.Controls.Add(this.CopyInfoBtn);
             this.TesterInfoBoxPanel.Controls.Add(this.TesterInfoBox);
             this.TesterInfoBoxPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.TesterInfoBoxPanel.Location = new System.Drawing.Point(0, 63);
@@ -639,16 +655,28 @@
             this.TesterInfoBoxPanel.Size = new System.Drawing.Size(979, 38);
             this.TesterInfoBoxPanel.TabIndex = 9;
             // 
-            // EngineTestBtn
+            // PressureValue
             // 
-            this.EngineTestBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.EngineTestBtn.Location = new System.Drawing.Point(8, 311);
-            this.EngineTestBtn.Name = "EngineTestBtn";
-            this.EngineTestBtn.Size = new System.Drawing.Size(75, 23);
-            this.EngineTestBtn.TabIndex = 1;
-            this.EngineTestBtn.Text = "Debug Test";
-            this.EngineTestBtn.UseVisualStyleBackColor = true;
-            this.EngineTestBtn.Click += new System.EventHandler(this.EngineTestBtn_Click);
+            this.PressureValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.PressureValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PressureValue.ForeColor = System.Drawing.Color.White;
+            this.PressureValue.Location = new System.Drawing.Point(898, 2);
+            this.PressureValue.Name = "PressureValue";
+            this.PressureValue.Size = new System.Drawing.Size(54, 29);
+            this.PressureValue.TabIndex = 9;
+            this.PressureValue.Text = "15";
+            this.PressureValue.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(946, 19);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(29, 13);
+            this.label13.TabIndex = 10;
+            this.label13.Text = "inHg";
             // 
             // MainForm
             // 
@@ -657,7 +685,6 @@
             this.ClientSize = new System.Drawing.Size(979, 662);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.TesterInfoBoxPanel);
-            this.Controls.Add(this.CopyInfoBtn);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -747,6 +774,8 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox EngineSpeedInput;
         private System.Windows.Forms.Button EngineTestBtn;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label PressureValue;
     }
 }
 
