@@ -16,10 +16,10 @@ namespace DJetronicECUTester
         public UInt32 DwellAngle;
         public bool FuelPumpOn;
         public bool ColdStartOn;
-        public UInt32 PulseWidth_I;
-        public UInt32 PulseWidth_II;
-        public UInt32 PulseWidth_III;
-        public UInt32 PulseWidth_IV;
+        public UInt32 PulseWidth_I;     // us
+        public UInt32 PulseWidth_II;    // us
+        public UInt32 PulseWidth_III;   // us
+        public UInt32 PulseWidth_IV;    // us
         public UInt32 Pressure;
     };
 }

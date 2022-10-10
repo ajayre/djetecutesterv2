@@ -12,6 +12,7 @@ namespace DJetronicECUTester
     {
         private ArduinoSession Session = null;
         private ISerialConnection Connection = null;
+        private Status CurrentStatus = new Status();
 
         private const byte SysExStart = 0xF0;
         private const byte SysExEnd = 0xF7;
@@ -46,7 +47,11 @@ namespace DJetronicECUTester
             SetThrottle = 0x0E,
             SetPulseAngle = 0x0F,
             CurrentStatus = 0x10,
-            EngineTest = 0x11
+            EngineTest = 0x11,
+            CurrentThrottle = 0x12,
+            CurrentStartOutput = 0x13,
+            CurrentFuelPumpOutput = 0x14,
+            CurrentPulseWidths = 0x15
         }
 
         public delegate void OnConnectedHandler(object sender, string PortName, int Baudrate, int MajorVersion, int MinorVersion);
@@ -296,7 +301,6 @@ namespace DJetronicECUTester
 
                 if ((Buffer[0] == (byte)MessageIds.CurrentStatus) && (Buffer.Length == 49))
                 {
-                    Status CurrentStatus = new Status();
                     CurrentStatus.EngineSpeed = (uint)BitConverter.ToInt32(Buffer, 1);
                     CurrentStatus.CoolantTemperature = (int)BitConverter.ToInt32(Buffer, 5);
                     CurrentStatus.AirTemperature = (int)BitConverter.ToInt32(Buffer, 9);
@@ -310,6 +314,41 @@ namespace DJetronicECUTester
                     CurrentStatus.PulseWidth_IV = (uint)BitConverter.ToInt32(Buffer, 41);
                     CurrentStatus.Pressure = (uint)BitConverter.ToInt32(Buffer, 45);
 
+                    if (OnReceivedStatus != null)
+                    {
+                        OnReceivedStatus(this, CurrentStatus);
+                    }
+                }
+                else if ((Buffer[0] == (byte)MessageIds.CurrentThrottle) && (Buffer.Length == 2))
+                {
+                    CurrentStatus.Throttle = (uint)Buffer[1];
+                    if (OnReceivedStatus != null)
+                    {
+                        OnReceivedStatus(this, CurrentStatus);
+                    }
+                }
+                else if ((Buffer[0] == (byte)MessageIds.CurrentStartOutput) && (Buffer.Length == 2))
+                {
+                    CurrentStatus.ColdStartOn = Buffer[1] > 0 ? true : false;
+                    if (OnReceivedStatus != null)
+                    {
+                        OnReceivedStatus(this, CurrentStatus);
+                    }
+                }
+                else if ((Buffer[0] == (byte)MessageIds.CurrentFuelPumpOutput) && (Buffer.Length == 2))
+                {
+                    CurrentStatus.FuelPumpOn = Buffer[1] > 0 ? true : false;
+                    if (OnReceivedStatus != null)
+                    {
+                        OnReceivedStatus(this, CurrentStatus);
+                    }
+                }
+                else if ((Buffer[0] == (byte)MessageIds.CurrentPulseWidths) && (Buffer.Length == 17))
+                {
+                    CurrentStatus.PulseWidth_I = (uint)BitConverter.ToInt32(Buffer, 1);
+                    CurrentStatus.PulseWidth_II = (uint)BitConverter.ToInt32(Buffer, 5);
+                    CurrentStatus.PulseWidth_III = (uint)BitConverter.ToInt32(Buffer, 9);
+                    CurrentStatus.PulseWidth_IV = (uint)BitConverter.ToInt32(Buffer, 13);
                     if (OnReceivedStatus != null)
                     {
                         OnReceivedStatus(this, CurrentStatus);

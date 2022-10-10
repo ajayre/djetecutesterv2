@@ -27,7 +27,11 @@ typedef enum _messageids_t
   SetThrottle = 0x0E,
   SetPulseAngle = 0x0F,
   CurrentStatus = 0x10,
-  EngineTest = 0x11
+  EngineTest = 0x11,
+  CurrentThrottle = 0x12,
+  CurrentStartOutput = 0x13,
+  CurrentFuelPumpOutput = 0x14,
+  CurrentPulseWidths = 0x15
 } messageids_t;
 
 typedef struct _status_t
@@ -243,19 +247,68 @@ void Serial_SendThrottle
   int Throttle   // throttle position as a percentage
   )
 {
-  int EngineSpeed;
-  int CoolantTemp;
-  int ThrottlePos;
-  throttledirection_t ThrottleDirection;
-  int Pressure;
-  int AirTemp;
-  int PulseAngle;
+  byte Buffer[1];
 
-  Engine_Get(&EngineSpeed, &CoolantTemp, &ThrottlePos, &ThrottleDirection, &Pressure,
-    &AirTemp, &PulseAngle);
+  Buffer[0] = Throttle & 0xFF;
+  Firmata.sendSysex(CurrentThrottle, 1, Buffer);
+}
 
-  SendStatus(EngineSpeed, CoolantTemp, Throttle, ThrottleDirection, Pressure,
-    AirTemp, PulseAngle);
+// sends the start output state
+void Serial_SendStartOutput
+  (
+  bool StartOutput   // start output, high = on
+  )
+{
+  byte Buffer[1];
+
+  Buffer[0] = (byte)StartOutput & 0xFF;
+  Firmata.sendSysex(CurrentStartOutput, 1, Buffer);
+}
+
+// sends the fuel pump output state
+void Serial_SendFuelPumpOutput
+  (
+  bool FuelPumpOutput   // fuel pump output, high = on
+  )
+{
+  byte Buffer[1];
+
+  Buffer[0] = (byte)FuelPumpOutput & 0xFF;
+  Firmata.sendSysex(CurrentFuelPumpOutput, 1, Buffer);
+}
+
+// sends the latest pulse width measurements
+void Serial_SendPulseWidths2
+  (
+  uint32_t Width_I,    // pulse width in us, group I
+  uint32_t Width_II,   // pulse width in us, group II
+  uint32_t Width_III,  // pulse width in us, group III
+  uint32_t Width_IV    // pulse width in us, group IV
+  )
+{
+  byte Buffer[16];
+
+  Buffer[0] = Width_I & 0xFF;
+  Buffer[1] = (Width_I >> 8) & 0xFF;
+  Buffer[2] = (Width_I >> 16) & 0xFF;
+  Buffer[3] = (Width_I >> 24) & 0xFF;
+
+  Buffer[4] = Width_II & 0xFF;
+  Buffer[5] = (Width_II >> 8) & 0xFF;
+  Buffer[6] = (Width_II >> 16) & 0xFF;
+  Buffer[7] = (Width_II >> 24) & 0xFF;
+
+  Buffer[8] = Width_III & 0xFF;
+  Buffer[9] = (Width_III >> 8) & 0xFF;
+  Buffer[10] = (Width_III >> 16) & 0xFF;
+  Buffer[11] = (Width_III >> 24) & 0xFF;
+
+  Buffer[12] = Width_IV & 0xFF;
+  Buffer[13] = (Width_IV >> 8) & 0xFF;
+  Buffer[14] = (Width_IV >> 16) & 0xFF;
+  Buffer[15] = (Width_IV >> 24) & 0xFF;
+
+  Firmata.sendSysex(CurrentPulseWidths, 16, Buffer);
 }
 
 // sends the current status

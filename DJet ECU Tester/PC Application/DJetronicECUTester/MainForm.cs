@@ -50,8 +50,8 @@ namespace DJetronicECUTester
                 CurrentStatus.AirTemperature, CurrentStatus.CoolantTemperature, CurrentStatus.EngineSpeed, CurrentStatus.Throttle,
                 CurrentStatus.DwellAngle, CurrentStatus.Pressure, CurrentStatus.FuelPumpOn ? "on" : "off", CurrentStatus.ColdStartOn ? "on" : "off");
 
-            StatusText += Environment.NewLine + string.Format("Pulse widths I={0}ms II={1}ms III={2}ms IV={0}ms",
-                CurrentStatus.PulseWidth_I, CurrentStatus.PulseWidth_II, CurrentStatus.PulseWidth_III, CurrentStatus.PulseWidth_IV);
+            StatusText += Environment.NewLine + string.Format("Pulse widths I={0:N2}ms II={1:N2}ms III={2:N2}ms IV={3:N2}ms",
+                CurrentStatus.PulseWidth_I / 1000.0, CurrentStatus.PulseWidth_II / 1000.0, CurrentStatus.PulseWidth_III / 1000.0, CurrentStatus.PulseWidth_IV / 1000.0);
 
             if (Tester.IsConnected)
             {

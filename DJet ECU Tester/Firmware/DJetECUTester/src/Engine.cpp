@@ -879,7 +879,36 @@ void Engine_Test
   void
   )
 {
-  static int call = 0;
+  static uint32_t a = 100, b = 200, c = 300, d = 400;
+
+  Serial_SendPulseWidths2(a, b, c, d);
+
+  a += 100;
+  b += 100;
+  c += 100;
+  d += 100;
+
+  /*static int call = 0;
+
+  switch (call)
+  {
+    case 0:
+      Serial_SendStartOutput(false);
+      Serial_SendFuelPumpOutput(false);
+      break;
+
+    case 1:
+      Serial_SendStartOutput(true);
+      break;
+
+    case 2:
+      Serial_SendFuelPumpOutput(true);
+      break;
+  }
+
+  call++;*/
+
+  /*static int call = 0;
   byte b;
 
   b = IOExpander.getPullup();
@@ -916,7 +945,7 @@ void Engine_Test
       break; 
   }
 
-   call++;
+   call++;*/
 }
 
 // sets the air temperature
