@@ -1298,7 +1298,8 @@ namespace Solid.Arduino
                                 break;
 
                             default:
-                                throw new NotImplementedException();
+                                // ignore
+                                break;
                         }
 
                         x += 2;

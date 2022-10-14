@@ -299,7 +299,7 @@ namespace DJetronicECUTester
             {
                 byte[] Buffer = eventArgs.Value.Value as byte[];
 
-                if ((Buffer[0] == (byte)MessageIds.CurrentStatus) && (Buffer.Length == 49))
+                if ((Buffer[0] == (byte)MessageIds.CurrentStatus) && (Buffer.Length == 33))
                 {
                     CurrentStatus.EngineSpeed = (uint)BitConverter.ToInt32(Buffer, 1);
                     CurrentStatus.CoolantTemperature = (int)BitConverter.ToInt32(Buffer, 5);
@@ -308,11 +308,7 @@ namespace DJetronicECUTester
                     CurrentStatus.DwellAngle = (uint)BitConverter.ToInt32(Buffer, 17);
                     CurrentStatus.FuelPumpOn = (uint)BitConverter.ToInt32(Buffer, 21) > 0 ? true : false;
                     CurrentStatus.ColdStartOn = (uint)BitConverter.ToInt32(Buffer, 25) > 0 ? true : false;
-                    CurrentStatus.PulseWidth_I = (uint)BitConverter.ToInt32(Buffer, 29);
-                    CurrentStatus.PulseWidth_II = (uint)BitConverter.ToInt32(Buffer, 33);
-                    CurrentStatus.PulseWidth_III = (uint)BitConverter.ToInt32(Buffer, 37);
-                    CurrentStatus.PulseWidth_IV = (uint)BitConverter.ToInt32(Buffer, 41);
-                    CurrentStatus.Pressure = (uint)BitConverter.ToInt32(Buffer, 45);
+                    CurrentStatus.Pressure = (uint)BitConverter.ToInt32(Buffer, 29);
 
                     if (OnReceivedStatus != null)
                     {
@@ -343,12 +339,12 @@ namespace DJetronicECUTester
                         OnReceivedStatus(this, CurrentStatus);
                     }
                 }
-                else if ((Buffer[0] == (byte)MessageIds.CurrentPulseWidths) && (Buffer.Length == 17))
+                else if ((Buffer[0] == (byte)MessageIds.CurrentPulseWidths) && (Buffer.Length == 9))
                 {
-                    CurrentStatus.PulseWidth_I = (uint)BitConverter.ToInt32(Buffer, 1);
-                    CurrentStatus.PulseWidth_II = (uint)BitConverter.ToInt32(Buffer, 5);
-                    CurrentStatus.PulseWidth_III = (uint)BitConverter.ToInt32(Buffer, 9);
-                    CurrentStatus.PulseWidth_IV = (uint)BitConverter.ToInt32(Buffer, 13);
+                    CurrentStatus.PulseWidth_I = (UInt16)BitConverter.ToInt16(Buffer, 1);
+                    CurrentStatus.PulseWidth_II = (UInt16)BitConverter.ToInt16(Buffer, 3);
+                    CurrentStatus.PulseWidth_III = (UInt16)BitConverter.ToInt16(Buffer, 5);
+                    CurrentStatus.PulseWidth_IV = (UInt16)BitConverter.ToInt16(Buffer, 7);
                     if (OnReceivedStatus != null)
                     {
                         OnReceivedStatus(this, CurrentStatus);

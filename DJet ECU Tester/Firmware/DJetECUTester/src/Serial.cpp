@@ -43,10 +43,6 @@ typedef struct _status_t
   uint32_t PulseAngle;
   uint32_t FuelPumpOn;
   uint32_t ColdStartOn;
-  uint32_t PulseWidth_I;
-  uint32_t PulseWidth_II;
-  uint32_t PulseWidth_III;
-  uint32_t PulseWidth_IV;
   uint32_t Pressure;
 } status_t __attribute__ ((aligned (1)));
 
@@ -183,10 +179,6 @@ static void SendStatus
   Status.Throttle = ThrottlePos;
   Status.ColdStartOn = 0;
   Status.FuelPumpOn = 0;
-  Status.PulseWidth_I = 0;
-  Status.PulseWidth_II = 0;
-  Status.PulseWidth_III = 0;
-  Status.PulseWidth_IV = 0;
   Status.Pressure = Pressure;
   Firmata.sendSysex(CurrentStatus, sizeof(status_t), (byte *)&Status);
 }
@@ -280,35 +272,31 @@ void Serial_SendFuelPumpOutput
 // sends the latest pulse width measurements
 void Serial_SendPulseWidths2
   (
-  uint32_t Width_I,    // pulse width in us, group I
-  uint32_t Width_II,   // pulse width in us, group II
-  uint32_t Width_III,  // pulse width in us, group III
-  uint32_t Width_IV    // pulse width in us, group IV
+  uint16_t Width_I,    // pulse width in us, group I
+  uint16_t Width_II,   // pulse width in us, group II
+  uint16_t Width_III,  // pulse width in us, group III
+  uint16_t Width_IV    // pulse width in us, group IV
   )
 {
   byte Buffer[16];
 
   Buffer[0] = Width_I & 0xFF;
   Buffer[1] = (Width_I >> 8) & 0xFF;
-  Buffer[2] = (Width_I >> 16) & 0xFF;
-  Buffer[3] = (Width_I >> 24) & 0xFF;
 
-  Buffer[4] = Width_II & 0xFF;
-  Buffer[5] = (Width_II >> 8) & 0xFF;
-  Buffer[6] = (Width_II >> 16) & 0xFF;
-  Buffer[7] = (Width_II >> 24) & 0xFF;
+  Buffer[2] = Width_II & 0xFF;
+  Buffer[3] = (Width_II >> 8) & 0xFF;
 
-  Buffer[8] = Width_III & 0xFF;
-  Buffer[9] = (Width_III >> 8) & 0xFF;
-  Buffer[10] = (Width_III >> 16) & 0xFF;
-  Buffer[11] = (Width_III >> 24) & 0xFF;
+  Buffer[4] = Width_III & 0xFF;
+  Buffer[5] = (Width_III >> 8) & 0xFF;
 
-  Buffer[12] = Width_IV & 0xFF;
-  Buffer[13] = (Width_IV >> 8) & 0xFF;
-  Buffer[14] = (Width_IV >> 16) & 0xFF;
-  Buffer[15] = (Width_IV >> 24) & 0xFF;
+  Buffer[6] = Width_IV & 0xFF;
+  Buffer[7] = (Width_IV >> 8) & 0xFF;
 
-  Firmata.sendSysex(CurrentPulseWidths, 16, Buffer);
+  //Serial_printf("%2.2X %2.2X", (byte)(Width_IV & 0xFF), (byte)((Width_IV >> 8) & 0xFF));
+
+  //Serial_printf("%2.2X %2.2X %2.2X %2.2X", Buffer[12], Buffer[13], Buffer[14], Buffer[15]);
+
+  Firmata.sendSysex(CurrentPulseWidths, 8, Buffer);
 }
 
 // sends the current status

@@ -44,10 +44,10 @@ extern void Serial_SendFuelPumpOutput
 // sends the latest pulse width measurements
 extern void Serial_SendPulseWidths2
   (
-  uint32_t Width_I,    // pulse width in ms, group I
-  uint32_t Width_II,   // pulse width in ms, group II
-  uint32_t Width_III,  // pulse width in ms, group III
-  uint32_t Width_IV    // pulse width in ms, group IV
+  uint16_t Width_I,    // pulse width in ms, group I
+  uint16_t Width_II,   // pulse width in ms, group II
+  uint16_t Width_III,  // pulse width in ms, group III
+  uint16_t Width_IV    // pulse width in ms, group IV
   );
 
 // func: debug_printf

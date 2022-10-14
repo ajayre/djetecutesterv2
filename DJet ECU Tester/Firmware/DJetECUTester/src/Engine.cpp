@@ -46,14 +46,19 @@ using namespace icecave::arduino;
 #define PIN_START     6
 #define PIN_FUELPUMP  7
 
+#define PIN_INJECTOR_I   2
+#define PIN_INJECTOR_II  7
+#define PIN_INJECTOR_III 4
+#define PIN_INJECTOR_IV  14
+
 #define PORT_TRIGGERGROUP1 PORTB
 #define PORT_TRIGGERGROUP2 PORTD
 #define PORT_TRIGGERGROUP3 PORTD
 #define PORT_TRIGGERGROUP4 PORTD
 
 #define PIN_TRIGGERGROUP1 1
-#define PIN_TRIGGERGROUP2 5
-#define PIN_TRIGGERGROUP3 6
+#define PIN_TRIGGERGROUP2 6
+#define PIN_TRIGGERGROUP3 5
 #define PIN_TRIGGERGROUP4 3
 
 #define DIR_TRIGGERGROUP1 DDRB
@@ -162,6 +167,9 @@ static unsigned int G4On;
 static unsigned int G4Off;
 static unsigned int FiringPeriod;
 static unsigned long ECUOutputsSampleTimestamp;
+static bool PulseState_I = false, PulseState_II = false, PulseState_III = false, PulseState_IV = false;
+static unsigned long PulseStart_I, PulseStart_II, PulseStart_III, PulseStart_IV;
+static uint16_t Width_I, Width_II, Width_III, Width_IV;
 
 // this table represents the fingers inside the throttle
 // position sensor. As the throttle is increased the
@@ -1227,17 +1235,46 @@ void Engine_Init
   ECUOutputsSampleTimestamp = GetTime() + ECU_OUTPUT_PERIOD_MS;
 }
 
+static void MeasurePulse
+  (
+  bool *pPulseState,
+  unsigned long *pPulseStart,
+  uint8_t Pin,
+  uint16_t *pWidth
+  )
+{
+  uint16_t Measurement;
+
+  if (!*pPulseState)
+  {
+    if (!digitalRead(Pin))
+    {
+      *pPulseStart = micros();
+      *pPulseState = true;
+    }
+  }
+  else
+  {
+    if (digitalRead(Pin))
+    {
+      *pPulseState = false;
+      Measurement = micros() - *pPulseStart;
+      // ignore pulses that are too short - they will be
+      // the oscillation when the signal is rising
+      if (Measurement > 1500)
+      {
+        *pWidth = Measurement;
+      }
+    }
+  }
+}
+
 // call repeatedly to implement the engine simulation
 void Engine_Process
   (
   void
   )
 {
-  uint32_t Width_I;
-  uint32_t Width_II;
-  uint32_t Width_III;
-  uint32_t Width_IV;
-
   // flash status LED to show we are alive
   if (IsTimeExpired(LEDTimestamp))
   {
@@ -1260,15 +1297,14 @@ void Engine_Process
     }
   }
 
+  MeasurePulse(&PulseState_I,   &PulseStart_I,   PIN_INJECTOR_I,   &Width_I);
+  MeasurePulse(&PulseState_II,  &PulseStart_II,  PIN_INJECTOR_II,  &Width_II);
+  MeasurePulse(&PulseState_III, &PulseStart_III, PIN_INJECTOR_III, &Width_III);
+  MeasurePulse(&PulseState_IV,  &PulseStart_IV,  PIN_INJECTOR_IV,  &Width_IV);
+
   // sample ecu outputs
   if (IsTimeExpired(ECUOutputsSampleTimestamp))
   {
-    // fixme - read outputs
-    Width_I = random(9000, 10000);
-    Width_II = random(9000, 10000);
-    Width_III = random(9000, 10000);
-    Width_IV = random(9000, 10000);
-
     Serial_SendPulseWidths2(Width_I, Width_II, Width_III, Width_IV);
     Serial_SendStartOutput(false);
     Serial_SendFuelPumpOutput(false);

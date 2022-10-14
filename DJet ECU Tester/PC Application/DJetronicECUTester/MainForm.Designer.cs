@@ -60,7 +60,7 @@
             this.TestPage = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.OutputPage = new System.Windows.Forms.TabPage();
+            this.DebugOutputPage = new System.Windows.Forms.TabPage();
             this.EngineTestBtn = new System.Windows.Forms.Button();
             this.OutputBox = new System.Windows.Forms.TextBox();
             this.cartesianChart1 = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
@@ -85,8 +85,9 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.CopyInfoBtn = new System.Windows.Forms.Button();
             this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
-            this.PressureValue = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.PressureValue = new System.Windows.Forms.Label();
+            this.DocumentationPage = new System.Windows.Forms.TabPage();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -97,7 +98,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.TestPage.SuspendLayout();
-            this.OutputPage.SuspendLayout();
+            this.DebugOutputPage.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.TesterInfoBoxPanel.SuspendLayout();
@@ -153,7 +154,8 @@
             this.Tabs.Controls.Add(this.StaticPage);
             this.Tabs.Controls.Add(this.DynamicPage);
             this.Tabs.Controls.Add(this.TestPage);
-            this.Tabs.Controls.Add(this.OutputPage);
+            this.Tabs.Controls.Add(this.DebugOutputPage);
+            this.Tabs.Controls.Add(this.DocumentationPage);
             this.Tabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Tabs.Location = new System.Drawing.Point(0, 0);
             this.Tabs.Name = "Tabs";
@@ -420,17 +422,17 @@
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // OutputPage
+            // DebugOutputPage
             // 
-            this.OutputPage.Controls.Add(this.EngineTestBtn);
-            this.OutputPage.Controls.Add(this.OutputBox);
-            this.OutputPage.Location = new System.Drawing.Point(4, 22);
-            this.OutputPage.Name = "OutputPage";
-            this.OutputPage.Padding = new System.Windows.Forms.Padding(3);
-            this.OutputPage.Size = new System.Drawing.Size(971, 340);
-            this.OutputPage.TabIndex = 3;
-            this.OutputPage.Text = "Tester Debug Output";
-            this.OutputPage.UseVisualStyleBackColor = true;
+            this.DebugOutputPage.Controls.Add(this.EngineTestBtn);
+            this.DebugOutputPage.Controls.Add(this.OutputBox);
+            this.DebugOutputPage.Location = new System.Drawing.Point(4, 22);
+            this.DebugOutputPage.Name = "DebugOutputPage";
+            this.DebugOutputPage.Padding = new System.Windows.Forms.Padding(3);
+            this.DebugOutputPage.Size = new System.Drawing.Size(971, 340);
+            this.DebugOutputPage.TabIndex = 3;
+            this.DebugOutputPage.Text = "Tester Debug Output";
+            this.DebugOutputPage.UseVisualStyleBackColor = true;
             // 
             // EngineTestBtn
             // 
@@ -655,6 +657,17 @@
             this.TesterInfoBoxPanel.Size = new System.Drawing.Size(979, 38);
             this.TesterInfoBoxPanel.TabIndex = 9;
             // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(946, 19);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(29, 13);
+            this.label13.TabIndex = 10;
+            this.label13.Text = "inHg";
+            // 
             // PressureValue
             // 
             this.PressureValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -667,16 +680,15 @@
             this.PressureValue.Text = "15";
             this.PressureValue.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // label13
+            // DocumentationPage
             // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.AutoSize = true;
-            this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(946, 19);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(29, 13);
-            this.label13.TabIndex = 10;
-            this.label13.Text = "inHg";
+            this.DocumentationPage.Location = new System.Drawing.Point(4, 22);
+            this.DocumentationPage.Name = "DocumentationPage";
+            this.DocumentationPage.Padding = new System.Windows.Forms.Padding(3);
+            this.DocumentationPage.Size = new System.Drawing.Size(971, 340);
+            this.DocumentationPage.TabIndex = 4;
+            this.DocumentationPage.Text = "Documentation";
+            this.DocumentationPage.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -705,8 +717,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.TestPage.ResumeLayout(false);
-            this.OutputPage.ResumeLayout(false);
-            this.OutputPage.PerformLayout();
+            this.DebugOutputPage.ResumeLayout(false);
+            this.DebugOutputPage.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -750,7 +762,7 @@
         private System.Windows.Forms.ToolStripMenuItem stopRecordingPulseWidthsToolStripMenuItem;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TabPage OutputPage;
+        private System.Windows.Forms.TabPage DebugOutputPage;
         private System.Windows.Forms.Panel TesterInfoBoxPanel;
         private LiveChartsCore.SkiaSharpView.WinForms.CartesianChart cartesianChart1;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -776,6 +788,7 @@
         private System.Windows.Forms.Button EngineTestBtn;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label PressureValue;
+        private System.Windows.Forms.TabPage DocumentationPage;
     }
 }
 

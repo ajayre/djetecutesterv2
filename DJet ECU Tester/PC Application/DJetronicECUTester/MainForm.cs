@@ -16,7 +16,7 @@ namespace DJetronicECUTester
         private ECUTester Tester = new ECUTester();
 
         private Color Orange = Color.FromArgb(202, 81, 0);
-        private uint CurrentPressure = 0;
+        private bool FirstStatus = true;
 
         public MainForm()
         {
@@ -29,6 +29,11 @@ namespace DJetronicECUTester
 
             ConnectionStatus.Text = "Not connected";
             TesterInfoBox.Text = "";
+
+            // if not debug build then hide debug user interface
+#if !DEBUG
+            Tabs.TabPages.Remove(DebugOutputPage);
+#endif
 
             UpdateUI();
         }
@@ -50,19 +55,29 @@ namespace DJetronicECUTester
                 CurrentStatus.AirTemperature, CurrentStatus.CoolantTemperature, CurrentStatus.EngineSpeed, CurrentStatus.Throttle,
                 CurrentStatus.DwellAngle, CurrentStatus.Pressure, CurrentStatus.FuelPumpOn ? "on" : "off", CurrentStatus.ColdStartOn ? "on" : "off");
 
-            StatusText += Environment.NewLine + string.Format("Pulse widths I={0:N2}ms II={1:N2}ms III={2:N2}ms IV={3:N2}ms",
-                CurrentStatus.PulseWidth_I / 1000.0, CurrentStatus.PulseWidth_II / 1000.0, CurrentStatus.PulseWidth_III / 1000.0, CurrentStatus.PulseWidth_IV / 1000.0);
+            UInt32 AveragePulseWidth = (UInt32)((CurrentStatus.PulseWidth_I + CurrentStatus.PulseWidth_II + CurrentStatus.PulseWidth_III + CurrentStatus.PulseWidth_IV) / 4.0);
+
+            StatusText += Environment.NewLine + string.Format("Pulse widths I={0:N2}ms II={1:N2}ms III={2:N2}ms IV={3:N2}ms Ave={4:N2}ms",
+                CurrentStatus.PulseWidth_I / 1000.0, CurrentStatus.PulseWidth_II / 1000.0, CurrentStatus.PulseWidth_III / 1000.0, CurrentStatus.PulseWidth_IV / 1000.0,
+                AveragePulseWidth / 1000.0);
+
+            PressureValue.Text = CurrentStatus.Pressure.ToString();
 
             if (Tester.IsConnected)
             {
                 TesterInfoBox.Text = StatusText;
             }
 
-            AirTempInput.Text = CurrentStatus.AirTemperature.ToString();
-            CoolantTempInput.Text = CurrentStatus.CoolantTemperature.ToString();
-            EngineSpeedInput.Text = CurrentStatus.EngineSpeed.ToString();
-            ThrottlePositionInput.Text = CurrentStatus.Throttle.ToString();
-            DwellAngleInput.Text = CurrentStatus.DwellAngle.ToString();
+            if (FirstStatus)
+            {
+                AirTempInput.Text = CurrentStatus.AirTemperature.ToString();
+                CoolantTempInput.Text = CurrentStatus.CoolantTemperature.ToString();
+                EngineSpeedInput.Text = CurrentStatus.EngineSpeed.ToString();
+                ThrottlePositionInput.Text = CurrentStatus.Throttle.ToString();
+                DwellAngleInput.Text = CurrentStatus.DwellAngle.ToString();
+
+                FirstStatus = false;
+            }
 
             /*if (CurrentStatus.Pressure != CurrentPressure)
             {
@@ -156,7 +171,16 @@ namespace DJetronicECUTester
             DisconnectBtn.Enabled = Tester.IsConnected;
             disconnectToolStripMenuItem.Enabled = Tester.IsConnected;
             CopyInfoBtn.Enabled = Tester.IsConnected;
-            Tabs.Enabled = Tester.IsConnected;
+
+            foreach (TabPage Page in Tabs.TabPages)
+            {
+                if (Page == DocumentationPage) continue;
+
+                foreach (Control Ctl in Page.Controls)
+                {
+                    Ctl.Enabled = Tester.IsConnected;
+                }
+            }
 
             if (Tester.IsConnected)
             {
