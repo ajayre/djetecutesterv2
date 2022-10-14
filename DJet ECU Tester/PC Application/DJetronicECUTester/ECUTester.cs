@@ -24,7 +24,7 @@ namespace DJetronicECUTester
         private const int MAX_COOLANT_TEMP_F = 101;
         private const int MIN_AIR_TEMP_F = -21;
         private const int MAX_AIR_TEMP_F = 32;
-        private const int MIN_ENGINE_SPEED_RPM = 500;
+        private const int MIN_ENGINE_SPEED_RPM = 50;
         private const int MAX_ENGINE_SPEED_RPM = 6500;
         private const int MIN_PULSE_ANGLE_DEG = 100;
         private const int MAX_PULSE_ANGLE_DEG = 190;

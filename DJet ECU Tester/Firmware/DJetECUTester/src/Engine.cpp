@@ -91,6 +91,9 @@ using namespace icecave::arduino;
 #define COOLANTTEMPCS2_DEASSERT digitalWrite(PIN_COOLANTTEMPCS2, HIGH);
 #define IOCS_DEASSERT           digitalWrite(PIN_IOCS,           HIGH);
 
+#define START_ACTIVE            IOExpander.read(PIN_START)
+#define FUEL_PUMP_ACTIVE        !IOExpander.read(PIN_FUELPUMP)
+
 #define TRIGGERGROUP1_HIGH (PORT_TRIGGERGROUP1 &= ~(1 << PIN_TRIGGERGROUP1))
 #define TRIGGERGROUP1_LOW  (PORT_TRIGGERGROUP1 |=  (1 << PIN_TRIGGERGROUP1))
 #define TRIGGERGROUP2_HIGH (PORT_TRIGGERGROUP2 &= ~(1 << PIN_TRIGGERGROUP2))
@@ -111,7 +114,7 @@ using namespace icecave::arduino;
 #define IS_ENGINE_ON (EngineSpeed > 0)
 
 // number of milliseconds between 1% increase in throttle
-#define THROTTLE_STEP_TIME_MS 20
+#define THROTTLE_STEP_TIME_MS 3
 
 // resolution of pulse generator timer in microseconds
 #define PG_TIMER_PERIOD_US 1000
@@ -634,11 +637,11 @@ static void UpdatePulseGeneratorTriggers
 // generates idle and WOT switch states
 static void UpdateThrottleSwitches
   (
-  int ThrottlePos                                          // throttle position 0% -> 100%
+  int ThrottlePos                                          // throttle position 0 -> 1000 (0.0% -> 100.0%)
   )
 {
   // idle switch
-  if (ThrottlePos <= 2)
+  if (ThrottlePos <= 20)
   {
     TPS_IDLE;
   }
@@ -648,7 +651,7 @@ static void UpdateThrottleSwitches
   }
 
   // wide open throttle switch
-  if (ThrottlePos >= 81)
+  if (ThrottlePos >= 810)
   {
     TPS_WOT;
   }
@@ -662,19 +665,18 @@ static void UpdateThrottleSwitches
 // https://www.sw-em.com/bosch_d-jetronic_injection.htm#reference_information_tps
 static void UpdateThrottleEnrichment
   (
-  int ThrottlePos                                          // throttle position 0% -> 100%
+  int ThrottlePos                                          // throttle position 0 -> 1000 (0.0% -> 100.0%)
   )
 {
-  // adjust throttle position for calculation, avoids the need for floating point
-  int T10 = ThrottlePos * 10;
-  if (T10 < 0)    T10 = 0;
-  if (T10 > 1000) T10 = 1000;
+  if (ThrottlePos < 0)    ThrottlePos = 0;
+  if (ThrottlePos > 1000) ThrottlePos = 1000;
 
   // search for current enrichment setting
   int NumEnrichmentPos = sizeof(Enrichment) / sizeof(enrichment_t);
+
   for (int e = 0; e < NumEnrichmentPos; e++)
   {
-    if ((T10 >= Enrichment[e].ThrottleLow) && (T10 <= Enrichment[e].ThrottleHigh))
+    if ((ThrottlePos >= Enrichment[e].ThrottleLow) && (ThrottlePos <= Enrichment[e].ThrottleHigh))
     {
       if (Enrichment[e].Accel1State == ASSERT)
       {
@@ -1034,7 +1036,7 @@ void Engine_SetThrottle
       UpdateThrottleEnrichment(NewThrottlePosition);
     }
 
-    UpdateThrottleSwitches(NewThrottlePosition);
+    UpdateThrottleSwitches(NewThrottlePosition * 10);
     return;
   }
 
@@ -1050,8 +1052,8 @@ void Engine_SetThrottle
 
   if (ThrottleDirection == THROTTLE_ACCELERATING)
   {
-    // increase throttle 1% at a time to generate all of the enrichment pulses
-    for (Throttle = ThrottlePosition; Throttle <= NewThrottlePosition; Throttle++)
+    // increase throttle 0.1% at a time to generate all of the enrichment pulses
+    for (Throttle = ThrottlePosition * 10; Throttle <= NewThrottlePosition * 10; Throttle++)
     {
       UpdateThrottleSwitches(Throttle);
       UpdateThrottleEnrichment(Throttle);
@@ -1063,7 +1065,7 @@ void Engine_SetThrottle
         Engine_Process();
       }
 
-      Serial_SendThrottle(Throttle);
+      Serial_SendThrottle(Throttle / 10);
       Serial_Process();
     }
   }
@@ -1073,7 +1075,7 @@ void Engine_SetThrottle
     TPS_ACCEL1_DEASSERT;
     TPS_ACCEL2_DEASSERT;
 
-    UpdateThrottleSwitches(NewThrottlePosition);
+    UpdateThrottleSwitches(NewThrottlePosition * 10);
 
     // back to starting condition for enrichment
     if (NewThrottlePosition == 0)
@@ -1260,7 +1262,7 @@ static void MeasurePulse
       *pPulseState = false;
       Measurement = micros() - *pPulseStart;
       // ignore pulses that are too short - they will be
-      // the oscillation when the signal is rising
+      // the overshoot when the signal is rising
       if (Measurement > 1500)
       {
         *pWidth = Measurement;
@@ -1293,6 +1295,7 @@ void Engine_Process
     }
     else
     {
+      Width_I = Width_II = Width_III = Width_IV = 0;
       LEDTimestamp = GetTime() + LED_FLASH_PERIOD_ENGINEOFF;
     }
   }
@@ -1306,8 +1309,8 @@ void Engine_Process
   if (IsTimeExpired(ECUOutputsSampleTimestamp))
   {
     Serial_SendPulseWidths2(Width_I, Width_II, Width_III, Width_IV);
-    Serial_SendStartOutput(false);
-    Serial_SendFuelPumpOutput(false);
+    Serial_SendStartOutput(START_ACTIVE);
+    Serial_SendFuelPumpOutput(FUEL_PUMP_ACTIVE);
 
     ECUOutputsSampleTimestamp = GetTime() + ECU_OUTPUT_PERIOD_MS;
   }
