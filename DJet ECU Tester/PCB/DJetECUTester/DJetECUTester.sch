@@ -1457,4 +1457,36 @@ Wire Wire Line
 	1400 3900 1700 3900
 Wire Wire Line
 	3400 3900 3100 3900
+Wire Wire Line
+	5400 4900 4700 4900
+Wire Wire Line
+	4700 4900 4700 5000
+Connection ~ 5400 4900
+$Comp
+L power:GND #PWR077
+U 1 1 634D17F4
+P 4700 5750
+AR Path="/634D17F4" Ref="#PWR077"  Part="1" 
+AR Path="/60479334/634D17F4" Ref="#PWR?"  Part="1" 
+F 0 "#PWR077" H 4700 5500 50  0001 C CNN
+F 1 "GND" H 4705 5577 50  0000 C CNN
+F 2 "" H 4700 5750 50  0001 C CNN
+F 3 "" H 4700 5750 50  0001 C CNN
+	1    4700 5750
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4700 5750 4700 5500
+NoConn ~ 4400 5200
+$Comp
+L BritishIdeas:Fan_3pin M1
+U 1 1 63504226
+P 4700 5200
+F 0 "M1" H 4858 5196 50  0000 L CNN
+F 1 "Fan_3pin" H 4858 5105 50  0000 L CNN
+F 2 "Connector:FanPinHeader_1x03_P2.54mm_Vertical" H 4700 5110 50  0001 C CNN
+F 3 "http://www.hardwarecanucks.com/forum/attachments/new-builds/16287d1330775095-help-chassis-power-fan-connectors-motherboard-asus_p8z68.jpg" H 4700 5110 50  0001 C CNN
+	1    4700 5200
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
