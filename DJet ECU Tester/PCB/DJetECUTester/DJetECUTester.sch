@@ -1292,40 +1292,12 @@ Wire Wire Line
 Connection ~ 9150 1950
 Wire Wire Line
 	9150 1950 9150 2100
-$Comp
-L Connector_Generic:Conn_01x01 J7
-U 1 1 63367628
-P 9400 2400
-F 0 "J7" V 9500 2450 50  0000 R CNN
-F 1 "Conn_01x01" V 9273 2312 50  0001 R CNN
-F 2 "Britishideas:tabconnector-63849-1" H 9400 2400 50  0001 C CNN
-F 3 "~" H 9400 2400 50  0001 C CNN
-F 4 "63849-1" V 9400 2400 50  0001 C CNN "manf#"
-	1    9400 2400
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Connector_Generic:Conn_01x01 J8
-U 1 1 63367D5E
-P 9600 2400
-F 0 "J8" V 9700 2450 50  0000 R CNN
-F 1 "Conn_01x01" V 9473 2312 50  0001 R CNN
-F 2 "Britishideas:tabconnector-63849-1" H 9600 2400 50  0001 C CNN
-F 3 "~" H 9600 2400 50  0001 C CNN
-F 4 "63849-1" V 9600 2400 50  0001 C CNN "manf#"
-	1    9600 2400
-	0    -1   -1   0   
-$EndComp
 Wire Wire Line
 	9150 2600 9400 2600
 Connection ~ 9150 2600
 Wire Wire Line
-	9600 2600 10000 2600
-Wire Wire Line
 	10000 2600 10000 2800
 Connection ~ 10000 2800
-Text Notes 9250 2250 0    50   ~ 0
-ECU power switch
 Text Label 10150 2600 0    50   ~ 0
 ECU_PWR
 Wire Wire Line
@@ -1486,7 +1458,22 @@ F 0 "M1" H 4858 5196 50  0000 L CNN
 F 1 "Fan_3pin" H 4858 5105 50  0000 L CNN
 F 2 "Connector:FanPinHeader_1x03_P2.54mm_Vertical" H 4700 5110 50  0001 C CNN
 F 3 "http://www.hardwarecanucks.com/forum/attachments/new-builds/16287d1330775095-help-chassis-power-fan-connectors-motherboard-asus_p8z68.jpg" H 4700 5110 50  0001 C CNN
+F 4 "22-23-2031" H 4700 5200 50  0001 C CNN "manf#"
 	1    4700 5200
 	1    0    0    -1  
 $EndComp
+$Comp
+L Connector:Screw_Terminal_01x02 J7
+U 1 1 634C4439
+P 9400 2400
+F 0 "J7" V 9400 2150 50  0000 L CNN
+F 1 "ECU PWR SWITCH" V 9500 1950 50  0000 L CNN
+F 2 "Britishideas:PhoenixContact_COMBICON_MKDSN_2" H 9400 2400 50  0001 C CNN
+F 3 "~" H 9400 2400 50  0001 C CNN
+F 4 "1729018" H 9400 2400 50  0001 C CNN "manf#"
+	1    9400 2400
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	9500 2600 10000 2600
 $EndSCHEMATC
