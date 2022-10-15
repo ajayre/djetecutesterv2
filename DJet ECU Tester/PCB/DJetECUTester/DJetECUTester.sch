@@ -3,9 +3,9 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 6
+Sheet 1 7
 Title "D-Jetronic ECU Tester"
-Date "2022-10-14"
+Date "2022-10-15"
 Rev "2.1"
 Comp "(C) Britishideas 2021-2022"
 Comment1 ""
@@ -1175,7 +1175,6 @@ Wire Wire Line
 Text Label 4750 2300 0    50   ~ 0
 ~IO_CS
 NoConn ~ 4550 2400
-NoConn ~ 7450 4200
 NoConn ~ 7450 4300
 Text Label 4750 1900 0    50   ~ 0
 ~COOLANTTEMP2_CS
@@ -1230,37 +1229,6 @@ Wire Wire Line
 	7250 5600 7000 5600
 Wire Wire Line
 	7000 5600 7000 5750
-$Comp
-L Device:R R52
-U 1 1 632EA45C
-P 7850 5250
-F 0 "R52" V 8057 5250 50  0000 C CNN
-F 1 "10k" V 7966 5250 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 7780 5250 50  0001 C CNN
-F 3 "~" H 7850 5250 50  0001 C CNN
-	1    7850 5250
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Device:R R48
-U 1 1 632EA6C2
-P 7400 5250
-F 0 "R48" V 7607 5250 50  0000 C CNN
-F 1 "4k2" V 7516 5250 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric" V 7330 5250 50  0001 C CNN
-F 3 "~" H 7400 5250 50  0001 C CNN
-	1    7400 5250
-	0    -1   -1   0   
-$EndComp
-Wire Wire Line
-	8150 5250 8000 5250
-Wire Wire Line
-	7700 5250 7600 5250
-Wire Wire Line
-	7250 5250 7000 5250
-Wire Wire Line
-	7000 5250 7000 5600
-Connection ~ 7000 5600
 Text Label 7700 6250 0    50   ~ 0
 MCU_FUELPUMPRELAY-19
 Wire Wire Line
@@ -1270,15 +1238,6 @@ Wire Wire Line
 Connection ~ 7600 5600
 Wire Wire Line
 	7600 5600 7550 5600
-Text Label 7500 4900 2    50   ~ 0
-MCU_START-18
-Wire Wire Line
-	7500 4900 7600 4900
-Wire Wire Line
-	7600 4900 7600 5250
-Connection ~ 7600 5250
-Wire Wire Line
-	7600 5250 7550 5250
 Text Label 7550 3700 0    50   ~ 0
 MCU_START-18
 $Comp
@@ -1294,29 +1253,10 @@ F 3 "~" H 8300 5600 50  0001 C CNN
 	1    8300 5600
 	1    0    0    -1  
 $EndComp
-$Comp
-L Device:D D?
-U 1 1 633559ED
-P 8300 5250
-AR Path="/63357965/633559ED" Ref="D?"  Part="1" 
-AR Path="/633559ED" Ref="D9"  Part="1" 
-F 0 "D9" H 8300 5033 50  0000 C CNN
-F 1 "MBR0520LT1G" H 8300 5124 50  0000 C CNN
-F 2 "Britishideas:SOD-123" H 8300 5250 50  0001 C CNN
-F 3 "~" H 8300 5250 50  0001 C CNN
-	1    8300 5250
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	8000 5600 8150 5600
 Wire Wire Line
 	8450 5600 10100 5600
-Wire Wire Line
-	8700 5500 8700 5250
-Wire Wire Line
-	8700 5250 8450 5250
-Wire Wire Line
-	8700 5500 10100 5500
 $Comp
 L Connector:Barrel_Jack_Switch J4
 U 1 1 632D6A80
@@ -1486,6 +1426,7 @@ F 0 "R57" H 5470 5296 50  0000 L CNN
 F 1 "680" H 5470 5205 50  0000 L CNN
 F 2 "Resistor_SMD:R_1206_3216Metric" V 5330 5250 50  0001 C CNN
 F 3 "~" H 5400 5250 50  0001 C CNN
+F 4 "CRCW1206680RFKEAHP" H 5400 5250 50  0001 C CNN "manf#"
 	1    5400 5250
 	1    0    0    -1  
 $EndComp
@@ -1497,4 +1438,23 @@ Wire Wire Line
 	5400 5600 5400 5400
 Text Notes 5650 5300 0    50   ~ 0
 Acts like coil of FP relay
+Wire Wire Line
+	10100 5500 9900 5500
+NoConn ~ 7450 4200
+$Sheet
+S 1700 3800 1400 200 
+U 634E02FB
+F0 "ECU Inputs" 50
+F1 "ECU Inputs.sch" 50
+F2 "MCU_START-18" I L 1700 3900 50 
+F3 "ECU_START-18" O R 3100 3900 50 
+$EndSheet
+Text Label 1400 3900 2    50   ~ 0
+MCU_START-18
+Text Label 3400 3900 0    50   ~ 0
+ECU_START-18
+Wire Wire Line
+	1400 3900 1700 3900
+Wire Wire Line
+	3400 3900 3100 3900
 $EndSCHEMATC

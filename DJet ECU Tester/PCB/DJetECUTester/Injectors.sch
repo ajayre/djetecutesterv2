@@ -3,9 +3,9 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 6 6
+Sheet 6 7
 Title "D-Jetronic ECU Tester"
-Date "2022-10-14"
+Date "2022-10-15"
 Rev "2.1"
 Comp "(C) Britishideas 2021-2022"
 Comment1 ""
