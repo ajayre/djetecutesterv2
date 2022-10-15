@@ -1296,6 +1296,7 @@ void Engine_Process
     else
     {
       Width_I = Width_II = Width_III = Width_IV = 0;
+      Serial_SendFuelPumpOutput(false);
       LEDTimestamp = GetTime() + LED_FLASH_PERIOD_ENGINEOFF;
     }
   }
