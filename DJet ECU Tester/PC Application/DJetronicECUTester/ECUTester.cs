@@ -24,7 +24,7 @@ namespace DJetronicECUTester
         private const int MAX_COOLANT_TEMP_F = 101;
         private const int MIN_AIR_TEMP_F = -21;
         private const int MAX_AIR_TEMP_F = 32;
-        private const int MIN_ENGINE_SPEED_RPM = 50;
+        private const int MIN_ENGINE_SPEED_RPM = 0;
         private const int MAX_ENGINE_SPEED_RPM = 6500;
         private const int MIN_PULSE_ANGLE_DEG = 100;
         private const int MAX_PULSE_ANGLE_DEG = 190;
@@ -307,7 +307,7 @@ namespace DJetronicECUTester
                     CurrentStatus.Throttle = (uint)BitConverter.ToInt32(Buffer, 13);
                     CurrentStatus.DwellAngle = (uint)BitConverter.ToInt32(Buffer, 17);
                     CurrentStatus.FuelPumpOn = (uint)BitConverter.ToInt32(Buffer, 21) > 0 ? true : false;
-                    CurrentStatus.ColdStartOn = (uint)BitConverter.ToInt32(Buffer, 25) > 0 ? true : false;
+                    CurrentStatus.StartSignal = (uint)BitConverter.ToInt32(Buffer, 25) > 0 ? true : false;
                     CurrentStatus.Pressure = (uint)BitConverter.ToInt32(Buffer, 29);
 
                     if (OnReceivedStatus != null)
@@ -325,7 +325,7 @@ namespace DJetronicECUTester
                 }
                 else if ((Buffer[0] == (byte)MessageIds.CurrentStartOutput) && (Buffer.Length == 2))
                 {
-                    CurrentStatus.ColdStartOn = Buffer[1] > 0 ? true : false;
+                    CurrentStatus.StartSignal = Buffer[1] > 0 ? true : false;
                     if (OnReceivedStatus != null)
                     {
                         OnReceivedStatus(this, CurrentStatus);

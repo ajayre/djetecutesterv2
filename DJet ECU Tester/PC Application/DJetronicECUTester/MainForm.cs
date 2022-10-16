@@ -51,9 +51,9 @@ namespace DJetronicECUTester
                 return;
             }
 
-            string StatusText = string.Format("Air temp={0}°F, Coolant temp={1}°F, Eng speed={2}RPM, Throttle={3}% PG Angle={4}°, Vacuum={5}inHg, Fuel pump={6}, Cold start={7}",
+            string StatusText = string.Format("Air temp={0}°F, Coolant temp={1}°F, Eng speed={2}RPM, Throttle={3}% PG Angle={4}°, Vacuum={5}inHg, Fuel pump={6}, Start signal={7}",
                 CurrentStatus.AirTemperature, CurrentStatus.CoolantTemperature, CurrentStatus.EngineSpeed, CurrentStatus.Throttle,
-                CurrentStatus.DwellAngle, CurrentStatus.Pressure, CurrentStatus.FuelPumpOn ? "on" : "off", CurrentStatus.ColdStartOn ? "on" : "off");
+                CurrentStatus.DwellAngle, CurrentStatus.Pressure, CurrentStatus.FuelPumpOn ? "on" : "off", CurrentStatus.StartSignal ? "on" : "off");
 
             UInt32 AveragePulseWidth = (UInt32)((CurrentStatus.PulseWidth_I + CurrentStatus.PulseWidth_II + CurrentStatus.PulseWidth_III + CurrentStatus.PulseWidth_IV) / 4.0);
 
@@ -175,6 +175,7 @@ namespace DJetronicECUTester
             foreach (TabPage Page in Tabs.TabPages)
             {
                 if (Page == DocumentationPage) continue;
+                if (Page == DebugOutputPage) continue;
 
                 foreach (Control Ctl in Page.Controls)
                 {

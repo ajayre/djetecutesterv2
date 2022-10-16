@@ -632,6 +632,12 @@ static void UpdatePulseGeneratorTriggers
   G3Off = Group3End;
   G4On = Group4Start;
   G4Off = Group4End;
+
+  Serial_printf("G1On=%d G1Off=%d", G1On, G1Off);
+  Serial_printf("G2On=%d G2Off=%d", G2On, G2Off);
+  Serial_printf("G3On=%d G3Off=%d", G3On, G3Off);
+  Serial_printf("G4On=%d G4Off=%d", G4On, G4Off);
+  Serial_printf("Firing period=%d", FiringPeriod);
 }
 
 // generates idle and WOT switch states

@@ -15,7 +15,7 @@ namespace DJetronicECUTester
         public UInt32 Throttle;
         public UInt32 DwellAngle;
         public bool FuelPumpOn;
-        public bool ColdStartOn;
+        public bool StartSignal;
         public UInt16 PulseWidth_I;     // us
         public UInt16 PulseWidth_II;    // us
         public UInt16 PulseWidth_III;   // us
