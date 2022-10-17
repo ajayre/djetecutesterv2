@@ -837,7 +837,10 @@ static void MeasurePulse
   )
 {
 #if SIMULATE == 1
-  *pWidth = random(11100, 11900);
+  if (IS_ENGINE_ON)
+    *pWidth = random(11100, 11900);
+  else
+    *pWidth = 0;
 #else
   uint16_t Measurement;
 

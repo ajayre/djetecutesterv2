@@ -30,12 +30,28 @@ namespace DJetronicECUTester
             ConnectionStatus.Text = "Not connected";
             TesterInfoBox.Text = "";
 
-            // if not debug build then hide debug user interface
-#if !DEBUG
+#if DEBUG
+            Gallery.ImageFolder = Path.GetDirectoryName(Application.ExecutablePath) + @"\..\..\Documentation";
+#else
             Tabs.TabPages.Remove(DebugOutputPage);
+            Gallery.ImageFolder = Path.GetDirectoryName(Application.ExecutablePath);
 #endif
+            Gallery.OnShowImage += Gallery_OnShowImage;
 
             UpdateUI();
+        }
+
+        /// <summary>
+        /// Called when user wishes to view an image from the documentation
+        /// </summary>
+        /// <param name="sender">Gallery</param>
+        /// <param name="FileName">Path and name of image</param>
+        private void Gallery_OnShowImage(object sender, string FileName, Image image)
+        {
+            ImageViewerForm Viewer = new ImageViewerForm();
+            Viewer.DisplayImage = image;
+            Viewer.ImageTitle = Path.GetFileNameWithoutExtension(FileName);
+            Viewer.ShowDialog();
         }
 
         /// <summary>
@@ -169,6 +185,7 @@ namespace DJetronicECUTester
             {
                 if (Page == DocumentationPage) continue;
                 if (Page == DebugOutputPage) continue;
+                if (Page == DocumentationPage) continue;
 
                 foreach (Control Ctl in Page.Controls)
                 {
