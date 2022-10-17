@@ -51,7 +51,7 @@ namespace DJetronicECUTester
                 return;
             }
 
-            string StatusText = string.Format("Air temp={0}°F, Coolant temp={1}°F, Eng speed={2}RPM, Throttle={3}% PG Angle={4}°, Vacuum={5}inHg, Fuel pump={6}, Start signal={7}",
+            string StatusText = string.Format("Air temp={0}°F, Coolant temp={1}°F, Eng speed={2}RPM, Throttle={3}% PG Angle={4}°, Vacuum={5}inHg, Fuel pump={6}, Starter motor={7}",
                 CurrentStatus.AirTemperature, CurrentStatus.CoolantTemperature, CurrentStatus.EngineSpeed, CurrentStatus.Throttle,
                 CurrentStatus.DwellAngle, CurrentStatus.Pressure, CurrentStatus.FuelPumpOn ? "on" : "off", CurrentStatus.StartSignal ? "on" : "off");
 
@@ -78,13 +78,6 @@ namespace DJetronicECUTester
 
                 FirstStatus = false;
             }
-
-            /*if (CurrentStatus.Pressure != CurrentPressure)
-            {
-                string Msg = string.Format("Change vacuum to {0}inHg", CurrentStatus.Pressure);
-                MessageBox.Show(Msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CurrentPressure = CurrentStatus.Pressure;
-            }*/
         }
 
         /// <summary>
@@ -220,11 +213,22 @@ namespace DJetronicECUTester
             uint EngineSpeed = 1200;
             uint.TryParse(EngineSpeedInput.Text, out EngineSpeed);
 
+            if (StarterMotorInput.Checked && (EngineSpeed < 1 || EngineSpeed > 300))
+            {
+                DialogResult Result = MessageBox.Show("The engine speed does not match a running starter motor. Are you sure you wish to use these settings?",
+                    Application.ProductName, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (Result != DialogResult.OK)
+                {
+                    return;
+                }
+            }
+
             Tester.SetCoolantTemperature(CoolantTemp);
             Tester.SetAirTemperature(AirTemp);
             Tester.SetThrottle(ThrottlePosition);
             Tester.SetDwellAngle(DwellAngle);
             Tester.SetEngineSpeed(EngineSpeed);
+            Tester.SetStarterMotorState(StarterMotorInput.Checked);
         }
 
         /// <summary>
@@ -313,6 +317,7 @@ namespace DJetronicECUTester
             else if (Preset == "Gentle Acceleration") Tester.UsePreset_GentleAcceleration();
             else if (Preset == "Moderate Acceleration") Tester.UsePreset_ModerateAcceleration();
             else if (Preset == "Hard Acceleration") Tester.UsePreset_HardAcceleration();
+            else if (Preset == "Cranking (Unstable RPM)") Tester.UsePreset_UnstableCranking();
         }
 
         /// <summary>

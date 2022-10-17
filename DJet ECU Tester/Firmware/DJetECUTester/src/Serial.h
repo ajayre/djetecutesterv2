@@ -29,10 +29,10 @@ extern void Serial_SendThrottle
   int Throttle   // throttle position as a percentage
   );
 
-// sends the start output state
-extern void Serial_SendStartOutput
+// sends the starter motor state
+extern void Serial_SendStarterMotorState
   (
-  bool StartOutput   // start output, high = on
+  bool Running   // true = starter running
   );
 
 // sends the fuel pump output state

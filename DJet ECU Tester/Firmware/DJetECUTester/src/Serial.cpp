@@ -29,9 +29,11 @@ typedef enum _messageids_t
   CurrentStatus = 0x10,
   EngineTest = 0x11,
   CurrentThrottle = 0x12,
-  CurrentStartOutput = 0x13,
+  CurrentStarterMotorState = 0x13,
   CurrentFuelPumpOutput = 0x14,
-  CurrentPulseWidths = 0x15
+  CurrentPulseWidths = 0x15,
+  SetStarterMotor = 0x16,
+  UnstableCranking = 0x17
 } messageids_t;
 
 typedef struct _status_t
@@ -41,8 +43,6 @@ typedef struct _status_t
   int32_t AirTemperature;
   uint32_t Throttle;
   uint32_t PulseAngle;
-  uint32_t FuelPumpOn;
-  uint32_t ColdStartOn;
   uint32_t Pressure;
 } status_t __attribute__ ((aligned (1)));
 
@@ -54,6 +54,7 @@ static void sysexCallback(byte command, byte argc, byte *argv)
   int Throttle;
   int Speed;
   int Angle;
+  bool StarterMotorState;
 
   switch (command)
   {
@@ -87,6 +88,7 @@ static void sysexCallback(byte command, byte argc, byte *argv)
       break;
 
     case SetEngineSpeed:
+      Engine_DisableUnstableCrankingRPM();
       Speed = argv[0] | ((int)argv[1] << 8);
       Engine_SetEngineSpeed(Speed);
       Serial_printf("Set engine speed to %d RPM", Speed);
@@ -99,6 +101,12 @@ static void sysexCallback(byte command, byte argc, byte *argv)
       Serial_printf("Set pulse dwell angle to %d deg", Angle);
       Serial_SendStatus();
       break;
+
+    case SetStarterMotor:
+      StarterMotorState = (bool)argv[0];
+      Engine_SetStarterMotor(StarterMotorState);
+      Serial_printf("Set starter motor state to %s", StarterMotorState ? "on" : "off");
+      break;
     
     case EngineOff:
       Engine_Off();
@@ -107,8 +115,14 @@ static void sysexCallback(byte command, byte argc, byte *argv)
       break;
 
     case Cranking:
-      Engine_Cranking(300);
-      Serial_printf("Engine cranking at 300RPM");
+      Engine_Cranking();
+      Serial_printf("Engine cranking");
+      Serial_SendStatus();
+      break;
+
+    case UnstableCranking:
+      Engine_CrankingUnstableRPM();
+      Serial_printf("Engine cranking with unstable RPMs");
       Serial_SendStatus();
       break;
 
@@ -177,8 +191,6 @@ static void SendStatus
   Status.EngineSpeed = EngineSpeed;
   Status.PulseAngle = PulseAngle;
   Status.Throttle = ThrottlePos;
-  Status.ColdStartOn = 0;
-  Status.FuelPumpOn = 0;
   Status.Pressure = Pressure;
   Firmata.sendSysex(CurrentStatus, sizeof(status_t), (byte *)&Status);
 }
@@ -245,16 +257,16 @@ void Serial_SendThrottle
   Firmata.sendSysex(CurrentThrottle, 1, Buffer);
 }
 
-// sends the start output state
-void Serial_SendStartOutput
+// sends the starter motor state
+void Serial_SendStarterMotorState
   (
-  bool StartOutput   // start output, high = on
+  bool Running   // true = starter running
   )
 {
   byte Buffer[1];
 
-  Buffer[0] = (byte)StartOutput & 0xFF;
-  Firmata.sendSysex(CurrentStartOutput, 1, Buffer);
+  Buffer[0] = (byte)Running & 0xFF;
+  Firmata.sendSysex(CurrentStarterMotorState, 1, Buffer);
 }
 
 // sends the fuel pump output state

@@ -63,6 +63,12 @@ extern void Engine_SetManifoldPressure
   int NewPressure                                          // new pressure level in inHg
   );
 
+// sets the state of the starter motor
+extern void Engine_SetStarterMotor
+  (
+  bool Running  // true if starter is running
+  );
+
 // set new engine parameters
 extern void Engine_Set
   (
@@ -93,7 +99,13 @@ extern void Engine_Off
 // sets the engine to cranking
 extern void Engine_Cranking
   (
-  int EngineSpeed                                          // new speed in RPM
+  void
+  );
+
+// sets the engine to cranking with unstable RPMs
+extern void Engine_CrankingUnstableRPM
+  (
+  void
   );
 
 // sets the engine to cold idle state
@@ -140,6 +152,12 @@ extern void Engine_HardAcceleration
 
 // test function for debugging
 extern void Engine_Test
+  (
+  void
+  );
+
+// disables the unstable rpms for cranking
+extern void Engine_DisableUnstableCrankingRPM
   (
   void
   );

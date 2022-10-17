@@ -49,9 +49,11 @@ namespace DJetronicECUTester
             CurrentStatus = 0x10,
             EngineTest = 0x11,
             CurrentThrottle = 0x12,
-            CurrentStartOutput = 0x13,
+            CurrentStarterMotorState = 0x13,
             CurrentFuelPumpOutput = 0x14,
-            CurrentPulseWidths = 0x15
+            CurrentPulseWidths = 0x15,
+            SetStarterMotor = 0x16,
+            UnstableCranking = 0x17
         }
 
         public delegate void OnConnectedHandler(object sender, string PortName, int Baudrate, int MajorVersion, int MinorVersion);
@@ -223,6 +225,21 @@ namespace DJetronicECUTester
         }
 
         /// <summary>
+        /// Sets the starter motor state
+        /// </summary>
+        /// <param name="Running">true if starter is running</param>
+        public void SetStarterMotorState
+            (
+            bool Running
+            )
+        {
+            byte State = (byte)(Running ? 1 : 0);
+
+            byte[] Buffer = new byte[4] { SysExStart, (byte)MessageIds.SetStarterMotor, State, SysExEnd };
+            Connection.Write(Buffer, 0, 4);
+        }
+
+        /// <summary>
         /// Sends the engine test command
         /// Used for debugging
         /// </summary>
@@ -255,6 +272,10 @@ namespace DJetronicECUTester
         /// Sets engine to cranking
         /// </summary>
         public void UsePreset_Cranking() { UsePreset(MessageIds.Cranking); }
+        /// <summary>
+        /// Sets engine to cranking with unstable RPM
+        /// </summary>
+        public void UsePreset_UnstableCranking() { UsePreset(MessageIds.UnstableCranking); }
         /// <summary>
         /// Sets engine to cold idle
         /// </summary>
@@ -299,20 +320,21 @@ namespace DJetronicECUTester
             {
                 byte[] Buffer = eventArgs.Value.Value as byte[];
 
-                if ((Buffer[0] == (byte)MessageIds.CurrentStatus) && (Buffer.Length == 33))
+                if (Buffer[0] == (byte)MessageIds.CurrentStatus)
                 {
-                    CurrentStatus.EngineSpeed = (uint)BitConverter.ToInt32(Buffer, 1);
-                    CurrentStatus.CoolantTemperature = (int)BitConverter.ToInt32(Buffer, 5);
-                    CurrentStatus.AirTemperature = (int)BitConverter.ToInt32(Buffer, 9);
-                    CurrentStatus.Throttle = (uint)BitConverter.ToInt32(Buffer, 13);
-                    CurrentStatus.DwellAngle = (uint)BitConverter.ToInt32(Buffer, 17);
-                    CurrentStatus.FuelPumpOn = (uint)BitConverter.ToInt32(Buffer, 21) > 0 ? true : false;
-                    CurrentStatus.StartSignal = (uint)BitConverter.ToInt32(Buffer, 25) > 0 ? true : false;
-                    CurrentStatus.Pressure = (uint)BitConverter.ToInt32(Buffer, 29);
-
-                    if (OnReceivedStatus != null)
+                    if (Buffer.Length == 25)
                     {
-                        OnReceivedStatus(this, CurrentStatus);
+                        CurrentStatus.EngineSpeed = (uint)BitConverter.ToInt32(Buffer, 1);
+                        CurrentStatus.CoolantTemperature = (int)BitConverter.ToInt32(Buffer, 5);
+                        CurrentStatus.AirTemperature = (int)BitConverter.ToInt32(Buffer, 9);
+                        CurrentStatus.Throttle = (uint)BitConverter.ToInt32(Buffer, 13);
+                        CurrentStatus.DwellAngle = (uint)BitConverter.ToInt32(Buffer, 17);
+                        CurrentStatus.Pressure = (uint)BitConverter.ToInt32(Buffer, 21);
+
+                        if (OnReceivedStatus != null)
+                        {
+                            OnReceivedStatus(this, CurrentStatus);
+                        }
                     }
                 }
                 else if ((Buffer[0] == (byte)MessageIds.CurrentThrottle) && (Buffer.Length == 2))
@@ -323,7 +345,7 @@ namespace DJetronicECUTester
                         OnReceivedStatus(this, CurrentStatus);
                     }
                 }
-                else if ((Buffer[0] == (byte)MessageIds.CurrentStartOutput) && (Buffer.Length == 2))
+                else if ((Buffer[0] == (byte)MessageIds.CurrentStarterMotorState) && (Buffer.Length == 2))
                 {
                     CurrentStatus.StartSignal = Buffer[1] > 0 ? true : false;
                     if (OnReceivedStatus != null)

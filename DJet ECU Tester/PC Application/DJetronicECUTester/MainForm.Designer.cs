@@ -63,6 +63,7 @@
             this.DebugOutputPage = new System.Windows.Forms.TabPage();
             this.EngineTestBtn = new System.Windows.Forms.Button();
             this.OutputBox = new System.Windows.Forms.TextBox();
+            this.DocumentationPage = new System.Windows.Forms.TabPage();
             this.cartesianChart1 = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
             this.TesterInfoBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -87,7 +88,7 @@
             this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.PressureValue = new System.Windows.Forms.Label();
-            this.DocumentationPage = new System.Windows.Forms.TabPage();
+            this.StarterMotorInput = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -180,6 +181,7 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.StarterMotorInput);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.EngineSpeedInput);
@@ -369,6 +371,7 @@
             this.PresetSelector.Items.AddRange(new object[] {
             "Engine Off",
             "Cranking",
+            "Cranking (Unstable RPM)",
             "Cold Idle",
             "Hot Idle",
             "Cruise 30MPH",
@@ -453,6 +456,16 @@
             this.OutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.OutputBox.Size = new System.Drawing.Size(965, 302);
             this.OutputBox.TabIndex = 0;
+            // 
+            // DocumentationPage
+            // 
+            this.DocumentationPage.Location = new System.Drawing.Point(4, 22);
+            this.DocumentationPage.Name = "DocumentationPage";
+            this.DocumentationPage.Padding = new System.Windows.Forms.Padding(3);
+            this.DocumentationPage.Size = new System.Drawing.Size(971, 340);
+            this.DocumentationPage.TabIndex = 4;
+            this.DocumentationPage.Text = "Documentation";
+            this.DocumentationPage.UseVisualStyleBackColor = true;
             // 
             // cartesianChart1
             // 
@@ -680,15 +693,15 @@
             this.PressureValue.Text = "15";
             this.PressureValue.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // DocumentationPage
+            // StarterMotorInput
             // 
-            this.DocumentationPage.Location = new System.Drawing.Point(4, 22);
-            this.DocumentationPage.Name = "DocumentationPage";
-            this.DocumentationPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DocumentationPage.Size = new System.Drawing.Size(971, 340);
-            this.DocumentationPage.TabIndex = 4;
-            this.DocumentationPage.Text = "Documentation";
-            this.DocumentationPage.UseVisualStyleBackColor = true;
+            this.StarterMotorInput.AutoSize = true;
+            this.StarterMotorInput.Location = new System.Drawing.Point(429, 75);
+            this.StarterMotorInput.Name = "StarterMotorInput";
+            this.StarterMotorInput.Size = new System.Drawing.Size(130, 17);
+            this.StarterMotorInput.TabIndex = 17;
+            this.StarterMotorInput.Text = "Starter Motor Running";
+            this.StarterMotorInput.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -789,6 +802,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label PressureValue;
         private System.Windows.Forms.TabPage DocumentationPage;
+        private System.Windows.Forms.CheckBox StarterMotorInput;
     }
 }
 

@@ -14,6 +14,9 @@
 
 using namespace icecave::arduino;
 
+// define to 1 to simulate reporting of ECU data
+#define SIMULATE 1
+
 // special value to indicate no manifold pressure required
 #define NO_PRESSURE -1
 
@@ -30,6 +33,12 @@ using namespace icecave::arduino;
 
 // default pulse generator pulse angle in degrees of distributor rotation
 #define DEFAULT_PULSEANGLE 135
+
+// engine speed during cranking - taken from measurement of starter motor
+#define DEFAULT_CRANKING_RPM 215
+
+// time between changes in RPM during cranking
+#define CRANKING_RPM_CHANGE_PERIOD_MS 200
 
 // mcu pins
 #define PIN_STATUS_LED     A3  // PC3
@@ -91,7 +100,10 @@ using namespace icecave::arduino;
 #define COOLANTTEMPCS2_DEASSERT digitalWrite(PIN_COOLANTTEMPCS2, HIGH);
 #define IOCS_DEASSERT           digitalWrite(PIN_IOCS,           HIGH);
 
-#define START_ACTIVE            IOExpander.read(PIN_START)
+#define START_ASSERT            IOExpander.write(PIN_START, 1)
+#define START_DEASSERT          IOExpander.write(PIN_START, 1)
+#define START_STATE             IOExpander.read(PIN_START)
+
 #define FUEL_PUMP_ACTIVE        !IOExpander.read(PIN_FUELPUMP)
 
 #define TRIGGERGROUP1_HIGH (PORT_TRIGGERGROUP1 &= ~(1 << PIN_TRIGGERGROUP1))
@@ -173,6 +185,8 @@ static unsigned long ECUOutputsSampleTimestamp;
 static bool PulseState_I = false, PulseState_II = false, PulseState_III = false, PulseState_IV = false;
 static unsigned long PulseStart_I, PulseStart_II, PulseStart_III, PulseStart_IV;
 static uint16_t Width_I, Width_II, Width_III, Width_IV;
+static unsigned long CrankingUnstableRPMTimestamp;
+static bool UnstableCrankingRPM = false;
 
 // this table represents the fingers inside the throttle
 // position sensor. As the throttle is increased the
@@ -814,6 +828,44 @@ static void GetCoolantWiperForResistance
   }
 }
 
+static void MeasurePulse
+  (
+  bool *pPulseState,
+  unsigned long *pPulseStart,
+  uint8_t Pin,
+  uint16_t *pWidth
+  )
+{
+#if SIMULATE == 1
+  *pWidth = random(11100, 11900);
+#else
+  uint16_t Measurement;
+
+  if (!*pPulseState)
+  {
+    if (!digitalRead(Pin))
+    {
+      *pPulseStart = micros();
+      *pPulseState = true;
+    }
+  }
+  else
+  {
+    if (digitalRead(Pin))
+    {
+      *pPulseState = false;
+      Measurement = micros() - *pPulseStart;
+      // ignore pulses that are too short - they will be
+      // the overshoot when the signal is rising
+      if (Measurement > 1500)
+      {
+        *pWidth = Measurement;
+      }
+    }
+  }
+#endif
+}
+
 /////////////////////////////////////////////////////////////////////
 // PUBLIC FUNCTIONS
 
@@ -830,6 +882,8 @@ void Engine_Set
   Engine_SetCoolantTempF(CoolantTempF);
   Engine_SetThrottle(ThrottlePosition);
   Engine_SetManifoldPressure(Pressure);
+
+  UnstableCrankingRPM = false;
 }
 
 // get current engine parameters
@@ -865,6 +919,15 @@ void Engine_SetPulseAngle
 
   // update calculations for pulse generation
   Engine_SetEngineSpeed(EngineSpeed);
+}
+
+// disables the unstable rpms for cranking
+void Engine_DisableUnstableCrankingRPM
+  (
+  void
+  )
+{
+  UnstableCrankingRPM = false;
 }
 
 // sets the engine speed
@@ -1102,13 +1165,27 @@ void Engine_SetManifoldPressure
    Pressure = NewPressure;
 }
 
+// sets the state of the starter motor
+void Engine_SetStarterMotor
+  (
+  bool Running  // true if starter is running
+  )
+{
+  if (Running)
+    START_ASSERT;
+  else
+    START_DEASSERT;
+}
+
 // sets the engine to cold idle state
 void Engine_ColdIdle
   (
   void  
   )
 {
+  UnstableCrankingRPM = false;
   Engine_Set(1200, DEFAULT_AIRTEMPF, 0, 15);
+  START_DEASSERT;
 }
 
 // sets the engine to hot idle state
@@ -1117,7 +1194,9 @@ void Engine_HotIdle
   void  
   )
 {
+  UnstableCrankingRPM = false;
   Engine_Set(700, 185, 0, 15);
+  START_DEASSERT;
 }
 
 // sets the engine to cruising at 30 MPH
@@ -1126,8 +1205,9 @@ void Engine_Cruise30MPH
   void  
   )
 {
-
+  UnstableCrankingRPM = false;
   Engine_Set(1400, 185, 17, 11);
+  START_DEASSERT;
 }
 
 // sets the engine to cruising at 70 MPH
@@ -1136,7 +1216,9 @@ void Engine_Cruise70MPH
   void  
   )
 {
+  UnstableCrankingRPM = false;
   Engine_Set(3000, 185, 25, 11);
+  START_DEASSERT;
 }
 
 // sets the engine to gentle acceleration
@@ -1145,7 +1227,9 @@ void Engine_GentleAcceleration
   void  
   )
 {
+  UnstableCrankingRPM = false;
   Engine_Set(1800, 185, 30, 9);
+  START_DEASSERT;
 }
 
 // sets the engine to moderate acceleration
@@ -1154,7 +1238,9 @@ void Engine_ModerateAcceleration
   void  
   )
 {
+  UnstableCrankingRPM = false;
   Engine_Set(3500, 185, 50, 7);
+  START_DEASSERT;
 }
 
 // sets the engine to hard acceleration
@@ -1163,7 +1249,9 @@ void Engine_HardAcceleration
   void  
   )
 {
+  UnstableCrankingRPM = false;
   Engine_Set(6000, 185, 95, 2);
+  START_DEASSERT;
 }
 
 // turns the engine off
@@ -1172,16 +1260,32 @@ void Engine_Off
   void  
   )
 {
+  UnstableCrankingRPM = false;
   Engine_Set(0, DEFAULT_AIRTEMPF, 0, 0);
+  START_DEASSERT;
 }
 
-// sets the engine to cranking
+// sets the engine to cranking with stable RPMs
 void Engine_Cranking
   (
-  int EngineSpeed                                          // new speed in RPM
+  void
   )
 {
-  Engine_Set(EngineSpeed, DEFAULT_AIRTEMPF, 0, 0);
+  UnstableCrankingRPM = false;
+  Engine_Set(DEFAULT_CRANKING_RPM, DEFAULT_AIRTEMPF, 0, 0);
+  START_ASSERT;
+}
+
+// sets the engine to cranking with unstable RPMs
+void Engine_CrankingUnstableRPM
+  (
+  void
+  )
+{
+  Engine_Set(DEFAULT_CRANKING_RPM, DEFAULT_AIRTEMPF, 0, 0);
+  START_ASSERT;
+  UnstableCrankingRPM = true;
+  CrankingUnstableRPMTimestamp = GetTime() + CRANKING_RPM_CHANGE_PERIOD_MS;
 }
 
 // initializes engine simulation
@@ -1221,9 +1325,10 @@ void Engine_Init
   IOExpander.pinMode(PIN_TPSACCEL1, OUTPUT);
   IOExpander.pinMode(PIN_TPSIDLE,   OUTPUT);
   IOExpander.pinMode(PIN_TPSWOT,    OUTPUT);
-  IOExpander.pinMode(PIN_START,     INPUT);
+  IOExpander.pinMode(PIN_START,     OUTPUT);
   IOExpander.pinMode(PIN_FUELPUMP,  INPUT);
   IOExpander.setPullup((1 << PIN_TPSACCEL2) | (1 << PIN_TPSACCEL1) | (1 << PIN_TPSIDLE) | (1 << PIN_TPSWOT));
+  START_DEASSERT;
 
   // set up pulse generator
   Timer1.initialize(0);
@@ -1234,6 +1339,8 @@ void Engine_Init
 
   ThrottlePosition = 0;
 
+  UnstableCrankingRPM = false;
+
   randomSeed(analogRead(6));
 
   Engine_Off();
@@ -1241,40 +1348,7 @@ void Engine_Init
 
   LEDTimestamp = GetTime() + LED_FLASH_PERIOD_ENGINEOFF;
   ECUOutputsSampleTimestamp = GetTime() + ECU_OUTPUT_PERIOD_MS;
-}
-
-static void MeasurePulse
-  (
-  bool *pPulseState,
-  unsigned long *pPulseStart,
-  uint8_t Pin,
-  uint16_t *pWidth
-  )
-{
-  uint16_t Measurement;
-
-  if (!*pPulseState)
-  {
-    if (!digitalRead(Pin))
-    {
-      *pPulseStart = micros();
-      *pPulseState = true;
-    }
-  }
-  else
-  {
-    if (digitalRead(Pin))
-    {
-      *pPulseState = false;
-      Measurement = micros() - *pPulseStart;
-      // ignore pulses that are too short - they will be
-      // the overshoot when the signal is rising
-      if (Measurement > 1500)
-      {
-        *pWidth = Measurement;
-      }
-    }
-  }
+  CrankingUnstableRPMTimestamp = GetTime() + CRANKING_RPM_CHANGE_PERIOD_MS;
 }
 
 // call repeatedly to implement the engine simulation
@@ -1316,9 +1390,21 @@ void Engine_Process
   if (IsTimeExpired(ECUOutputsSampleTimestamp))
   {
     Serial_SendPulseWidths2(Width_I, Width_II, Width_III, Width_IV);
-    Serial_SendStartOutput(START_ACTIVE);
+    Serial_SendStarterMotorState(START_STATE);
     Serial_SendFuelPumpOutput(FUEL_PUMP_ACTIVE);
 
     ECUOutputsSampleTimestamp = GetTime() + ECU_OUTPUT_PERIOD_MS;
+  }
+
+  // time to change the RPM during cranking
+  if (UnstableCrankingRPM)
+  {
+    if (IsTimeExpired(CrankingUnstableRPMTimestamp))
+    {
+      Engine_SetEngineSpeed(random(DEFAULT_CRANKING_RPM - 10, DEFAULT_CRANKING_RPM + 10));
+      Serial_SendStatus();
+
+      CrankingUnstableRPMTimestamp = GetTime() + CRANKING_RPM_CHANGE_PERIOD_MS;
+    }
   }
 }
