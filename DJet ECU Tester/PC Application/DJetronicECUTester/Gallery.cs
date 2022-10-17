@@ -59,7 +59,7 @@ namespace DJetronicECUTester
 
             int Index = 0;
 
-            Size size = new Size(150, 150);
+            Size size = new Size(230, 230);
             int rows = 4;
             int columns = 4;
             int totalBoxes = rows * columns;
@@ -84,7 +84,8 @@ namespace DJetronicECUTester
                         SizeMode = PictureBoxSizeMode.Zoom,
                         Visible = true,
                         Image = Bitmap.FromFile(Images[Index]),
-                        Tag = Images[Index++]
+                        Tag = Images[Index++],
+                        Cursor = Cursors.Hand
                     };
                     this.Controls.Add(picture);
                     pictureBoxList.Add(picture);

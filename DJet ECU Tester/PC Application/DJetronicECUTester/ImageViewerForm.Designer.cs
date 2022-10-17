@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageViewerForm));
             this.Picture = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Title = new System.Windows.Forms.Label();
@@ -41,7 +42,7 @@
             this.Picture.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Picture.Location = new System.Drawing.Point(0, 30);
             this.Picture.Name = "Picture";
-            this.Picture.Size = new System.Drawing.Size(800, 420);
+            this.Picture.Size = new System.Drawing.Size(1027, 556);
             this.Picture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.Picture.TabIndex = 0;
             this.Picture.TabStop = false;
@@ -53,7 +54,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 30);
+            this.panel1.Size = new System.Drawing.Size(1027, 30);
             this.panel1.TabIndex = 1;
             // 
             // Title
@@ -69,9 +70,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1027, 586);
             this.Controls.Add(this.Picture);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ImageViewerForm";
             this.Text = "Image Viewer";
             ((System.ComponentModel.ISupportInitialize)(this.Picture)).EndInit();

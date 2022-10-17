@@ -346,5 +346,20 @@ namespace DJetronicECUTester
         {
             Tester.EngineTest();
         }
+
+        private void SpeedBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SpeedEnable_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void StarterEnable_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
