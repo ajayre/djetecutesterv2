@@ -1433,6 +1433,13 @@ void Engine_Process
   // run the dynamic test
   if (EngineDynamicTest.Running)
   {
+    if (IsTimeExpired(EngineDynamicTest.SendStatusTimestamp))
+    {
+      Serial_SendStatus();
+
+      EngineDynamicTest.SendStatusTimestamp = GetTime() + DYNAMIC_TEST_STATUS_PERIOD_MS;
+    }
+
     if (IsTimeExpired(EngineDynamicTest.Timestamp))
     {
       EngineDynamicTest.StepNumber++;
@@ -1444,13 +1451,12 @@ void Engine_Process
         //  EngineDynamicTest.SpeedStep / 10, (int)(EngineDynamicTest.StepNumber * EngineDynamicTest.SpeedStep));
       }
 
-      Serial_SendStatus();
-
       if (EngineDynamicTest.StepNumber == EngineDynamicTest.Steps)
       {
         // end of test
         EngineDynamicTest.Running = false;
         Serial_printf("End of dynamic test");
+        Serial_SendStatus();
       }
       else
       {

@@ -464,6 +464,8 @@ namespace DJetronicECUTester
             {
                 if (!uint.TryParse(StartThrottleInput.Text, out Settings.StartThrottle)) Settings.UseThrottle = false;
                 if (!uint.TryParse(EndThrottleInput.Text, out Settings.EndThrottle)) Settings.UseThrottle = false;
+
+                // fixme - to do - if using throttle then duration must be at least <throttle change %> x 10 x resolution - ask user to confirm increase in duration or greater resolution
             }
 
             if (StarterEnable.Checked)
