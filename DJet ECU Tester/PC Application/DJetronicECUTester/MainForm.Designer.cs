@@ -1,4 +1,4 @@
-﻿namespace DJetronicECUTester
+﻿namespace DJetronicStudio
 {
     partial class MainForm
     {
@@ -58,6 +58,9 @@
             this.PresetSelector = new System.Windows.Forms.ComboBox();
             this.DynamicPage = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.DynamicResolutionInput = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.DynamicTimePeriod = new System.Windows.Forms.TextBox();
             this.DynamicStartBtn = new System.Windows.Forms.Button();
             this.StartStarterInput = new System.Windows.Forms.TextBox();
@@ -106,6 +109,7 @@
             this.EngineTestBtn = new System.Windows.Forms.Button();
             this.OutputBox = new System.Windows.Forms.TextBox();
             this.DocumentationPage = new System.Windows.Forms.TabPage();
+            this.Gallery = new DJetronicStudio.Gallery();
             this.TesterInfoBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -129,10 +133,6 @@
             this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.PressureValue = new System.Windows.Forms.Label();
-            this.Gallery = new DJetronicECUTester.Gallery();
-            this.DynamicResolutionInput = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.StaticPage.SuspendLayout();
@@ -483,6 +483,31 @@
             this.groupBox3.TabIndex = 55;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Linear";
+            // 
+            // DynamicResolutionInput
+            // 
+            this.DynamicResolutionInput.Location = new System.Drawing.Point(178, 45);
+            this.DynamicResolutionInput.Name = "DynamicResolutionInput";
+            this.DynamicResolutionInput.Size = new System.Drawing.Size(100, 20);
+            this.DynamicResolutionInput.TabIndex = 55;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(112, 48);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(60, 13);
+            this.label12.TabIndex = 56;
+            this.label12.Text = "Resolution:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(284, 48);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(20, 13);
+            this.label14.TabIndex = 57;
+            this.label14.Text = "ms";
             // 
             // DynamicTimePeriod
             // 
@@ -839,7 +864,7 @@
             // 
             // button3
             // 
-            this.button3.Image = global::DJetronicECUTester.Properties.Resources.stop_64;
+            this.button3.Image = global::DJetronicStudio.Properties.Resources.stop_64;
             this.button3.Location = new System.Drawing.Point(94, 6);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(80, 80);
@@ -848,7 +873,7 @@
             // 
             // button1
             // 
-            this.button1.Image = global::DJetronicECUTester.Properties.Resources.examine_64;
+            this.button1.Image = global::DJetronicStudio.Properties.Resources.examine_64;
             this.button1.Location = new System.Drawing.Point(8, 6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(80, 80);
@@ -921,6 +946,14 @@
             this.DocumentationPage.Text = "Documentation";
             this.DocumentationPage.UseVisualStyleBackColor = true;
             // 
+            // Gallery
+            // 
+            this.Gallery.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Gallery.Location = new System.Drawing.Point(3, 3);
+            this.Gallery.Name = "Gallery";
+            this.Gallery.Size = new System.Drawing.Size(965, 507);
+            this.Gallery.TabIndex = 0;
+            // 
             // TesterInfoBox
             // 
             this.TesterInfoBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(81)))), ((int)(((byte)(0)))));
@@ -976,7 +1009,7 @@
             // 
             // connectToolStripMenuItem
             // 
-            this.connectToolStripMenuItem.Image = global::DJetronicECUTester.Properties.Resources.connect;
+            this.connectToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.connect;
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
             this.connectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.connectToolStripMenuItem.Text = "&Connect";
@@ -984,7 +1017,7 @@
             // 
             // disconnectToolStripMenuItem
             // 
-            this.disconnectToolStripMenuItem.Image = global::DJetronicECUTester.Properties.Resources.disconnect;
+            this.disconnectToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.disconnect;
             this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
             this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.disconnectToolStripMenuItem.Text = "&Disconnect";
@@ -1001,7 +1034,7 @@
             // 
             // startRecordingDataToolStripMenuItem
             // 
-            this.startRecordingDataToolStripMenuItem.Image = global::DJetronicECUTester.Properties.Resources.record;
+            this.startRecordingDataToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.record;
             this.startRecordingDataToolStripMenuItem.Name = "startRecordingDataToolStripMenuItem";
             this.startRecordingDataToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.startRecordingDataToolStripMenuItem.Text = "Start &Recording Data";
@@ -1009,7 +1042,7 @@
             // 
             // stopRecordingDataToolStripMenuItem
             // 
-            this.stopRecordingDataToolStripMenuItem.Image = global::DJetronicECUTester.Properties.Resources.stop;
+            this.stopRecordingDataToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.stop;
             this.stopRecordingDataToolStripMenuItem.Name = "stopRecordingDataToolStripMenuItem";
             this.stopRecordingDataToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.stopRecordingDataToolStripMenuItem.Text = "&Stop Recording Data";
@@ -1048,7 +1081,7 @@
             // ConnectBtn
             // 
             this.ConnectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ConnectBtn.Image = global::DJetronicECUTester.Properties.Resources.connect;
+            this.ConnectBtn.Image = global::DJetronicStudio.Properties.Resources.connect;
             this.ConnectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ConnectBtn.Name = "ConnectBtn";
             this.ConnectBtn.Size = new System.Drawing.Size(36, 36);
@@ -1058,7 +1091,7 @@
             // DisconnectBtn
             // 
             this.DisconnectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DisconnectBtn.Image = global::DJetronicECUTester.Properties.Resources.disconnect;
+            this.DisconnectBtn.Image = global::DJetronicStudio.Properties.Resources.disconnect;
             this.DisconnectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DisconnectBtn.Name = "DisconnectBtn";
             this.DisconnectBtn.Size = new System.Drawing.Size(36, 36);
@@ -1073,7 +1106,7 @@
             // RecordBtn
             // 
             this.RecordBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.RecordBtn.Image = global::DJetronicECUTester.Properties.Resources.record;
+            this.RecordBtn.Image = global::DJetronicStudio.Properties.Resources.record;
             this.RecordBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.RecordBtn.Name = "RecordBtn";
             this.RecordBtn.Size = new System.Drawing.Size(36, 36);
@@ -1082,7 +1115,7 @@
             // StopBtn
             // 
             this.StopBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.StopBtn.Image = global::DJetronicECUTester.Properties.Resources.stop;
+            this.StopBtn.Image = global::DJetronicStudio.Properties.Resources.stop;
             this.StopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.StopBtn.Name = "StopBtn";
             this.StopBtn.Size = new System.Drawing.Size(36, 36);
@@ -1091,7 +1124,7 @@
             // CopyInfoBtn
             // 
             this.CopyInfoBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CopyInfoBtn.Image = global::DJetronicECUTester.Properties.Resources.copy;
+            this.CopyInfoBtn.Image = global::DJetronicStudio.Properties.Resources.copy;
             this.CopyInfoBtn.Location = new System.Drawing.Point(867, 5);
             this.CopyInfoBtn.Name = "CopyInfoBtn";
             this.CopyInfoBtn.Size = new System.Drawing.Size(30, 30);
@@ -1137,39 +1170,6 @@
             this.PressureValue.Text = "15";
             this.PressureValue.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // Gallery
-            // 
-            this.Gallery.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Gallery.Location = new System.Drawing.Point(3, 3);
-            this.Gallery.Name = "Gallery";
-            this.Gallery.Size = new System.Drawing.Size(965, 507);
-            this.Gallery.TabIndex = 0;
-            // 
-            // DynamicResolutionInput
-            // 
-            this.DynamicResolutionInput.Location = new System.Drawing.Point(178, 45);
-            this.DynamicResolutionInput.Name = "DynamicResolutionInput";
-            this.DynamicResolutionInput.Size = new System.Drawing.Size(100, 20);
-            this.DynamicResolutionInput.TabIndex = 55;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(112, 48);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(60, 13);
-            this.label12.TabIndex = 56;
-            this.label12.Text = "Resolution:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(284, 48);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(20, 13);
-            this.label14.TabIndex = 57;
-            this.label14.Text = "ms";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1183,7 +1183,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "D-Jetronic ECU Tester";
+            this.Text = "D-Jetronic Studio";
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.Tabs.ResumeLayout(false);

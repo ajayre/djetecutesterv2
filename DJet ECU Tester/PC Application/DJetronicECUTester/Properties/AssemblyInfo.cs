@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("D-Jetronic ECU Tester")]
+[assembly: AssemblyTitle("D-Jetronic Studio")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("D-Jetronic ECU Tester")]
+[assembly: AssemblyProduct("D-Jetronic Studio")]
 [assembly: AssemblyCopyright("Copyright © britishideas.com 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

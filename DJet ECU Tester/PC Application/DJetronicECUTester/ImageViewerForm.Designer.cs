@@ -1,4 +1,4 @@
-﻿namespace DJetronicECUTester
+﻿namespace DJetronicStudio
 {
     partial class ImageViewerForm
     {

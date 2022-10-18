@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Solid.Arduino.Firmata;
 using Solid.Arduino;
 
-namespace DJetronicECUTester
+namespace DJetronicStudio
 {
     public class ECUTester
     {
