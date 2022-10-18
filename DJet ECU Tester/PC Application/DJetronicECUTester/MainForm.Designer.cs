@@ -57,16 +57,46 @@
             this.label1 = new System.Windows.Forms.Label();
             this.PresetSelector = new System.Windows.Forms.ComboBox();
             this.DynamicPage = new System.Windows.Forms.TabPage();
-            this.SpeedBtn = new System.Windows.Forms.Button();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.SpeedTimePeriod = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.DynamicTimePeriod = new System.Windows.Forms.TextBox();
+            this.DynamicStartBtn = new System.Windows.Forms.Button();
+            this.StartStarterInput = new System.Windows.Forms.TextBox();
+            this.EndSpeedLabel1 = new System.Windows.Forms.Label();
+            this.StartStarterLabel1 = new System.Windows.Forms.Label();
             this.EndSpeedInput = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
+            this.StartStarterLabel2 = new System.Windows.Forms.Label();
+            this.EndSpeedLabel2 = new System.Windows.Forms.Label();
+            this.EndStarterLabel2 = new System.Windows.Forms.Label();
+            this.StartSpeedLabel2 = new System.Windows.Forms.Label();
+            this.EndStarterInput = new System.Windows.Forms.TextBox();
+            this.StartSpeedLabel1 = new System.Windows.Forms.Label();
+            this.EndStarterLabel1 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.StarterEnable = new System.Windows.Forms.CheckBox();
             this.StartSpeedInput = new System.Windows.Forms.TextBox();
+            this.ThrottleEnable = new System.Windows.Forms.CheckBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.StartThrottleInput = new System.Windows.Forms.TextBox();
+            this.SpeedEnable = new System.Windows.Forms.CheckBox();
+            this.StartThrottleLabel1 = new System.Windows.Forms.Label();
+            this.EndAirTempLabel1 = new System.Windows.Forms.Label();
+            this.StartThrottleLabel2 = new System.Windows.Forms.Label();
+            this.EndAirTempInput = new System.Windows.Forms.TextBox();
+            this.EndThrottleLabel2 = new System.Windows.Forms.Label();
+            this.EndAirTempLabel2 = new System.Windows.Forms.Label();
+            this.EndThrottleInput = new System.Windows.Forms.TextBox();
+            this.StartAirTempLabel2 = new System.Windows.Forms.Label();
+            this.EndThrottleLabel1 = new System.Windows.Forms.Label();
+            this.StartAirTempLabel1 = new System.Windows.Forms.Label();
+            this.CoolantTempEnable = new System.Windows.Forms.CheckBox();
+            this.StartAirTempInput = new System.Windows.Forms.TextBox();
+            this.StartCoolantTempInput = new System.Windows.Forms.TextBox();
+            this.AirTempEnable = new System.Windows.Forms.CheckBox();
+            this.StartCoolantTempLabel1 = new System.Windows.Forms.Label();
+            this.EndCoolantTempLabel1 = new System.Windows.Forms.Label();
+            this.StartCoolantTempLabel2 = new System.Windows.Forms.Label();
+            this.EndCoolantTempInput = new System.Windows.Forms.TextBox();
+            this.EndCoolantTempLabel2 = new System.Windows.Forms.Label();
             this.TestPage = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -84,8 +114,8 @@
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.startRecordingPulseWidthsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stopRecordingPulseWidthsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startRecordingDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopRecordingDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -100,41 +130,16 @@
             this.label13 = new System.Windows.Forms.Label();
             this.PressureValue = new System.Windows.Forms.Label();
             this.Gallery = new DJetronicECUTester.Gallery();
-            this.SpeedEnable = new System.Windows.Forms.CheckBox();
-            this.AirTempEnable = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.CoolantTempEnable = new System.Windows.Forms.CheckBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.ThrottleEnable = new System.Windows.Forms.CheckBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.StarterEnable = new System.Windows.Forms.CheckBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.label34 = new System.Windows.Forms.Label();
+            this.DynamicResolutionInput = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.StaticPage.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.DynamicPage.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.TestPage.SuspendLayout();
             this.ChartPage.SuspendLayout();
             this.DebugOutputPage.SuspendLayout();
@@ -417,45 +422,7 @@
             // 
             // DynamicPage
             // 
-            this.DynamicPage.Controls.Add(this.textBox7);
-            this.DynamicPage.Controls.Add(this.label31);
-            this.DynamicPage.Controls.Add(this.label32);
-            this.DynamicPage.Controls.Add(this.label33);
-            this.DynamicPage.Controls.Add(this.textBox8);
-            this.DynamicPage.Controls.Add(this.label34);
-            this.DynamicPage.Controls.Add(this.StarterEnable);
-            this.DynamicPage.Controls.Add(this.ThrottleEnable);
-            this.DynamicPage.Controls.Add(this.textBox5);
-            this.DynamicPage.Controls.Add(this.label27);
-            this.DynamicPage.Controls.Add(this.label28);
-            this.DynamicPage.Controls.Add(this.label29);
-            this.DynamicPage.Controls.Add(this.textBox6);
-            this.DynamicPage.Controls.Add(this.label30);
-            this.DynamicPage.Controls.Add(this.CoolantTempEnable);
-            this.DynamicPage.Controls.Add(this.textBox3);
-            this.DynamicPage.Controls.Add(this.label23);
-            this.DynamicPage.Controls.Add(this.label24);
-            this.DynamicPage.Controls.Add(this.label25);
-            this.DynamicPage.Controls.Add(this.textBox4);
-            this.DynamicPage.Controls.Add(this.label26);
-            this.DynamicPage.Controls.Add(this.AirTempEnable);
-            this.DynamicPage.Controls.Add(this.textBox1);
-            this.DynamicPage.Controls.Add(this.label19);
-            this.DynamicPage.Controls.Add(this.label20);
-            this.DynamicPage.Controls.Add(this.label21);
-            this.DynamicPage.Controls.Add(this.textBox2);
-            this.DynamicPage.Controls.Add(this.label22);
-            this.DynamicPage.Controls.Add(this.SpeedBtn);
-            this.DynamicPage.Controls.Add(this.SpeedEnable);
-            this.DynamicPage.Controls.Add(this.label17);
-            this.DynamicPage.Controls.Add(this.StartSpeedInput);
-            this.DynamicPage.Controls.Add(this.label18);
-            this.DynamicPage.Controls.Add(this.label14);
-            this.DynamicPage.Controls.Add(this.SpeedTimePeriod);
-            this.DynamicPage.Controls.Add(this.label12);
-            this.DynamicPage.Controls.Add(this.label15);
-            this.DynamicPage.Controls.Add(this.EndSpeedInput);
-            this.DynamicPage.Controls.Add(this.label16);
+            this.DynamicPage.Controls.Add(this.groupBox3);
             this.DynamicPage.Location = new System.Drawing.Point(4, 22);
             this.DynamicPage.Name = "DynamicPage";
             this.DynamicPage.Padding = new System.Windows.Forms.Padding(3);
@@ -464,91 +431,399 @@
             this.DynamicPage.Text = "Dynamic";
             this.DynamicPage.UseVisualStyleBackColor = true;
             // 
-            // SpeedBtn
+            // groupBox3
             // 
-            this.SpeedBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SpeedBtn.Location = new System.Drawing.Point(888, 484);
-            this.SpeedBtn.Name = "SpeedBtn";
-            this.SpeedBtn.Size = new System.Drawing.Size(75, 23);
-            this.SpeedBtn.TabIndex = 26;
-            this.SpeedBtn.Text = "Start";
-            this.SpeedBtn.UseVisualStyleBackColor = true;
-            this.SpeedBtn.Click += new System.EventHandler(this.SpeedBtn_Click);
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.DynamicResolutionInput);
+            this.groupBox3.Controls.Add(this.label12);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.DynamicTimePeriod);
+            this.groupBox3.Controls.Add(this.DynamicStartBtn);
+            this.groupBox3.Controls.Add(this.StartStarterInput);
+            this.groupBox3.Controls.Add(this.EndSpeedLabel1);
+            this.groupBox3.Controls.Add(this.StartStarterLabel1);
+            this.groupBox3.Controls.Add(this.EndSpeedInput);
+            this.groupBox3.Controls.Add(this.StartStarterLabel2);
+            this.groupBox3.Controls.Add(this.EndSpeedLabel2);
+            this.groupBox3.Controls.Add(this.EndStarterLabel2);
+            this.groupBox3.Controls.Add(this.StartSpeedLabel2);
+            this.groupBox3.Controls.Add(this.EndStarterInput);
+            this.groupBox3.Controls.Add(this.StartSpeedLabel1);
+            this.groupBox3.Controls.Add(this.EndStarterLabel1);
+            this.groupBox3.Controls.Add(this.label18);
+            this.groupBox3.Controls.Add(this.StarterEnable);
+            this.groupBox3.Controls.Add(this.StartSpeedInput);
+            this.groupBox3.Controls.Add(this.ThrottleEnable);
+            this.groupBox3.Controls.Add(this.label17);
+            this.groupBox3.Controls.Add(this.StartThrottleInput);
+            this.groupBox3.Controls.Add(this.SpeedEnable);
+            this.groupBox3.Controls.Add(this.StartThrottleLabel1);
+            this.groupBox3.Controls.Add(this.EndAirTempLabel1);
+            this.groupBox3.Controls.Add(this.StartThrottleLabel2);
+            this.groupBox3.Controls.Add(this.EndAirTempInput);
+            this.groupBox3.Controls.Add(this.EndThrottleLabel2);
+            this.groupBox3.Controls.Add(this.EndAirTempLabel2);
+            this.groupBox3.Controls.Add(this.EndThrottleInput);
+            this.groupBox3.Controls.Add(this.StartAirTempLabel2);
+            this.groupBox3.Controls.Add(this.EndThrottleLabel1);
+            this.groupBox3.Controls.Add(this.StartAirTempLabel1);
+            this.groupBox3.Controls.Add(this.CoolantTempEnable);
+            this.groupBox3.Controls.Add(this.StartAirTempInput);
+            this.groupBox3.Controls.Add(this.StartCoolantTempInput);
+            this.groupBox3.Controls.Add(this.AirTempEnable);
+            this.groupBox3.Controls.Add(this.StartCoolantTempLabel1);
+            this.groupBox3.Controls.Add(this.EndCoolantTempLabel1);
+            this.groupBox3.Controls.Add(this.StartCoolantTempLabel2);
+            this.groupBox3.Controls.Add(this.EndCoolantTempInput);
+            this.groupBox3.Controls.Add(this.EndCoolantTempLabel2);
+            this.groupBox3.Location = new System.Drawing.Point(8, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(955, 208);
+            this.groupBox3.TabIndex = 55;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Linear";
             // 
-            // label17
+            // DynamicTimePeriod
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(283, 9);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(12, 13);
-            this.label17.TabIndex = 25;
-            this.label17.Text = "s";
+            this.DynamicTimePeriod.Location = new System.Drawing.Point(178, 19);
+            this.DynamicTimePeriod.Name = "DynamicTimePeriod";
+            this.DynamicTimePeriod.Size = new System.Drawing.Size(100, 20);
+            this.DynamicTimePeriod.TabIndex = 23;
+            // 
+            // DynamicStartBtn
+            // 
+            this.DynamicStartBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DynamicStartBtn.Location = new System.Drawing.Point(874, 179);
+            this.DynamicStartBtn.Name = "DynamicStartBtn";
+            this.DynamicStartBtn.Size = new System.Drawing.Size(75, 23);
+            this.DynamicStartBtn.TabIndex = 26;
+            this.DynamicStartBtn.Text = "Start";
+            this.DynamicStartBtn.UseVisualStyleBackColor = true;
+            this.DynamicStartBtn.Click += new System.EventHandler(this.DynamicStartBtn_Click);
+            // 
+            // StartStarterInput
+            // 
+            this.StartStarterInput.Location = new System.Drawing.Point(178, 175);
+            this.StartStarterInput.Name = "StartStarterInput";
+            this.StartStarterInput.Size = new System.Drawing.Size(100, 20);
+            this.StartStarterInput.TabIndex = 49;
+            // 
+            // EndSpeedLabel1
+            // 
+            this.EndSpeedLabel1.AutoSize = true;
+            this.EndSpeedLabel1.Location = new System.Drawing.Point(329, 74);
+            this.EndSpeedLabel1.Name = "EndSpeedLabel1";
+            this.EndSpeedLabel1.Size = new System.Drawing.Size(29, 13);
+            this.EndSpeedLabel1.TabIndex = 21;
+            this.EndSpeedLabel1.Text = "End:";
+            // 
+            // StartStarterLabel1
+            // 
+            this.StartStarterLabel1.AutoSize = true;
+            this.StartStarterLabel1.Location = new System.Drawing.Point(148, 178);
+            this.StartStarterLabel1.Name = "StartStarterLabel1";
+            this.StartStarterLabel1.Size = new System.Drawing.Size(24, 13);
+            this.StartStarterLabel1.TabIndex = 50;
+            this.StartStarterLabel1.Text = "On:";
+            // 
+            // EndSpeedInput
+            // 
+            this.EndSpeedInput.Location = new System.Drawing.Point(364, 71);
+            this.EndSpeedInput.Name = "EndSpeedInput";
+            this.EndSpeedInput.Size = new System.Drawing.Size(100, 20);
+            this.EndSpeedInput.TabIndex = 20;
+            // 
+            // StartStarterLabel2
+            // 
+            this.StartStarterLabel2.AutoSize = true;
+            this.StartStarterLabel2.Location = new System.Drawing.Point(284, 178);
+            this.StartStarterLabel2.Name = "StartStarterLabel2";
+            this.StartStarterLabel2.Size = new System.Drawing.Size(12, 13);
+            this.StartStarterLabel2.TabIndex = 51;
+            this.StartStarterLabel2.Text = "s";
+            // 
+            // EndSpeedLabel2
+            // 
+            this.EndSpeedLabel2.AutoSize = true;
+            this.EndSpeedLabel2.Location = new System.Drawing.Point(470, 74);
+            this.EndSpeedLabel2.Name = "EndSpeedLabel2";
+            this.EndSpeedLabel2.Size = new System.Drawing.Size(31, 13);
+            this.EndSpeedLabel2.TabIndex = 22;
+            this.EndSpeedLabel2.Text = "RPM";
+            // 
+            // EndStarterLabel2
+            // 
+            this.EndStarterLabel2.AutoSize = true;
+            this.EndStarterLabel2.Location = new System.Drawing.Point(470, 178);
+            this.EndStarterLabel2.Name = "EndStarterLabel2";
+            this.EndStarterLabel2.Size = new System.Drawing.Size(12, 13);
+            this.EndStarterLabel2.TabIndex = 54;
+            this.EndStarterLabel2.Text = "s";
+            // 
+            // StartSpeedLabel2
+            // 
+            this.StartSpeedLabel2.AutoSize = true;
+            this.StartSpeedLabel2.Location = new System.Drawing.Point(284, 74);
+            this.StartSpeedLabel2.Name = "StartSpeedLabel2";
+            this.StartSpeedLabel2.Size = new System.Drawing.Size(31, 13);
+            this.StartSpeedLabel2.TabIndex = 19;
+            this.StartSpeedLabel2.Text = "RPM";
+            // 
+            // EndStarterInput
+            // 
+            this.EndStarterInput.Location = new System.Drawing.Point(364, 175);
+            this.EndStarterInput.Name = "EndStarterInput";
+            this.EndStarterInput.Size = new System.Drawing.Size(100, 20);
+            this.EndStarterInput.TabIndex = 52;
+            // 
+            // StartSpeedLabel1
+            // 
+            this.StartSpeedLabel1.AutoSize = true;
+            this.StartSpeedLabel1.Location = new System.Drawing.Point(140, 74);
+            this.StartSpeedLabel1.Name = "StartSpeedLabel1";
+            this.StartSpeedLabel1.Size = new System.Drawing.Size(32, 13);
+            this.StartSpeedLabel1.TabIndex = 18;
+            this.StartSpeedLabel1.Text = "Start:";
+            // 
+            // EndStarterLabel1
+            // 
+            this.EndStarterLabel1.AutoSize = true;
+            this.EndStarterLabel1.Location = new System.Drawing.Point(334, 178);
+            this.EndStarterLabel1.Name = "EndStarterLabel1";
+            this.EndStarterLabel1.Size = new System.Drawing.Size(24, 13);
+            this.EndStarterLabel1.TabIndex = 53;
+            this.EndStarterLabel1.Text = "Off:";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(105, 9);
+            this.label18.Location = new System.Drawing.Point(106, 22);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(66, 13);
             this.label18.TabIndex = 24;
             this.label18.Text = "Time Period:";
             // 
-            // SpeedTimePeriod
+            // StarterEnable
             // 
-            this.SpeedTimePeriod.Location = new System.Drawing.Point(177, 6);
-            this.SpeedTimePeriod.Name = "SpeedTimePeriod";
-            this.SpeedTimePeriod.Size = new System.Drawing.Size(100, 20);
-            this.SpeedTimePeriod.TabIndex = 23;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(469, 35);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(31, 13);
-            this.label15.TabIndex = 22;
-            this.label15.Text = "RPM";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(328, 35);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(29, 13);
-            this.label16.TabIndex = 21;
-            this.label16.Text = "End:";
-            // 
-            // EndSpeedInput
-            // 
-            this.EndSpeedInput.Location = new System.Drawing.Point(363, 32);
-            this.EndSpeedInput.Name = "EndSpeedInput";
-            this.EndSpeedInput.Size = new System.Drawing.Size(100, 20);
-            this.EndSpeedInput.TabIndex = 20;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(283, 35);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(31, 13);
-            this.label12.TabIndex = 19;
-            this.label12.Text = "RPM";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(139, 35);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(32, 13);
-            this.label14.TabIndex = 18;
-            this.label14.Text = "Start:";
+            this.StarterEnable.AutoSize = true;
+            this.StarterEnable.Location = new System.Drawing.Point(9, 177);
+            this.StarterEnable.Name = "StarterEnable";
+            this.StarterEnable.Size = new System.Drawing.Size(87, 17);
+            this.StarterEnable.TabIndex = 48;
+            this.StarterEnable.Text = "Starter Motor";
+            this.StarterEnable.UseVisualStyleBackColor = true;
+            this.StarterEnable.CheckedChanged += new System.EventHandler(this.StarterEnable_CheckedChanged);
             // 
             // StartSpeedInput
             // 
-            this.StartSpeedInput.Location = new System.Drawing.Point(177, 32);
+            this.StartSpeedInput.Location = new System.Drawing.Point(178, 71);
             this.StartSpeedInput.Name = "StartSpeedInput";
             this.StartSpeedInput.Size = new System.Drawing.Size(100, 20);
             this.StartSpeedInput.TabIndex = 17;
+            // 
+            // ThrottleEnable
+            // 
+            this.ThrottleEnable.AutoSize = true;
+            this.ThrottleEnable.Location = new System.Drawing.Point(9, 151);
+            this.ThrottleEnable.Name = "ThrottleEnable";
+            this.ThrottleEnable.Size = new System.Drawing.Size(102, 17);
+            this.ThrottleEnable.TabIndex = 47;
+            this.ThrottleEnable.Text = "Throttle Position";
+            this.ThrottleEnable.UseVisualStyleBackColor = true;
+            this.ThrottleEnable.CheckedChanged += new System.EventHandler(this.ThrottleEnable_CheckedChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(284, 22);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(20, 13);
+            this.label17.TabIndex = 25;
+            this.label17.Text = "ms";
+            // 
+            // StartThrottleInput
+            // 
+            this.StartThrottleInput.Location = new System.Drawing.Point(178, 149);
+            this.StartThrottleInput.Name = "StartThrottleInput";
+            this.StartThrottleInput.Size = new System.Drawing.Size(100, 20);
+            this.StartThrottleInput.TabIndex = 41;
+            // 
+            // SpeedEnable
+            // 
+            this.SpeedEnable.AutoSize = true;
+            this.SpeedEnable.Location = new System.Drawing.Point(9, 73);
+            this.SpeedEnable.Name = "SpeedEnable";
+            this.SpeedEnable.Size = new System.Drawing.Size(93, 17);
+            this.SpeedEnable.TabIndex = 26;
+            this.SpeedEnable.Text = "Engine Speed";
+            this.SpeedEnable.UseVisualStyleBackColor = true;
+            this.SpeedEnable.CheckedChanged += new System.EventHandler(this.SpeedEnable_CheckedChanged);
+            // 
+            // StartThrottleLabel1
+            // 
+            this.StartThrottleLabel1.AutoSize = true;
+            this.StartThrottleLabel1.Location = new System.Drawing.Point(140, 152);
+            this.StartThrottleLabel1.Name = "StartThrottleLabel1";
+            this.StartThrottleLabel1.Size = new System.Drawing.Size(32, 13);
+            this.StartThrottleLabel1.TabIndex = 42;
+            this.StartThrottleLabel1.Text = "Start:";
+            // 
+            // EndAirTempLabel1
+            // 
+            this.EndAirTempLabel1.AutoSize = true;
+            this.EndAirTempLabel1.Location = new System.Drawing.Point(329, 100);
+            this.EndAirTempLabel1.Name = "EndAirTempLabel1";
+            this.EndAirTempLabel1.Size = new System.Drawing.Size(29, 13);
+            this.EndAirTempLabel1.TabIndex = 31;
+            this.EndAirTempLabel1.Text = "End:";
+            // 
+            // StartThrottleLabel2
+            // 
+            this.StartThrottleLabel2.AutoSize = true;
+            this.StartThrottleLabel2.Location = new System.Drawing.Point(284, 152);
+            this.StartThrottleLabel2.Name = "StartThrottleLabel2";
+            this.StartThrottleLabel2.Size = new System.Drawing.Size(15, 13);
+            this.StartThrottleLabel2.TabIndex = 43;
+            this.StartThrottleLabel2.Text = "%";
+            // 
+            // EndAirTempInput
+            // 
+            this.EndAirTempInput.Location = new System.Drawing.Point(364, 97);
+            this.EndAirTempInput.Name = "EndAirTempInput";
+            this.EndAirTempInput.Size = new System.Drawing.Size(100, 20);
+            this.EndAirTempInput.TabIndex = 30;
+            // 
+            // EndThrottleLabel2
+            // 
+            this.EndThrottleLabel2.AutoSize = true;
+            this.EndThrottleLabel2.Location = new System.Drawing.Point(470, 152);
+            this.EndThrottleLabel2.Name = "EndThrottleLabel2";
+            this.EndThrottleLabel2.Size = new System.Drawing.Size(15, 13);
+            this.EndThrottleLabel2.TabIndex = 46;
+            this.EndThrottleLabel2.Text = "%";
+            // 
+            // EndAirTempLabel2
+            // 
+            this.EndAirTempLabel2.AutoSize = true;
+            this.EndAirTempLabel2.Location = new System.Drawing.Point(470, 100);
+            this.EndAirTempLabel2.Name = "EndAirTempLabel2";
+            this.EndAirTempLabel2.Size = new System.Drawing.Size(17, 13);
+            this.EndAirTempLabel2.TabIndex = 32;
+            this.EndAirTempLabel2.Text = "°F";
+            // 
+            // EndThrottleInput
+            // 
+            this.EndThrottleInput.Location = new System.Drawing.Point(364, 149);
+            this.EndThrottleInput.Name = "EndThrottleInput";
+            this.EndThrottleInput.Size = new System.Drawing.Size(100, 20);
+            this.EndThrottleInput.TabIndex = 44;
+            // 
+            // StartAirTempLabel2
+            // 
+            this.StartAirTempLabel2.AutoSize = true;
+            this.StartAirTempLabel2.Location = new System.Drawing.Point(284, 100);
+            this.StartAirTempLabel2.Name = "StartAirTempLabel2";
+            this.StartAirTempLabel2.Size = new System.Drawing.Size(17, 13);
+            this.StartAirTempLabel2.TabIndex = 29;
+            this.StartAirTempLabel2.Text = "°F";
+            // 
+            // EndThrottleLabel1
+            // 
+            this.EndThrottleLabel1.AutoSize = true;
+            this.EndThrottleLabel1.Location = new System.Drawing.Point(329, 152);
+            this.EndThrottleLabel1.Name = "EndThrottleLabel1";
+            this.EndThrottleLabel1.Size = new System.Drawing.Size(29, 13);
+            this.EndThrottleLabel1.TabIndex = 45;
+            this.EndThrottleLabel1.Text = "End:";
+            // 
+            // StartAirTempLabel1
+            // 
+            this.StartAirTempLabel1.AutoSize = true;
+            this.StartAirTempLabel1.Location = new System.Drawing.Point(140, 100);
+            this.StartAirTempLabel1.Name = "StartAirTempLabel1";
+            this.StartAirTempLabel1.Size = new System.Drawing.Size(32, 13);
+            this.StartAirTempLabel1.TabIndex = 28;
+            this.StartAirTempLabel1.Text = "Start:";
+            // 
+            // CoolantTempEnable
+            // 
+            this.CoolantTempEnable.AutoSize = true;
+            this.CoolantTempEnable.Location = new System.Drawing.Point(9, 125);
+            this.CoolantTempEnable.Name = "CoolantTempEnable";
+            this.CoolantTempEnable.Size = new System.Drawing.Size(125, 17);
+            this.CoolantTempEnable.TabIndex = 40;
+            this.CoolantTempEnable.Text = "Coolant Temperature";
+            this.CoolantTempEnable.UseVisualStyleBackColor = true;
+            this.CoolantTempEnable.CheckedChanged += new System.EventHandler(this.CoolantTempEnable_CheckedChanged);
+            // 
+            // StartAirTempInput
+            // 
+            this.StartAirTempInput.Location = new System.Drawing.Point(178, 97);
+            this.StartAirTempInput.Name = "StartAirTempInput";
+            this.StartAirTempInput.Size = new System.Drawing.Size(100, 20);
+            this.StartAirTempInput.TabIndex = 27;
+            // 
+            // StartCoolantTempInput
+            // 
+            this.StartCoolantTempInput.Location = new System.Drawing.Point(178, 123);
+            this.StartCoolantTempInput.Name = "StartCoolantTempInput";
+            this.StartCoolantTempInput.Size = new System.Drawing.Size(100, 20);
+            this.StartCoolantTempInput.TabIndex = 34;
+            // 
+            // AirTempEnable
+            // 
+            this.AirTempEnable.AutoSize = true;
+            this.AirTempEnable.Location = new System.Drawing.Point(9, 99);
+            this.AirTempEnable.Name = "AirTempEnable";
+            this.AirTempEnable.Size = new System.Drawing.Size(101, 17);
+            this.AirTempEnable.TabIndex = 33;
+            this.AirTempEnable.Text = "Air Temperature";
+            this.AirTempEnable.UseVisualStyleBackColor = true;
+            this.AirTempEnable.CheckedChanged += new System.EventHandler(this.AirTempEnable_CheckedChanged);
+            // 
+            // StartCoolantTempLabel1
+            // 
+            this.StartCoolantTempLabel1.AutoSize = true;
+            this.StartCoolantTempLabel1.Location = new System.Drawing.Point(140, 126);
+            this.StartCoolantTempLabel1.Name = "StartCoolantTempLabel1";
+            this.StartCoolantTempLabel1.Size = new System.Drawing.Size(32, 13);
+            this.StartCoolantTempLabel1.TabIndex = 35;
+            this.StartCoolantTempLabel1.Text = "Start:";
+            // 
+            // EndCoolantTempLabel1
+            // 
+            this.EndCoolantTempLabel1.AutoSize = true;
+            this.EndCoolantTempLabel1.Location = new System.Drawing.Point(329, 126);
+            this.EndCoolantTempLabel1.Name = "EndCoolantTempLabel1";
+            this.EndCoolantTempLabel1.Size = new System.Drawing.Size(29, 13);
+            this.EndCoolantTempLabel1.TabIndex = 38;
+            this.EndCoolantTempLabel1.Text = "End:";
+            // 
+            // StartCoolantTempLabel2
+            // 
+            this.StartCoolantTempLabel2.AutoSize = true;
+            this.StartCoolantTempLabel2.Location = new System.Drawing.Point(284, 126);
+            this.StartCoolantTempLabel2.Name = "StartCoolantTempLabel2";
+            this.StartCoolantTempLabel2.Size = new System.Drawing.Size(17, 13);
+            this.StartCoolantTempLabel2.TabIndex = 36;
+            this.StartCoolantTempLabel2.Text = "°F";
+            // 
+            // EndCoolantTempInput
+            // 
+            this.EndCoolantTempInput.Location = new System.Drawing.Point(364, 123);
+            this.EndCoolantTempInput.Name = "EndCoolantTempInput";
+            this.EndCoolantTempInput.Size = new System.Drawing.Size(100, 20);
+            this.EndCoolantTempInput.TabIndex = 37;
+            // 
+            // EndCoolantTempLabel2
+            // 
+            this.EndCoolantTempLabel2.AutoSize = true;
+            this.EndCoolantTempLabel2.Location = new System.Drawing.Point(470, 126);
+            this.EndCoolantTempLabel2.Name = "EndCoolantTempLabel2";
+            this.EndCoolantTempLabel2.Size = new System.Drawing.Size(17, 13);
+            this.EndCoolantTempLabel2.TabIndex = 39;
+            this.EndCoolantTempLabel2.Text = "°F";
             // 
             // TestPage
             // 
@@ -718,26 +993,26 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startRecordingPulseWidthsToolStripMenuItem,
-            this.stopRecordingPulseWidthsToolStripMenuItem});
+            this.startRecordingDataToolStripMenuItem,
+            this.stopRecordingDataToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
-            // startRecordingPulseWidthsToolStripMenuItem
+            // startRecordingDataToolStripMenuItem
             // 
-            this.startRecordingPulseWidthsToolStripMenuItem.Image = global::DJetronicECUTester.Properties.Resources.record;
-            this.startRecordingPulseWidthsToolStripMenuItem.Name = "startRecordingPulseWidthsToolStripMenuItem";
-            this.startRecordingPulseWidthsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.startRecordingPulseWidthsToolStripMenuItem.Text = "Start &Recording Pulse Widths";
-            this.startRecordingPulseWidthsToolStripMenuItem.Click += new System.EventHandler(this.startRecordingPulseWidthsToolStripMenuItem_Click);
+            this.startRecordingDataToolStripMenuItem.Image = global::DJetronicECUTester.Properties.Resources.record;
+            this.startRecordingDataToolStripMenuItem.Name = "startRecordingDataToolStripMenuItem";
+            this.startRecordingDataToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.startRecordingDataToolStripMenuItem.Text = "Start &Recording Data";
+            this.startRecordingDataToolStripMenuItem.Click += new System.EventHandler(this.startRecordingPulseWidthsToolStripMenuItem_Click);
             // 
-            // stopRecordingPulseWidthsToolStripMenuItem
+            // stopRecordingDataToolStripMenuItem
             // 
-            this.stopRecordingPulseWidthsToolStripMenuItem.Image = global::DJetronicECUTester.Properties.Resources.stop;
-            this.stopRecordingPulseWidthsToolStripMenuItem.Name = "stopRecordingPulseWidthsToolStripMenuItem";
-            this.stopRecordingPulseWidthsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.stopRecordingPulseWidthsToolStripMenuItem.Text = "&Stop Recording Pulse Widths";
+            this.stopRecordingDataToolStripMenuItem.Image = global::DJetronicECUTester.Properties.Resources.stop;
+            this.stopRecordingDataToolStripMenuItem.Name = "stopRecordingDataToolStripMenuItem";
+            this.stopRecordingDataToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.stopRecordingDataToolStripMenuItem.Text = "&Stop Recording Data";
             // 
             // helpToolStripMenuItem
             // 
@@ -802,7 +1077,7 @@
             this.RecordBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.RecordBtn.Name = "RecordBtn";
             this.RecordBtn.Size = new System.Drawing.Size(36, 36);
-            this.RecordBtn.Text = "Start recording pulse widths";
+            this.RecordBtn.Text = "Start recording data";
             // 
             // StopBtn
             // 
@@ -811,7 +1086,7 @@
             this.StopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.StopBtn.Name = "StopBtn";
             this.StopBtn.Size = new System.Drawing.Size(36, 36);
-            this.StopBtn.Text = "Stop recording pulse widths";
+            this.StopBtn.Text = "Stop recording data";
             // 
             // CopyInfoBtn
             // 
@@ -870,257 +1145,30 @@
             this.Gallery.Size = new System.Drawing.Size(965, 507);
             this.Gallery.TabIndex = 0;
             // 
-            // SpeedEnable
+            // DynamicResolutionInput
             // 
-            this.SpeedEnable.AutoSize = true;
-            this.SpeedEnable.Location = new System.Drawing.Point(8, 34);
-            this.SpeedEnable.Name = "SpeedEnable";
-            this.SpeedEnable.Size = new System.Drawing.Size(93, 17);
-            this.SpeedEnable.TabIndex = 26;
-            this.SpeedEnable.Text = "Engine Speed";
-            this.SpeedEnable.UseVisualStyleBackColor = true;
-            this.SpeedEnable.CheckedChanged += new System.EventHandler(this.SpeedEnable_CheckedChanged);
+            this.DynamicResolutionInput.Location = new System.Drawing.Point(178, 45);
+            this.DynamicResolutionInput.Name = "DynamicResolutionInput";
+            this.DynamicResolutionInput.Size = new System.Drawing.Size(100, 20);
+            this.DynamicResolutionInput.TabIndex = 55;
             // 
-            // AirTempEnable
+            // label12
             // 
-            this.AirTempEnable.AutoSize = true;
-            this.AirTempEnable.Location = new System.Drawing.Point(8, 60);
-            this.AirTempEnable.Name = "AirTempEnable";
-            this.AirTempEnable.Size = new System.Drawing.Size(101, 17);
-            this.AirTempEnable.TabIndex = 33;
-            this.AirTempEnable.Text = "Air Temperature";
-            this.AirTempEnable.UseVisualStyleBackColor = true;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(112, 48);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(60, 13);
+            this.label12.TabIndex = 56;
+            this.label12.Text = "Resolution:";
             // 
-            // textBox1
+            // label14
             // 
-            this.textBox1.Location = new System.Drawing.Point(177, 58);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 27;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(139, 61);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(32, 13);
-            this.label19.TabIndex = 28;
-            this.label19.Text = "Start:";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(283, 61);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(17, 13);
-            this.label20.TabIndex = 29;
-            this.label20.Text = "°F";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(469, 61);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(17, 13);
-            this.label21.TabIndex = 32;
-            this.label21.Text = "°F";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(363, 58);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 30;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(328, 61);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(29, 13);
-            this.label22.TabIndex = 31;
-            this.label22.Text = "End:";
-            // 
-            // CoolantTempEnable
-            // 
-            this.CoolantTempEnable.AutoSize = true;
-            this.CoolantTempEnable.Location = new System.Drawing.Point(8, 86);
-            this.CoolantTempEnable.Name = "CoolantTempEnable";
-            this.CoolantTempEnable.Size = new System.Drawing.Size(125, 17);
-            this.CoolantTempEnable.TabIndex = 40;
-            this.CoolantTempEnable.Text = "Coolant Temperature";
-            this.CoolantTempEnable.UseVisualStyleBackColor = true;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(177, 84);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 34;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(139, 87);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(32, 13);
-            this.label23.TabIndex = 35;
-            this.label23.Text = "Start:";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(283, 87);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(17, 13);
-            this.label24.TabIndex = 36;
-            this.label24.Text = "°F";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(469, 87);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(17, 13);
-            this.label25.TabIndex = 39;
-            this.label25.Text = "°F";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(363, 84);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 37;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(328, 87);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(29, 13);
-            this.label26.TabIndex = 38;
-            this.label26.Text = "End:";
-            // 
-            // ThrottleEnable
-            // 
-            this.ThrottleEnable.AutoSize = true;
-            this.ThrottleEnable.Location = new System.Drawing.Point(8, 112);
-            this.ThrottleEnable.Name = "ThrottleEnable";
-            this.ThrottleEnable.Size = new System.Drawing.Size(102, 17);
-            this.ThrottleEnable.TabIndex = 47;
-            this.ThrottleEnable.Text = "Throttle Position";
-            this.ThrottleEnable.UseVisualStyleBackColor = true;
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(177, 110);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
-            this.textBox5.TabIndex = 41;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(139, 113);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(32, 13);
-            this.label27.TabIndex = 42;
-            this.label27.Text = "Start:";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(283, 113);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(15, 13);
-            this.label28.TabIndex = 43;
-            this.label28.Text = "%";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(469, 113);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(15, 13);
-            this.label29.TabIndex = 46;
-            this.label29.Text = "%";
-            // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(363, 110);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 20);
-            this.textBox6.TabIndex = 44;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(328, 113);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(29, 13);
-            this.label30.TabIndex = 45;
-            this.label30.Text = "End:";
-            // 
-            // StarterEnable
-            // 
-            this.StarterEnable.AutoSize = true;
-            this.StarterEnable.Location = new System.Drawing.Point(8, 138);
-            this.StarterEnable.Name = "StarterEnable";
-            this.StarterEnable.Size = new System.Drawing.Size(87, 17);
-            this.StarterEnable.TabIndex = 48;
-            this.StarterEnable.Text = "Starter Motor";
-            this.StarterEnable.UseVisualStyleBackColor = true;
-            this.StarterEnable.CheckedChanged += new System.EventHandler(this.StarterEnable_CheckedChanged);
-            // 
-            // textBox7
-            // 
-            this.textBox7.Location = new System.Drawing.Point(177, 136);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 20);
-            this.textBox7.TabIndex = 49;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(147, 139);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(24, 13);
-            this.label31.TabIndex = 50;
-            this.label31.Text = "On:";
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(283, 139);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(12, 13);
-            this.label32.TabIndex = 51;
-            this.label32.Text = "s";
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(469, 139);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(12, 13);
-            this.label33.TabIndex = 54;
-            this.label33.Text = "s";
-            // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(363, 136);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(100, 20);
-            this.textBox8.TabIndex = 52;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(333, 139);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(24, 13);
-            this.label34.TabIndex = 53;
-            this.label34.Text = "Off:";
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(284, 48);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(20, 13);
+            this.label14.TabIndex = 57;
+            this.label14.Text = "ms";
             // 
             // MainForm
             // 
@@ -1145,7 +1193,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.DynamicPage.ResumeLayout(false);
-            this.DynamicPage.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.TestPage.ResumeLayout(false);
             this.ChartPage.ResumeLayout(false);
             this.DebugOutputPage.ResumeLayout(false);
@@ -1189,8 +1238,8 @@
         private System.Windows.Forms.ToolStripButton RecordBtn;
         private System.Windows.Forms.ToolStripButton StopBtn;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem startRecordingPulseWidthsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem stopRecordingPulseWidthsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startRecordingDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopRecordingDataToolStripMenuItem;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TabPage DebugOutputPage;
@@ -1223,45 +1272,49 @@
         private System.Windows.Forms.CheckBox StarterMotorInput;
         private System.Windows.Forms.TabPage ChartPage;
         private Gallery Gallery;
-        private System.Windows.Forms.Button SpeedBtn;
+        private System.Windows.Forms.Button DynamicStartBtn;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox SpeedTimePeriod;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox DynamicTimePeriod;
+        private System.Windows.Forms.Label EndSpeedLabel2;
+        private System.Windows.Forms.Label EndSpeedLabel1;
         private System.Windows.Forms.TextBox EndSpeedInput;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label StartSpeedLabel2;
+        private System.Windows.Forms.Label StartSpeedLabel1;
         private System.Windows.Forms.TextBox StartSpeedInput;
         private System.Windows.Forms.CheckBox SpeedEnable;
         private System.Windows.Forms.CheckBox CoolantTempEnable;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox StartCoolantTempInput;
+        private System.Windows.Forms.Label StartCoolantTempLabel1;
+        private System.Windows.Forms.Label StartCoolantTempLabel2;
+        private System.Windows.Forms.Label EndCoolantTempLabel2;
+        private System.Windows.Forms.TextBox EndCoolantTempInput;
+        private System.Windows.Forms.Label EndCoolantTempLabel1;
         private System.Windows.Forms.CheckBox AirTempEnable;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox StartAirTempInput;
+        private System.Windows.Forms.Label StartAirTempLabel1;
+        private System.Windows.Forms.Label StartAirTempLabel2;
+        private System.Windows.Forms.Label EndAirTempLabel2;
+        private System.Windows.Forms.TextBox EndAirTempInput;
+        private System.Windows.Forms.Label EndAirTempLabel1;
         private System.Windows.Forms.CheckBox ThrottleEnable;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.TextBox StartThrottleInput;
+        private System.Windows.Forms.Label StartThrottleLabel1;
+        private System.Windows.Forms.Label StartThrottleLabel2;
+        private System.Windows.Forms.Label EndThrottleLabel2;
+        private System.Windows.Forms.TextBox EndThrottleInput;
+        private System.Windows.Forms.Label EndThrottleLabel1;
+        private System.Windows.Forms.TextBox StartStarterInput;
+        private System.Windows.Forms.Label StartStarterLabel1;
+        private System.Windows.Forms.Label StartStarterLabel2;
+        private System.Windows.Forms.Label EndStarterLabel2;
+        private System.Windows.Forms.TextBox EndStarterInput;
+        private System.Windows.Forms.Label EndStarterLabel1;
         private System.Windows.Forms.CheckBox StarterEnable;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox DynamicResolutionInput;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label14;
     }
 }
 

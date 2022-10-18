@@ -13,6 +13,9 @@ namespace DJetronicECUTester
 {
     public partial class MainForm : Form
     {
+        private const int DEFAULT_DYNAMIC_TIME_MS = 10000;
+        private const int DEFAULT_DYNAMIC_RESOLUTION_MS = 50;
+
         private ECUTester Tester = new ECUTester();
 
         private Color Orange = Color.FromArgb(202, 81, 0);
@@ -38,7 +41,31 @@ namespace DJetronicECUTester
 #endif
             Gallery.OnShowImage += Gallery_OnShowImage;
 
+            ShowInitialSettings();
+
             UpdateUI();
+        }
+
+        // from: https://stackoverflow.com/questions/76993/how-to-double-buffer-net-controls-on-a-form
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;    // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
+        }
+
+        /// <summary>
+        /// Shows the initial settings
+        /// </summary>
+        private void ShowInitialSettings
+            (
+            )
+        {
+            DynamicTimePeriod.Text = DEFAULT_DYNAMIC_TIME_MS.ToString();
+            DynamicResolutionInput.Text = DEFAULT_DYNAMIC_RESOLUTION_MS.ToString();
         }
 
         /// <summary>
@@ -203,9 +230,44 @@ namespace DJetronicECUTester
             }
 
             RecordBtn.Enabled = Tester.IsConnected;
-            startRecordingPulseWidthsToolStripMenuItem.Enabled = Tester.IsConnected;
+            startRecordingDataToolStripMenuItem.Enabled = Tester.IsConnected;
             StopBtn.Enabled = Tester.IsConnected;
-            stopRecordingPulseWidthsToolStripMenuItem.Enabled = Tester.IsConnected;
+            stopRecordingDataToolStripMenuItem.Enabled = Tester.IsConnected;
+
+            StartSpeedInput.Enabled = SpeedEnable.Checked;
+            EndSpeedInput.Enabled = SpeedEnable.Checked;
+            StartSpeedLabel1.Enabled = SpeedEnable.Checked;
+            StartSpeedLabel2.Enabled = SpeedEnable.Checked;
+            EndSpeedLabel1.Enabled = SpeedEnable.Checked;
+            EndSpeedLabel2.Enabled = SpeedEnable.Checked;
+
+            StartAirTempInput.Enabled = AirTempEnable.Checked;
+            EndAirTempInput.Enabled = AirTempEnable.Checked;
+            StartAirTempLabel1.Enabled = AirTempEnable.Checked;
+            EndAirTempLabel2.Enabled = AirTempEnable.Checked;
+            StartAirTempLabel2.Enabled = AirTempEnable.Checked;
+            EndAirTempLabel1.Enabled = AirTempEnable.Checked;
+
+            StartCoolantTempInput.Enabled = CoolantTempEnable.Checked;
+            EndCoolantTempInput.Enabled = CoolantTempEnable.Checked;
+            StartCoolantTempLabel1.Enabled = CoolantTempEnable.Checked;
+            EndCoolantTempLabel1.Enabled = CoolantTempEnable.Checked;
+            StartCoolantTempLabel2.Enabled = CoolantTempEnable.Checked;
+            EndCoolantTempLabel2.Enabled = CoolantTempEnable.Checked;
+
+            StartThrottleInput.Enabled = ThrottleEnable.Checked;
+            EndThrottleInput.Enabled = ThrottleEnable.Checked;
+            StartThrottleLabel1.Enabled = ThrottleEnable.Checked;
+            EndThrottleLabel1.Enabled = ThrottleEnable.Checked;
+            StartThrottleLabel2.Enabled = ThrottleEnable.Checked;
+            EndThrottleLabel2.Enabled = ThrottleEnable.Checked;
+
+            StartStarterInput.Enabled = StarterEnable.Checked;
+            EndStarterInput.Enabled = StarterEnable.Checked;
+            StartStarterLabel1.Enabled = StarterEnable.Checked;
+            EndStarterLabel1.Enabled = StarterEnable.Checked;
+            StartStarterLabel2.Enabled = StarterEnable.Checked;
+            EndStarterLabel2.Enabled = StarterEnable.Checked;
         }
 
         /// <summary>
@@ -338,6 +400,88 @@ namespace DJetronicECUTester
         }
 
         /// <summary>
+        /// Starts the dynamic simulation
+        /// </summary>
+        private void StartDynamic
+            (
+            )
+        {
+            DynamicSettings Settings = new DynamicSettings();
+
+            if (!uint.TryParse(DynamicTimePeriod.Text, out Settings.Duration))
+            {
+                MessageBox.Show("Invalid period for dynamic test", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            
+            if (Settings.Duration < 100)
+            {
+                MessageBox.Show("Dynamic test must be at least 100ms long", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            if (!uint.TryParse(DynamicResolutionInput.Text, out Settings.Resolution))
+            {
+                Settings.Resolution = 10;
+            }
+
+            Settings.UseSpeed = SpeedEnable.Checked;
+            Settings.UseAirTemp = AirTempEnable.Checked;
+            Settings.UseCoolantTemp = CoolantTempEnable.Checked;
+            Settings.UseThrottle = ThrottleEnable.Checked;
+            Settings.UseStarter = StarterEnable.Checked;
+
+            Settings.StartSpeed = 0;
+            Settings.EndSpeed = 0;
+            Settings.StartAirTemp = 0;
+            Settings.EndAirTemp = 0;
+            Settings.StartCoolantTemp = 0;
+            Settings.EndCoolantTemp = 0;
+            Settings.StartThrottle = 0;
+            Settings.EndThrottle = 0;
+            Settings.StartStarter = 0;
+            Settings.EndStarter = 0;
+
+            if (SpeedEnable.Checked)
+            {
+                if (!uint.TryParse(StartSpeedInput.Text, out Settings.StartSpeed)) Settings.UseSpeed = false;
+                if (!uint.TryParse(EndSpeedInput.Text, out Settings.EndSpeed)) Settings.UseSpeed = false;
+            }
+
+            if (AirTempEnable.Checked)
+            {
+                if (!int.TryParse(StartAirTempInput.Text, out Settings.StartAirTemp)) Settings.UseAirTemp = false;
+                if (!int.TryParse(EndAirTempInput.Text, out Settings.EndAirTemp)) Settings.UseAirTemp = false;
+            }
+
+            if (CoolantTempEnable.Checked)
+            {
+                if (!int.TryParse(StartCoolantTempInput.Text, out Settings.StartCoolantTemp)) Settings.UseCoolantTemp = false;
+                if (!int.TryParse(EndCoolantTempInput.Text, out Settings.EndCoolantTemp)) Settings.UseCoolantTemp = false;
+            }
+
+            if (ThrottleEnable.Checked)
+            {
+                if (!uint.TryParse(StartThrottleInput.Text, out Settings.StartThrottle)) Settings.UseThrottle = false;
+                if (!uint.TryParse(EndThrottleInput.Text, out Settings.EndThrottle)) Settings.UseThrottle = false;
+            }
+
+            if (StarterEnable.Checked)
+            {
+                if (!uint.TryParse(StartStarterInput.Text, out Settings.StartStarter)) Settings.UseStarter = false;
+                if (!uint.TryParse(EndStarterInput.Text, out Settings.EndStarter)) Settings.UseStarter = false;
+            }
+
+            if (Settings.StartStarter > Settings.EndStarter)
+            {
+                MessageBox.Show("Starter motor off time must be later than the on time", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            Tester.UseDynamicSettings(Settings);
+        }
+
+        /// <summary>
         /// Called when user clicks on the engine test button
         /// </summary>
         /// <param name="sender"></param>
@@ -347,19 +491,34 @@ namespace DJetronicECUTester
             Tester.EngineTest();
         }
 
-        private void SpeedBtn_Click(object sender, EventArgs e)
+        private void DynamicStartBtn_Click(object sender, EventArgs e)
         {
-
+            StartDynamic();
         }
 
         private void SpeedEnable_CheckedChanged(object sender, EventArgs e)
         {
-
+            UpdateUI();
         }
 
         private void StarterEnable_CheckedChanged(object sender, EventArgs e)
         {
+            UpdateUI();
+        }
 
+        private void AirTempEnable_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateUI();
+        }
+
+        private void CoolantTempEnable_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateUI();
+        }
+
+        private void ThrottleEnable_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateUI();
         }
     }
 }

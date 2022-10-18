@@ -53,7 +53,8 @@ namespace DJetronicECUTester
             CurrentFuelPumpOutput = 0x14,
             CurrentPulseWidths = 0x15,
             SetStarterMotor = 0x16,
-            UnstableCranking = 0x17
+            UnstableCranking = 0x17,
+            DynamicTest = 0x18
         }
 
         public delegate void OnConnectedHandler(object sender, string PortName, int Baudrate, int MajorVersion, int MinorVersion);
@@ -249,6 +250,60 @@ namespace DJetronicECUTester
         {
             byte[] Buffer = new byte[3] { SysExStart, (byte)MessageIds.EngineTest, SysExEnd };
             Connection.Write(Buffer, 0, 3);
+        }
+
+        /// <summary>
+        /// Starts the use of dynamic settings
+        /// </summary>
+        /// <param name="Settings">Settings to use</param>
+        public void UseDynamicSettings
+            (
+            DynamicSettings Settings
+            )
+        {
+            if (Settings.UseSpeed)
+            {
+                if (Settings.StartSpeed > MAX_ENGINE_SPEED_RPM) Settings.StartSpeed = MAX_ENGINE_SPEED_RPM;
+                if (Settings.EndSpeed > MAX_ENGINE_SPEED_RPM) Settings.EndSpeed = MAX_ENGINE_SPEED_RPM;
+            }
+
+            if (Settings.UseThrottle)
+            {
+                if (Settings.StartThrottle > 100) Settings.StartThrottle = 100;
+                if (Settings.EndThrottle > 100) Settings.EndThrottle = 100;
+            }
+
+            if (Settings.UseAirTemp)
+            {
+                if (Settings.StartAirTemp < MIN_AIR_TEMP_F) Settings.StartAirTemp = MIN_AIR_TEMP_F;
+                if (Settings.StartAirTemp > MAX_AIR_TEMP_F) Settings.StartAirTemp = MAX_AIR_TEMP_F;
+                if (Settings.EndAirTemp < MIN_AIR_TEMP_F) Settings.EndAirTemp = MIN_AIR_TEMP_F;
+                if (Settings.EndAirTemp > MAX_AIR_TEMP_F) Settings.EndAirTemp = MAX_AIR_TEMP_F;
+            }
+
+            if (Settings.UseCoolantTemp)
+            {
+                if (Settings.StartCoolantTemp < MIN_COOLANT_TEMP_F) Settings.StartCoolantTemp = MIN_COOLANT_TEMP_F;
+                if (Settings.StartCoolantTemp > MAX_COOLANT_TEMP_F) Settings.StartCoolantTemp = MAX_COOLANT_TEMP_F;
+                if (Settings.EndCoolantTemp < MIN_COOLANT_TEMP_F) Settings.EndCoolantTemp = MIN_COOLANT_TEMP_F;
+                if (Settings.EndCoolantTemp > MAX_COOLANT_TEMP_F) Settings.EndCoolantTemp = MAX_COOLANT_TEMP_F;
+            }
+
+            if (Settings.UseStarter)
+            {
+                if (Settings.StartStarter > Settings.Duration) Settings.StartStarter = Settings.Duration;
+                if (Settings.EndStarter > Settings.Duration) Settings.EndStarter = Settings.Duration;
+            }
+
+            byte[] Table = Settings.GenerateTable();
+
+            byte[] Buffer = new byte[Table.Length + 3];
+            Buffer[0] = SysExStart;
+            Buffer[1] = (byte)MessageIds.DynamicTest;
+            Array.Copy(Table, 0, Buffer, 2, Table.Length);
+            Buffer[Table.Length + 2] = SysExEnd;
+
+            Connection.Write(Buffer, 0, Buffer.Length);
         }
 
         /// <summary>

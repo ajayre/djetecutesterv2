@@ -75,6 +75,7 @@
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ImageViewerForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Image Viewer";
             ((System.ComponentModel.ISupportInitialize)(this.Picture)).EndInit();
             this.panel1.ResumeLayout(false);

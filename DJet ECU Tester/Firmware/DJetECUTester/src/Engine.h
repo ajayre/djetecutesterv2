@@ -14,6 +14,33 @@ typedef enum _throttledirection
   THROTTLE_DECELERATING
 } throttledirection_t;
 
+typedef struct _dynamic_test_t
+{
+  uint16_t Steps;
+  uint16_t StepTimeMs;
+
+  uint16_t StartSpeed;
+  int16_t SpeedStep;
+
+  int16_t StartAirTemp;
+  int16_t AirTempStep;
+
+  int16_t StartCoolantTemp;
+  int16_t CoolantTempStep;
+
+  uint16_t StartThrottle;
+  uint16_t ThrottleStep;
+
+  uint16_t StartStarter;
+  uint16_t EndStarter;
+
+  bool Running = false;
+  unsigned long Timestamp;
+  uint16_t StepNumber;
+} dynamic_test_t;
+
+extern dynamic_test_t EngineDynamicTest;
+
 // initializes engine simulation
 // initially cold idle
 extern void Engine_Init
@@ -158,6 +185,13 @@ extern void Engine_Test
 
 // disables the unstable rpms for cranking
 extern void Engine_DisableUnstableCrankingRPM
+  (
+  void
+  );
+
+// starts a dynamic test
+// before calling configure EngineDynamicTest with the settings
+extern void Engine_StartDynamicTest
   (
   void
   );

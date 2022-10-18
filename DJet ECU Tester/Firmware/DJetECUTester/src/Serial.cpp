@@ -33,7 +33,8 @@ typedef enum _messageids_t
   CurrentFuelPumpOutput = 0x14,
   CurrentPulseWidths = 0x15,
   SetStarterMotor = 0x16,
-  UnstableCranking = 0x17
+  UnstableCranking = 0x17,
+  DynamicTest = 0x18
 } messageids_t;
 
 typedef struct _status_t
@@ -45,6 +46,25 @@ typedef struct _status_t
   uint32_t PulseAngle;
   uint32_t Pressure;
 } status_t __attribute__ ((aligned (1)));
+
+// starts the dynamic test
+static void StartDynamicTest
+  (
+  byte argc,
+  byte *argv
+  )
+{
+  EngineDynamicTest.Steps      = (uint16_t)((argv[0] | ((uint16_t)argv[1] << 8)));
+  EngineDynamicTest.StepTimeMs = (uint16_t)((argv[2] | ((uint16_t)argv[3] << 8)));
+
+  EngineDynamicTest.StartSpeed = (uint16_t)((argv[4] | ((int16_t)argv[5] << 8)));
+  EngineDynamicTest.SpeedStep  = (int16_t)((argv[6] | ((int16_t)argv[7] << 8)));
+
+  Serial_printf("Steps=%u StepTimeMs=%u StartSpeed=%u SpeedStep=%d", EngineDynamicTest.Steps,
+    EngineDynamicTest.StepTimeMs, EngineDynamicTest.StartSpeed, EngineDynamicTest.SpeedStep);
+
+  Engine_StartDynamicTest();
+}
 
 // called when a sysex message is received
 // processes the message
@@ -165,6 +185,12 @@ static void sysexCallback(byte command, byte argc, byte *argv)
     case HardAcceleration:
       Engine_HardAcceleration();
       Serial_printf("Hard acceleration");
+      Serial_SendStatus();
+      break;
+
+    case DynamicTest:
+      StartDynamicTest(argc, argv);
+      Serial_printf("Running dynamic test");
       Serial_SendStatus();
       break;
   }

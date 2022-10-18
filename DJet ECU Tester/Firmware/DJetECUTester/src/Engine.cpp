@@ -159,6 +159,8 @@ typedef struct _coolantpotvalue_t
 // pulse generator trigger states for state machine
 typedef enum _triggerstates { G1START, G1END, G2START, G2END, G3START, G3END, G4START, G4END } triggerstates_t;
 
+dynamic_test_t EngineDynamicTest;
+
 static int EngineSpeed;                                    // RPM
 static int AirTempF;
 static int CoolantTempF;
@@ -647,11 +649,11 @@ static void UpdatePulseGeneratorTriggers
   G4On = Group4Start;
   G4Off = Group4End;
 
-  Serial_printf("G1On=%d G1Off=%d", G1On, G1Off);
-  Serial_printf("G2On=%d G2Off=%d", G2On, G2Off);
-  Serial_printf("G3On=%d G3Off=%d", G3On, G3Off);
-  Serial_printf("G4On=%d G4Off=%d", G4On, G4Off);
-  Serial_printf("Firing period=%d", FiringPeriod);
+  //Serial_printf("G1On=%d G1Off=%d", G1On, G1Off);
+  //Serial_printf("G2On=%d G2Off=%d", G2On, G2Off);
+  //Serial_printf("G3On=%d G3Off=%d", G3On, G3Off);
+  //Serial_printf("G4On=%d G4Off=%d", G4On, G4Off);
+  //Serial_printf("Firing period=%d", FiringPeriod);
 }
 
 // generates idle and WOT switch states
@@ -871,6 +873,23 @@ static void MeasurePulse
 
 /////////////////////////////////////////////////////////////////////
 // PUBLIC FUNCTIONS
+
+// starts a dynamic test
+// before calling configure EngineDynamicTest with the settings
+void Engine_StartDynamicTest
+  (
+  void
+  )
+{
+  EngineDynamicTest.Running = true;
+  EngineDynamicTest.Timestamp = GetTime() + EngineDynamicTest.StepTimeMs;
+  EngineDynamicTest.StepNumber = 0;
+
+  if (EngineDynamicTest.SpeedStep != 0)
+  {
+    Engine_SetEngineSpeed(EngineDynamicTest.StartSpeed);
+  }
+}
 
 // set new engine parameters
 void Engine_Set
@@ -1408,6 +1427,35 @@ void Engine_Process
       Serial_SendStatus();
 
       CrankingUnstableRPMTimestamp = GetTime() + CRANKING_RPM_CHANGE_PERIOD_MS;
+    }
+  }
+
+  // run the dynamic test
+  if (EngineDynamicTest.Running)
+  {
+    if (IsTimeExpired(EngineDynamicTest.Timestamp))
+    {
+      EngineDynamicTest.StepNumber++;
+
+      if (EngineDynamicTest.SpeedStep != 0)
+      {
+        Engine_SetEngineSpeed(EngineDynamicTest.StartSpeed + ((long)(EngineDynamicTest.StepNumber * EngineDynamicTest.SpeedStep) / 10));
+        //Serial_printf("%d (%d + %d * %d) %d", EngineSpeed, EngineDynamicTest.StartSpeed, EngineDynamicTest.StepNumber,
+        //  EngineDynamicTest.SpeedStep / 10, (int)(EngineDynamicTest.StepNumber * EngineDynamicTest.SpeedStep));
+      }
+
+      Serial_SendStatus();
+
+      if (EngineDynamicTest.StepNumber == EngineDynamicTest.Steps)
+      {
+        // end of test
+        EngineDynamicTest.Running = false;
+        Serial_printf("End of dynamic test");
+      }
+      else
+      {
+        EngineDynamicTest.Timestamp = GetTime() + EngineDynamicTest.StepTimeMs;
+      }
     }
   }
 }
