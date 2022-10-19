@@ -8,7 +8,8 @@
 extern void Serial_Init
   (
   int FirmwareMajorVersion,
-  int FirmwareMinorVersion
+  int FirmwareMinorVersion,
+  char *EngineName
   );
 
 // operates the module
@@ -56,6 +57,12 @@ extern int Serial_printf
   (
   char const *format,
   ...
+  );
+
+// sends notification that the dynamic test has ended
+extern void Serial_SendDynamicTestEnded
+  (
+  void
   );
 
 #endif // _SERIALH_

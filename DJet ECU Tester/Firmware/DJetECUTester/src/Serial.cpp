@@ -34,7 +34,11 @@ typedef enum _messageids_t
   CurrentPulseWidths = 0x15,
   SetStarterMotor = 0x16,
   UnstableCranking = 0x17,
-  DynamicTest = 0x18
+  StartDynamicTest = 0x18,
+  EngineName = 0x19,
+  RequestEngineName = 0x1A,
+  StopDynamicTest = 0x1B,
+  DynamicTestEnded = 0x1C
 } messageids_t;
 
 typedef struct _status_t
@@ -47,8 +51,11 @@ typedef struct _status_t
   uint32_t Pressure;
 } status_t __attribute__ ((aligned (1)));
 
+// the name of the engine
+static char *CurrentEngineName;
+
 // starts the dynamic test
-static void StartDynamicTest
+static void StartDynamic
   (
   byte argc,
   byte *argv
@@ -60,10 +67,30 @@ static void StartDynamicTest
   EngineDynamicTest.StartSpeed = (uint16_t)((argv[4] | ((int16_t)argv[5] << 8)));
   EngineDynamicTest.SpeedStep  = (int16_t)((argv[6] | ((int16_t)argv[7] << 8)));
 
+  EngineDynamicTest.StartAirTemp = (uint16_t)((argv[8] | ((int16_t)argv[9] << 8)));
+  EngineDynamicTest.AirTempStep  = (int16_t)((argv[10] | ((int16_t)argv[11] << 8)));
+
   Serial_printf("Steps=%u StepTimeMs=%u StartSpeed=%u SpeedStep=%d", EngineDynamicTest.Steps,
     EngineDynamicTest.StepTimeMs, EngineDynamicTest.StartSpeed, EngineDynamicTest.SpeedStep);
 
   Engine_StartDynamicTest();
+}
+
+// stops the dynamic test
+static void StopDynamic
+  (
+  void
+  )
+{
+  Engine_StopDynamicTest();
+}
+
+// sends the name of the engine being tested
+static void SendEngineName
+  (
+  )
+{
+  Firmata.sendSysex(EngineName, strlen(CurrentEngineName), (byte *)CurrentEngineName);
 }
 
 // called when a sysex message is received
@@ -84,6 +111,10 @@ static void sysexCallback(byte command, byte argc, byte *argv)
 
     case RequestStatus:
       Serial_SendStatus();
+      break;
+
+    case RequestEngineName:
+      SendEngineName();
       break;
 
     case SetCoolantTemp:
@@ -188,9 +219,15 @@ static void sysexCallback(byte command, byte argc, byte *argv)
       Serial_SendStatus();
       break;
 
-    case DynamicTest:
-      StartDynamicTest(argc, argv);
+    case StartDynamicTest:
+      StartDynamic(argc, argv);
       Serial_printf("Running dynamic test");
+      Serial_SendStatus();
+      break;
+
+    case StopDynamicTest:
+      StopDynamic();
+      Serial_printf("Dynamic test stopped");
       Serial_SendStatus();
       break;
   }
@@ -250,9 +287,13 @@ int Serial_printf
 void Serial_Init
   (
   int FirmwareMajorVersion,
-  int FirmwareMinorVersion
+  int FirmwareMinorVersion,
+  char *EngineName
   )
 {
+  // store name to send later
+  CurrentEngineName = EngineName;
+
   Firmata.setFirmwareVersion(FirmwareMajorVersion, FirmwareMinorVersion);
   //Firmata.attach(STRING_DATA, stringCallback);
   Firmata.attach(START_SYSEX, sysexCallback);
@@ -281,6 +322,18 @@ void Serial_SendThrottle
 
   Buffer[0] = Throttle & 0xFF;
   Firmata.sendSysex(CurrentThrottle, 1, Buffer);
+}
+
+// sends notification that the dynamic test has ended
+void Serial_SendDynamicTestEnded
+  (
+  void
+  )
+{
+  byte Buffer[1];
+
+  Buffer[0] = 0x00;
+  Firmata.sendSysex(DynamicTestEnded, 1, Buffer);
 }
 
 // sends the starter motor state

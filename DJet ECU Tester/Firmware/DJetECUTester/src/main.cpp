@@ -7,10 +7,11 @@
 
 #define MAJOR_VERSION 2
 #define MINOR_VERSION 1
+#define ENGINE_NAME "Mercedes V8"
 
 // initialization
 void setup() {
-  Serial_Init(MAJOR_VERSION, MINOR_VERSION);
+  Serial_Init(MAJOR_VERSION, MINOR_VERSION, ENGINE_NAME);
   Engine_Init();
 }
 

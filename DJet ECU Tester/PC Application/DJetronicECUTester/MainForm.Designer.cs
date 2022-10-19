@@ -62,7 +62,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.DynamicTimePeriod = new System.Windows.Forms.TextBox();
-            this.DynamicStartBtn = new System.Windows.Forms.Button();
+            this.DynamicStartStopBtn = new System.Windows.Forms.Button();
             this.StartStarterInput = new System.Windows.Forms.TextBox();
             this.EndSpeedLabel1 = new System.Windows.Forms.Label();
             this.StartStarterLabel1 = new System.Windows.Forms.Label();
@@ -109,7 +109,6 @@
             this.EngineTestBtn = new System.Windows.Forms.Button();
             this.OutputBox = new System.Windows.Forms.TextBox();
             this.DocumentationPage = new System.Windows.Forms.TabPage();
-            this.Gallery = new DJetronicStudio.Gallery();
             this.TesterInfoBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -133,6 +132,10 @@
             this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.PressureValue = new System.Windows.Forms.Label();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.EngineNameLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.DynamicProgressBar = new System.Windows.Forms.ProgressBar();
+            this.Gallery = new DJetronicStudio.Gallery();
             this.statusStrip1.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.StaticPage.SuspendLayout();
@@ -163,7 +166,9 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ConnectionStatus});
+            this.ConnectionStatus,
+            this.toolStripStatusLabel1,
+            this.EngineNameLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 640);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(979, 22);
@@ -435,11 +440,12 @@
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.DynamicProgressBar);
             this.groupBox3.Controls.Add(this.DynamicResolutionInput);
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.DynamicTimePeriod);
-            this.groupBox3.Controls.Add(this.DynamicStartBtn);
+            this.groupBox3.Controls.Add(this.DynamicStartStopBtn);
             this.groupBox3.Controls.Add(this.StartStarterInput);
             this.groupBox3.Controls.Add(this.EndSpeedLabel1);
             this.groupBox3.Controls.Add(this.StartStarterLabel1);
@@ -516,16 +522,16 @@
             this.DynamicTimePeriod.Size = new System.Drawing.Size(100, 20);
             this.DynamicTimePeriod.TabIndex = 23;
             // 
-            // DynamicStartBtn
+            // DynamicStartStopBtn
             // 
-            this.DynamicStartBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DynamicStartBtn.Location = new System.Drawing.Point(874, 179);
-            this.DynamicStartBtn.Name = "DynamicStartBtn";
-            this.DynamicStartBtn.Size = new System.Drawing.Size(75, 23);
-            this.DynamicStartBtn.TabIndex = 26;
-            this.DynamicStartBtn.Text = "Start";
-            this.DynamicStartBtn.UseVisualStyleBackColor = true;
-            this.DynamicStartBtn.Click += new System.EventHandler(this.DynamicStartBtn_Click);
+            this.DynamicStartStopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DynamicStartStopBtn.Location = new System.Drawing.Point(874, 179);
+            this.DynamicStartStopBtn.Name = "DynamicStartStopBtn";
+            this.DynamicStartStopBtn.Size = new System.Drawing.Size(75, 23);
+            this.DynamicStartStopBtn.TabIndex = 26;
+            this.DynamicStartStopBtn.Text = "Start";
+            this.DynamicStartStopBtn.UseVisualStyleBackColor = true;
+            this.DynamicStartStopBtn.Click += new System.EventHandler(this.DynamicStartStopBtn_Click);
             // 
             // StartStarterInput
             // 
@@ -927,12 +933,14 @@
             // 
             // OutputBox
             // 
-            this.OutputBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OutputBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.OutputBox.Location = new System.Drawing.Point(3, 3);
             this.OutputBox.Multiline = true;
             this.OutputBox.Name = "OutputBox";
             this.OutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.OutputBox.Size = new System.Drawing.Size(965, 507);
+            this.OutputBox.Size = new System.Drawing.Size(965, 475);
             this.OutputBox.TabIndex = 0;
             // 
             // DocumentationPage
@@ -945,14 +953,6 @@
             this.DocumentationPage.TabIndex = 4;
             this.DocumentationPage.Text = "Documentation";
             this.DocumentationPage.UseVisualStyleBackColor = true;
-            // 
-            // Gallery
-            // 
-            this.Gallery.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Gallery.Location = new System.Drawing.Point(3, 3);
-            this.Gallery.Name = "Gallery";
-            this.Gallery.Size = new System.Drawing.Size(965, 507);
-            this.Gallery.TabIndex = 0;
             // 
             // TesterInfoBox
             // 
@@ -1170,6 +1170,36 @@
             this.PressureValue.Text = "15";
             this.PressureValue.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(760, 17);
+            this.toolStripStatusLabel1.Spring = true;
+            // 
+            // EngineNameLabel
+            // 
+            this.EngineNameLabel.Name = "EngineNameLabel";
+            this.EngineNameLabel.Size = new System.Drawing.Size(103, 17);
+            this.EngineNameLabel.Text = "EngineNameLabel";
+            // 
+            // DynamicProgressBar
+            // 
+            this.DynamicProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DynamicProgressBar.Enabled = false;
+            this.DynamicProgressBar.Location = new System.Drawing.Point(726, 181);
+            this.DynamicProgressBar.Name = "DynamicProgressBar";
+            this.DynamicProgressBar.Size = new System.Drawing.Size(142, 19);
+            this.DynamicProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.DynamicProgressBar.TabIndex = 58;
+            // 
+            // Gallery
+            // 
+            this.Gallery.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Gallery.Location = new System.Drawing.Point(3, 3);
+            this.Gallery.Name = "Gallery";
+            this.Gallery.Size = new System.Drawing.Size(965, 507);
+            this.Gallery.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1272,7 +1302,7 @@
         private System.Windows.Forms.CheckBox StarterMotorInput;
         private System.Windows.Forms.TabPage ChartPage;
         private Gallery Gallery;
-        private System.Windows.Forms.Button DynamicStartBtn;
+        private System.Windows.Forms.Button DynamicStartStopBtn;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox DynamicTimePeriod;
@@ -1315,6 +1345,9 @@
         private System.Windows.Forms.TextBox DynamicResolutionInput;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel EngineNameLabel;
+        private System.Windows.Forms.ProgressBar DynamicProgressBar;
     }
 }
 

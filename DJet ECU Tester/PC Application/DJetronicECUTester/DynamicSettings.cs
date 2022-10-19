@@ -38,6 +38,7 @@ namespace DJetronicStudio
         {
             uint Steps = Duration / Resolution;
             int SpeedStep = 0;
+            int AirTempStep = 0;
 
             if (UseSpeed)
             {
@@ -51,18 +52,35 @@ namespace DJetronicStudio
                 }
             }
 
-            byte[] Table = new byte[8];
+            if (UseAirTemp)
+            {
+                if (EndAirTemp > StartAirTemp)
+                {
+                    AirTempStep = (int)(((double)EndAirTemp - (double)StartAirTemp + 1) * 100 / Steps);
+                }
+                else if (StartAirTemp > EndAirTemp)
+                {
+                    AirTempStep = -(int)(((double)StartAirTemp - (double)EndAirTemp + 1) * 100 / Steps);
+                }
+            }
 
-            Table[0] = (byte)(Steps & 0xFF);
-            Table[1] = (byte)((Steps >> 8) & 0xFF);
+            byte[] Table = new byte[12];
 
-            Table[2] = (byte)(Resolution & 0xFF);
-            Table[3] = (byte)((Resolution >> 8) & 0xFF);
+            Table[0]  = (byte)(Steps & 0xFF);
+            Table[1]  = (byte)((Steps >> 8) & 0xFF);
 
-            Table[4] = (byte)(StartSpeed & 0xFF);
-            Table[5] = (byte)((StartSpeed >> 8) & 0xFF);
-            Table[6] = (byte)(SpeedStep & 0xFF);
-            Table[7] = (byte)((SpeedStep >> 8) & 0xFF);
+            Table[2]  = (byte)(Resolution & 0xFF);
+            Table[3]  = (byte)((Resolution >> 8) & 0xFF);
+
+            Table[4]  = (byte)(StartSpeed & 0xFF);
+            Table[5]  = (byte)((StartSpeed >> 8) & 0xFF);
+            Table[6]  = (byte)(SpeedStep & 0xFF);
+            Table[7]  = (byte)((SpeedStep >> 8) & 0xFF);
+
+            Table[8]  = (byte)(StartAirTemp & 0xFF);
+            Table[9]  = (byte)((StartAirTemp >> 8) & 0xFF);
+            Table[10] = (byte)(AirTempStep & 0xFF);
+            Table[11] = (byte)((AirTempStep >> 8) & 0xFF);
 
             return Table;
         }

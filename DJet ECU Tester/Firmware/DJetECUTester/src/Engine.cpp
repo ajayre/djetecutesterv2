@@ -40,6 +40,9 @@ using namespace icecave::arduino;
 // time between changes in RPM during cranking
 #define CRANKING_RPM_CHANGE_PERIOD_MS 200
 
+// time between status reports during dynamic testing, in milliseconds
+#define DYNAMIC_TEST_STATUS_PERIOD_MS 30
+
 // mcu pins
 #define PIN_STATUS_LED     A3  // PC3
 #define PIN_AIRTEMPCS      A5  // PC5
@@ -881,14 +884,30 @@ void Engine_StartDynamicTest
   void
   )
 {
+  if (EngineDynamicTest.Running)
+  {
+    Serial_printf("Dynamic test already running, ignoring new request");
+    return;
+  }
+
   EngineDynamicTest.Running = true;
   EngineDynamicTest.Timestamp = GetTime() + EngineDynamicTest.StepTimeMs;
+  EngineDynamicTest.SendStatusTimestamp = GetTime() + DYNAMIC_TEST_STATUS_PERIOD_MS;
   EngineDynamicTest.StepNumber = 0;
 
   if (EngineDynamicTest.SpeedStep != 0)
   {
     Engine_SetEngineSpeed(EngineDynamicTest.StartSpeed);
   }
+}
+
+// stops the dynamic test
+void Engine_StopDynamicTest
+  (
+  void
+  )
+{
+  EngineDynamicTest.Running = false;
 }
 
 // set new engine parameters
@@ -1446,9 +1465,12 @@ void Engine_Process
 
       if (EngineDynamicTest.SpeedStep != 0)
       {
-        Engine_SetEngineSpeed(EngineDynamicTest.StartSpeed + ((long)(EngineDynamicTest.StepNumber * EngineDynamicTest.SpeedStep) / 10));
-        //Serial_printf("%d (%d + %d * %d) %d", EngineSpeed, EngineDynamicTest.StartSpeed, EngineDynamicTest.StepNumber,
-        //  EngineDynamicTest.SpeedStep / 10, (int)(EngineDynamicTest.StepNumber * EngineDynamicTest.SpeedStep));
+        Engine_SetEngineSpeed((int)(EngineDynamicTest.StartSpeed + (((float)EngineDynamicTest.StepNumber * (float)EngineDynamicTest.SpeedStep) / (float)10)));
+      }
+
+      if (EngineDynamicTest.AirTempStep != 0)
+      {
+        Engine_SetAirTempF((int)(EngineDynamicTest.StartAirTemp + (((float)EngineDynamicTest.StepNumber * (float)EngineDynamicTest.AirTempStep) / (float)100)));
       }
 
       if (EngineDynamicTest.StepNumber == EngineDynamicTest.Steps)
@@ -1456,6 +1478,7 @@ void Engine_Process
         // end of test
         EngineDynamicTest.Running = false;
         Serial_printf("End of dynamic test");
+        Serial_SendDynamicTestEnded();
         Serial_SendStatus();
       }
       else

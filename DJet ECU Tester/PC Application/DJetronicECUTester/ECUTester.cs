@@ -14,6 +14,12 @@ namespace DJetronicStudio
         private ISerialConnection Connection = null;
         private Status CurrentStatus = new Status();
 
+        private bool _DynamicTestRunning = false;
+        public bool DynamicTestRunning
+        {
+            get { return _DynamicTestRunning; }
+        }
+
         private const byte SysExStart = 0xF0;
         private const byte SysExEnd = 0xF7;
 
@@ -54,7 +60,11 @@ namespace DJetronicStudio
             CurrentPulseWidths = 0x15,
             SetStarterMotor = 0x16,
             UnstableCranking = 0x17,
-            DynamicTest = 0x18
+            StartDynamicTest = 0x18,
+            EngineName = 0x19,
+            RequestEngineName = 0x1A,
+            StopDynamicTest = 0x1B,
+            DynamicTestEnded = 0x1C
         }
 
         public delegate void OnConnectedHandler(object sender, string PortName, int Baudrate, int MajorVersion, int MinorVersion);
@@ -68,6 +78,15 @@ namespace DJetronicStudio
 
         public delegate void OnReceivedStatusHandler(object sender, Status CurrentStatus);
         public event OnReceivedStatusHandler OnReceivedStatus = null;
+
+        public delegate void OnReceivedEngineNameHandler(object sender, string EngineName);
+        public event OnReceivedEngineNameHandler OnReceivedEngineName = null;
+
+        public delegate void OnDynamicTestStartedHandler(object sender);
+        public event OnDynamicTestStartedHandler OnDynamicTestStarted = null;
+
+        public delegate void OnDynamicTestStoppedHandler(object sender);
+        public event OnDynamicTestStoppedHandler OnDynamicTestStopped = null;
 
         /// <summary>
         /// true if connected to the tester
@@ -103,11 +122,14 @@ namespace DJetronicStudio
 
             var firmware = Session.GetFirmware();
 
+            _DynamicTestRunning = false;
+
             if (OnConnected != null)
             {
                 OnConnected(this, Connection.PortName, Connection.BaudRate, firmware.MajorVersion, firmware.MinorVersion);
             }
 
+            RequestEngineName();
             RequestStatus();
         }
 
@@ -121,6 +143,13 @@ namespace DJetronicStudio
             if (Connection == null || !Connection.IsOpen)
             {
                 return;
+            }
+
+            if (DynamicTestRunning)
+            {
+                StopDynamicTest();
+                DateTime Wait = DateTime.Now.AddMilliseconds(1000);
+                while (DateTime.Now < Wait) ;
             }
 
             Session.MessageReceived -= Session_MessageReceived;
@@ -142,6 +171,17 @@ namespace DJetronicStudio
             )
         {
             byte[] Buffer = new byte[3] { SysExStart, (byte)MessageIds.RequestStatus, SysExEnd };
+            Connection.Write(Buffer, 0, 3);
+        }
+
+        /// <summary>
+        /// Tells the tester to send the engine name
+        /// </summary>
+        private void RequestEngineName
+            (
+            )
+        {
+            byte[] Buffer = new byte[3] { SysExStart, (byte)MessageIds.RequestEngineName, SysExEnd };
             Connection.Write(Buffer, 0, 3);
         }
 
@@ -253,10 +293,24 @@ namespace DJetronicStudio
         }
 
         /// <summary>
+        /// Stops a currently running dynamic test
+        /// </summary>
+        public void StopDynamicTest
+            (
+            )
+        {
+            byte[] Buffer = new byte[3] { SysExStart, (byte)MessageIds.StopDynamicTest, SysExEnd };
+            Connection.Write(Buffer, 0, 3);
+
+            _DynamicTestRunning = false;
+            if (OnDynamicTestStopped != null) OnDynamicTestStopped(this);
+        }
+
+        /// <summary>
         /// Starts the use of dynamic settings
         /// </summary>
         /// <param name="Settings">Settings to use</param>
-        public void UseDynamicSettings
+        public void StartDynamicTest
             (
             DynamicSettings Settings
             )
@@ -299,11 +353,14 @@ namespace DJetronicStudio
 
             byte[] Buffer = new byte[Table.Length + 3];
             Buffer[0] = SysExStart;
-            Buffer[1] = (byte)MessageIds.DynamicTest;
+            Buffer[1] = (byte)MessageIds.StartDynamicTest;
             Array.Copy(Table, 0, Buffer, 2, Table.Length);
             Buffer[Table.Length + 2] = SysExEnd;
 
             Connection.Write(Buffer, 0, Buffer.Length);
+
+            _DynamicTestRunning = true;
+            if (OnDynamicTestStarted != null) OnDynamicTestStarted(this);
         }
 
         /// <summary>
@@ -426,6 +483,16 @@ namespace DJetronicStudio
                     {
                         OnReceivedStatus(this, CurrentStatus);
                     }
+                }
+                else if (Buffer[0] == (byte)MessageIds.EngineName)
+                {
+                    string EngineName = Encoding.ASCII.GetString(Buffer, 1, Buffer.Length - 1);
+                    if (OnReceivedEngineName != null) OnReceivedEngineName(this, EngineName);
+                }
+                else if (Buffer[0] == (byte)MessageIds.DynamicTestEnded)
+                {
+                    _DynamicTestRunning = false;
+                    if (OnDynamicTestStopped != null) OnDynamicTestStopped(this);
                 }
             }
         }

@@ -145,7 +145,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DJetECUTesterV2.ico" />
     <Content Include="DJetronicStudio.ico" />
     <None Include="Graphics\DJetronicStudio_72.png" />
     <None Include="Graphics\stop_64.png" />

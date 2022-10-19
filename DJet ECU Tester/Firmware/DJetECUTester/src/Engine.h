@@ -37,6 +37,7 @@ typedef struct _dynamic_test_t
   bool Running = false;
   unsigned long Timestamp;
   uint16_t StepNumber;
+  unsigned long SendStatusTimestamp;
 } dynamic_test_t;
 
 extern dynamic_test_t EngineDynamicTest;
@@ -192,6 +193,12 @@ extern void Engine_DisableUnstableCrankingRPM
 // starts a dynamic test
 // before calling configure EngineDynamicTest with the settings
 extern void Engine_StartDynamicTest
+  (
+  void
+  );
+
+// stops the dynamic test
+extern void Engine_StopDynamicTest
   (
   void
   );

@@ -25,13 +25,18 @@ namespace DJetronicStudio
         {
             InitializeComponent();
 
+
             Tester.OnConnected += Tester_OnConnected;
             Tester.OnDisconnected += Tester_OnDisconnected;
             Tester.OnShowMessage += Tester_OnShowMessage;
             Tester.OnReceivedStatus += Tester_OnReceivedStatus;
+            Tester.OnReceivedEngineName += Tester_OnReceivedEngineName;
+            Tester.OnDynamicTestStarted += Tester_OnDynamicTestStarted;
+            Tester.OnDynamicTestStopped += Tester_OnDynamicTestStopped;
 
             ConnectionStatus.Text = "Not connected";
             TesterInfoBox.Text = "";
+            EngineNameLabel.Text = "";
 
 #if DEBUG
             Gallery.ImageFolder = Path.GetDirectoryName(Application.ExecutablePath) + @"\..\..\Documentation";
@@ -41,9 +46,48 @@ namespace DJetronicStudio
 #endif
             Gallery.OnShowImage += Gallery_OnShowImage;
 
+            DynamicProgressBar.Style = ProgressBarStyle.Continuous;
+
             ShowInitialSettings();
 
             UpdateUI();
+        }
+
+        /// <summary>
+        /// The dynamic test has stopped
+        /// </summary>
+        /// <param name="sender"></param>
+        private void Tester_OnDynamicTestStopped(object sender)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action<object>(Tester_OnDynamicTestStopped), sender);
+                return;
+            }
+
+            DynamicProgressBar.Style = ProgressBarStyle.Continuous;
+            DynamicStartStopBtn.Text = "Start";
+        }
+
+        /// <summary>
+        /// A dynamic test has started
+        /// </summary>
+        /// <param name="sender"></param>
+        private void Tester_OnDynamicTestStarted(object sender)
+        {
+            DynamicProgressBar.Style = ProgressBarStyle.Marquee;
+            DynamicStartStopBtn.Text = "Stop";
+        }
+
+        /// <summary>
+        /// Called when the engine name has been sent from the tester
+        /// Displays the name in the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="EngineName"></param>
+        private void Tester_OnReceivedEngineName(object sender, string EngineName)
+        {
+            EngineNameLabel.Text = EngineName;
         }
 
         // from: https://stackoverflow.com/questions/76993/how-to-double-buffer-net-controls-on-a-form
@@ -146,6 +190,7 @@ namespace DJetronicStudio
         private void Tester_OnDisconnected(object sender)
         {
             ConnectionStatus.Text = "Not connected";
+            EngineNameLabel.Text = "";
             UpdateUI();
         }
 
@@ -268,6 +313,8 @@ namespace DJetronicStudio
             EndStarterLabel1.Enabled = StarterEnable.Checked;
             StartStarterLabel2.Enabled = StarterEnable.Checked;
             EndStarterLabel2.Enabled = StarterEnable.Checked;
+
+            DynamicProgressBar.Style = ProgressBarStyle.Continuous;
         }
 
         /// <summary>
@@ -480,7 +527,7 @@ namespace DJetronicStudio
                 return;
             }
 
-            Tester.UseDynamicSettings(Settings);
+            Tester.StartDynamicTest(Settings);
         }
 
         /// <summary>
@@ -493,9 +540,16 @@ namespace DJetronicStudio
             Tester.EngineTest();
         }
 
-        private void DynamicStartBtn_Click(object sender, EventArgs e)
+        private void DynamicStartStopBtn_Click(object sender, EventArgs e)
         {
-            StartDynamic();
+            if (Tester.DynamicTestRunning)
+            {
+                Tester.StopDynamicTest();
+            }
+            else
+            {
+                StartDynamic();
+            }
         }
 
         private void SpeedEnable_CheckedChanged(object sender, EventArgs e)
