@@ -1,0 +1,9 @@
+D-JETRONIC STUDIO RELEASE NOTES
+(C) andy@britishideas.com 2022
+Attribution-NonCommercial-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+Version 1.0.0.0
+---------------
+
+- First release.
