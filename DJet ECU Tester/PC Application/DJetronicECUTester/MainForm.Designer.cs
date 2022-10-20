@@ -80,19 +80,12 @@
             this.label18 = new System.Windows.Forms.Label();
             this.StarterEnable = new System.Windows.Forms.CheckBox();
             this.StartSpeedInput = new System.Windows.Forms.TextBox();
-            this.ThrottleEnable = new System.Windows.Forms.CheckBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.StartThrottleInput = new System.Windows.Forms.TextBox();
             this.SpeedEnable = new System.Windows.Forms.CheckBox();
-            this.StartThrottleLabel1 = new System.Windows.Forms.Label();
             this.EndAirTempLabel1 = new System.Windows.Forms.Label();
-            this.StartThrottleLabel2 = new System.Windows.Forms.Label();
             this.EndAirTempInput = new System.Windows.Forms.TextBox();
-            this.EndThrottleLabel2 = new System.Windows.Forms.Label();
             this.EndAirTempLabel2 = new System.Windows.Forms.Label();
-            this.EndThrottleInput = new System.Windows.Forms.TextBox();
             this.StartAirTempLabel2 = new System.Windows.Forms.Label();
-            this.EndThrottleLabel1 = new System.Windows.Forms.Label();
             this.StartAirTempLabel1 = new System.Windows.Forms.Label();
             this.CoolantTempEnable = new System.Windows.Forms.CheckBox();
             this.StartAirTempInput = new System.Windows.Forms.TextBox();
@@ -103,7 +96,7 @@
             this.StartCoolantTempLabel2 = new System.Windows.Forms.Label();
             this.EndCoolantTempInput = new System.Windows.Forms.TextBox();
             this.EndCoolantTempLabel2 = new System.Windows.Forms.Label();
-            this.TestPage = new System.Windows.Forms.TabPage();
+            this.AutomatedTestPage = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.ChartPage = new System.Windows.Forms.TabPage();
@@ -112,7 +105,6 @@
             this.EngineTestBtn = new System.Windows.Forms.Button();
             this.OutputBox = new System.Windows.Forms.TextBox();
             this.DocumentationPage = new System.Windows.Forms.TabPage();
-            this.Gallery = new DJetronicStudio.Gallery();
             this.TesterInfoBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -136,6 +128,7 @@
             this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.PressureValue = new System.Windows.Forms.Label();
+            this.Gallery = new DJetronicStudio.Gallery();
             this.statusStrip1.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.StaticPage.SuspendLayout();
@@ -143,7 +136,7 @@
             this.groupBox1.SuspendLayout();
             this.DynamicPage.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.TestPage.SuspendLayout();
+            this.AutomatedTestPage.SuspendLayout();
             this.ChartPage.SuspendLayout();
             this.DebugOutputPage.SuspendLayout();
             this.DocumentationPage.SuspendLayout();
@@ -198,7 +191,7 @@
             // 
             this.Tabs.Controls.Add(this.StaticPage);
             this.Tabs.Controls.Add(this.DynamicPage);
-            this.Tabs.Controls.Add(this.TestPage);
+            this.Tabs.Controls.Add(this.AutomatedTestPage);
             this.Tabs.Controls.Add(this.ChartPage);
             this.Tabs.Controls.Add(this.DebugOutputPage);
             this.Tabs.Controls.Add(this.DocumentationPage);
@@ -473,19 +466,12 @@
             this.groupBox3.Controls.Add(this.label18);
             this.groupBox3.Controls.Add(this.StarterEnable);
             this.groupBox3.Controls.Add(this.StartSpeedInput);
-            this.groupBox3.Controls.Add(this.ThrottleEnable);
             this.groupBox3.Controls.Add(this.label17);
-            this.groupBox3.Controls.Add(this.StartThrottleInput);
             this.groupBox3.Controls.Add(this.SpeedEnable);
-            this.groupBox3.Controls.Add(this.StartThrottleLabel1);
             this.groupBox3.Controls.Add(this.EndAirTempLabel1);
-            this.groupBox3.Controls.Add(this.StartThrottleLabel2);
             this.groupBox3.Controls.Add(this.EndAirTempInput);
-            this.groupBox3.Controls.Add(this.EndThrottleLabel2);
             this.groupBox3.Controls.Add(this.EndAirTempLabel2);
-            this.groupBox3.Controls.Add(this.EndThrottleInput);
             this.groupBox3.Controls.Add(this.StartAirTempLabel2);
-            this.groupBox3.Controls.Add(this.EndThrottleLabel1);
             this.groupBox3.Controls.Add(this.StartAirTempLabel1);
             this.groupBox3.Controls.Add(this.CoolantTempEnable);
             this.groupBox3.Controls.Add(this.StartAirTempInput);
@@ -498,7 +484,7 @@
             this.groupBox3.Controls.Add(this.EndCoolantTempLabel2);
             this.groupBox3.Location = new System.Drawing.Point(8, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(955, 208);
+            this.groupBox3.Size = new System.Drawing.Size(955, 184);
             this.groupBox3.TabIndex = 55;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Linear";
@@ -507,7 +493,7 @@
             // 
             this.DynamicProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.DynamicProgressBar.Enabled = false;
-            this.DynamicProgressBar.Location = new System.Drawing.Point(726, 181);
+            this.DynamicProgressBar.Location = new System.Drawing.Point(726, 157);
             this.DynamicProgressBar.Name = "DynamicProgressBar";
             this.DynamicProgressBar.Size = new System.Drawing.Size(142, 19);
             this.DynamicProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
@@ -548,7 +534,7 @@
             // DynamicStartStopBtn
             // 
             this.DynamicStartStopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DynamicStartStopBtn.Location = new System.Drawing.Point(874, 179);
+            this.DynamicStartStopBtn.Location = new System.Drawing.Point(874, 155);
             this.DynamicStartStopBtn.Name = "DynamicStartStopBtn";
             this.DynamicStartStopBtn.Size = new System.Drawing.Size(75, 23);
             this.DynamicStartStopBtn.TabIndex = 26;
@@ -558,7 +544,7 @@
             // 
             // StartStarterInput
             // 
-            this.StartStarterInput.Location = new System.Drawing.Point(178, 175);
+            this.StartStarterInput.Location = new System.Drawing.Point(178, 149);
             this.StartStarterInput.Name = "StartStarterInput";
             this.StartStarterInput.Size = new System.Drawing.Size(100, 20);
             this.StartStarterInput.TabIndex = 49;
@@ -575,7 +561,7 @@
             // StartStarterLabel1
             // 
             this.StartStarterLabel1.AutoSize = true;
-            this.StartStarterLabel1.Location = new System.Drawing.Point(148, 178);
+            this.StartStarterLabel1.Location = new System.Drawing.Point(148, 152);
             this.StartStarterLabel1.Name = "StartStarterLabel1";
             this.StartStarterLabel1.Size = new System.Drawing.Size(24, 13);
             this.StartStarterLabel1.TabIndex = 50;
@@ -591,7 +577,7 @@
             // StartStarterLabel2
             // 
             this.StartStarterLabel2.AutoSize = true;
-            this.StartStarterLabel2.Location = new System.Drawing.Point(284, 178);
+            this.StartStarterLabel2.Location = new System.Drawing.Point(284, 152);
             this.StartStarterLabel2.Name = "StartStarterLabel2";
             this.StartStarterLabel2.Size = new System.Drawing.Size(20, 13);
             this.StartStarterLabel2.TabIndex = 51;
@@ -609,7 +595,7 @@
             // EndStarterLabel2
             // 
             this.EndStarterLabel2.AutoSize = true;
-            this.EndStarterLabel2.Location = new System.Drawing.Point(470, 178);
+            this.EndStarterLabel2.Location = new System.Drawing.Point(470, 152);
             this.EndStarterLabel2.Name = "EndStarterLabel2";
             this.EndStarterLabel2.Size = new System.Drawing.Size(20, 13);
             this.EndStarterLabel2.TabIndex = 54;
@@ -626,7 +612,7 @@
             // 
             // EndStarterInput
             // 
-            this.EndStarterInput.Location = new System.Drawing.Point(364, 175);
+            this.EndStarterInput.Location = new System.Drawing.Point(364, 149);
             this.EndStarterInput.Name = "EndStarterInput";
             this.EndStarterInput.Size = new System.Drawing.Size(100, 20);
             this.EndStarterInput.TabIndex = 52;
@@ -643,7 +629,7 @@
             // EndStarterLabel1
             // 
             this.EndStarterLabel1.AutoSize = true;
-            this.EndStarterLabel1.Location = new System.Drawing.Point(334, 178);
+            this.EndStarterLabel1.Location = new System.Drawing.Point(334, 152);
             this.EndStarterLabel1.Name = "EndStarterLabel1";
             this.EndStarterLabel1.Size = new System.Drawing.Size(24, 13);
             this.EndStarterLabel1.TabIndex = 53;
@@ -661,7 +647,7 @@
             // StarterEnable
             // 
             this.StarterEnable.AutoSize = true;
-            this.StarterEnable.Location = new System.Drawing.Point(9, 177);
+            this.StarterEnable.Location = new System.Drawing.Point(9, 151);
             this.StarterEnable.Name = "StarterEnable";
             this.StarterEnable.Size = new System.Drawing.Size(87, 17);
             this.StarterEnable.TabIndex = 48;
@@ -676,17 +662,6 @@
             this.StartSpeedInput.Size = new System.Drawing.Size(100, 20);
             this.StartSpeedInput.TabIndex = 17;
             // 
-            // ThrottleEnable
-            // 
-            this.ThrottleEnable.AutoSize = true;
-            this.ThrottleEnable.Location = new System.Drawing.Point(9, 151);
-            this.ThrottleEnable.Name = "ThrottleEnable";
-            this.ThrottleEnable.Size = new System.Drawing.Size(102, 17);
-            this.ThrottleEnable.TabIndex = 47;
-            this.ThrottleEnable.Text = "Throttle Position";
-            this.ThrottleEnable.UseVisualStyleBackColor = true;
-            this.ThrottleEnable.CheckedChanged += new System.EventHandler(this.ThrottleEnable_CheckedChanged);
-            // 
             // label17
             // 
             this.label17.AutoSize = true;
@@ -695,13 +670,6 @@
             this.label17.Size = new System.Drawing.Size(20, 13);
             this.label17.TabIndex = 25;
             this.label17.Text = "ms";
-            // 
-            // StartThrottleInput
-            // 
-            this.StartThrottleInput.Location = new System.Drawing.Point(178, 149);
-            this.StartThrottleInput.Name = "StartThrottleInput";
-            this.StartThrottleInput.Size = new System.Drawing.Size(100, 20);
-            this.StartThrottleInput.TabIndex = 41;
             // 
             // SpeedEnable
             // 
@@ -714,15 +682,6 @@
             this.SpeedEnable.UseVisualStyleBackColor = true;
             this.SpeedEnable.CheckedChanged += new System.EventHandler(this.SpeedEnable_CheckedChanged);
             // 
-            // StartThrottleLabel1
-            // 
-            this.StartThrottleLabel1.AutoSize = true;
-            this.StartThrottleLabel1.Location = new System.Drawing.Point(140, 152);
-            this.StartThrottleLabel1.Name = "StartThrottleLabel1";
-            this.StartThrottleLabel1.Size = new System.Drawing.Size(32, 13);
-            this.StartThrottleLabel1.TabIndex = 42;
-            this.StartThrottleLabel1.Text = "Start:";
-            // 
             // EndAirTempLabel1
             // 
             this.EndAirTempLabel1.AutoSize = true;
@@ -732,30 +691,12 @@
             this.EndAirTempLabel1.TabIndex = 31;
             this.EndAirTempLabel1.Text = "End:";
             // 
-            // StartThrottleLabel2
-            // 
-            this.StartThrottleLabel2.AutoSize = true;
-            this.StartThrottleLabel2.Location = new System.Drawing.Point(284, 152);
-            this.StartThrottleLabel2.Name = "StartThrottleLabel2";
-            this.StartThrottleLabel2.Size = new System.Drawing.Size(15, 13);
-            this.StartThrottleLabel2.TabIndex = 43;
-            this.StartThrottleLabel2.Text = "%";
-            // 
             // EndAirTempInput
             // 
             this.EndAirTempInput.Location = new System.Drawing.Point(364, 97);
             this.EndAirTempInput.Name = "EndAirTempInput";
             this.EndAirTempInput.Size = new System.Drawing.Size(100, 20);
             this.EndAirTempInput.TabIndex = 30;
-            // 
-            // EndThrottleLabel2
-            // 
-            this.EndThrottleLabel2.AutoSize = true;
-            this.EndThrottleLabel2.Location = new System.Drawing.Point(470, 152);
-            this.EndThrottleLabel2.Name = "EndThrottleLabel2";
-            this.EndThrottleLabel2.Size = new System.Drawing.Size(15, 13);
-            this.EndThrottleLabel2.TabIndex = 46;
-            this.EndThrottleLabel2.Text = "%";
             // 
             // EndAirTempLabel2
             // 
@@ -766,13 +707,6 @@
             this.EndAirTempLabel2.TabIndex = 32;
             this.EndAirTempLabel2.Text = "°F";
             // 
-            // EndThrottleInput
-            // 
-            this.EndThrottleInput.Location = new System.Drawing.Point(364, 149);
-            this.EndThrottleInput.Name = "EndThrottleInput";
-            this.EndThrottleInput.Size = new System.Drawing.Size(100, 20);
-            this.EndThrottleInput.TabIndex = 44;
-            // 
             // StartAirTempLabel2
             // 
             this.StartAirTempLabel2.AutoSize = true;
@@ -781,15 +715,6 @@
             this.StartAirTempLabel2.Size = new System.Drawing.Size(17, 13);
             this.StartAirTempLabel2.TabIndex = 29;
             this.StartAirTempLabel2.Text = "°F";
-            // 
-            // EndThrottleLabel1
-            // 
-            this.EndThrottleLabel1.AutoSize = true;
-            this.EndThrottleLabel1.Location = new System.Drawing.Point(329, 152);
-            this.EndThrottleLabel1.Name = "EndThrottleLabel1";
-            this.EndThrottleLabel1.Size = new System.Drawing.Size(29, 13);
-            this.EndThrottleLabel1.TabIndex = 45;
-            this.EndThrottleLabel1.Text = "End:";
             // 
             // StartAirTempLabel1
             // 
@@ -879,17 +804,17 @@
             this.EndCoolantTempLabel2.TabIndex = 39;
             this.EndCoolantTempLabel2.Text = "°F";
             // 
-            // TestPage
+            // AutomatedTestPage
             // 
-            this.TestPage.Controls.Add(this.button3);
-            this.TestPage.Controls.Add(this.button1);
-            this.TestPage.Location = new System.Drawing.Point(4, 22);
-            this.TestPage.Name = "TestPage";
-            this.TestPage.Padding = new System.Windows.Forms.Padding(3);
-            this.TestPage.Size = new System.Drawing.Size(971, 513);
-            this.TestPage.TabIndex = 2;
-            this.TestPage.Text = "Automated Testing";
-            this.TestPage.UseVisualStyleBackColor = true;
+            this.AutomatedTestPage.Controls.Add(this.button3);
+            this.AutomatedTestPage.Controls.Add(this.button1);
+            this.AutomatedTestPage.Location = new System.Drawing.Point(4, 22);
+            this.AutomatedTestPage.Name = "AutomatedTestPage";
+            this.AutomatedTestPage.Padding = new System.Windows.Forms.Padding(3);
+            this.AutomatedTestPage.Size = new System.Drawing.Size(971, 513);
+            this.AutomatedTestPage.TabIndex = 2;
+            this.AutomatedTestPage.Text = "Automated Testing";
+            this.AutomatedTestPage.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
@@ -977,14 +902,6 @@
             this.DocumentationPage.Text = "Documentation";
             this.DocumentationPage.UseVisualStyleBackColor = true;
             // 
-            // Gallery
-            // 
-            this.Gallery.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Gallery.Location = new System.Drawing.Point(3, 3);
-            this.Gallery.Name = "Gallery";
-            this.Gallery.Size = new System.Drawing.Size(965, 507);
-            this.Gallery.TabIndex = 0;
-            // 
             // TesterInfoBox
             // 
             this.TesterInfoBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(81)))), ((int)(((byte)(0)))));
@@ -1042,7 +959,7 @@
             // 
             this.connectToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.connect;
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-            this.connectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.connectToolStripMenuItem.Text = "&Connect";
             this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
@@ -1050,7 +967,7 @@
             // 
             this.disconnectToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.disconnect;
             this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
-            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.disconnectToolStripMenuItem.Text = "&Disconnect";
             this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
             // 
@@ -1201,6 +1118,14 @@
             this.PressureValue.Text = "15";
             this.PressureValue.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
+            // Gallery
+            // 
+            this.Gallery.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Gallery.Location = new System.Drawing.Point(3, 3);
+            this.Gallery.Name = "Gallery";
+            this.Gallery.Size = new System.Drawing.Size(965, 507);
+            this.Gallery.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1226,7 +1151,7 @@
             this.DynamicPage.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.TestPage.ResumeLayout(false);
+            this.AutomatedTestPage.ResumeLayout(false);
             this.ChartPage.ResumeLayout(false);
             this.DebugOutputPage.ResumeLayout(false);
             this.DebugOutputPage.PerformLayout();
@@ -1260,7 +1185,7 @@
         private System.Windows.Forms.TabPage StaticPage;
         private System.Windows.Forms.TabPage DynamicPage;
         private System.Windows.Forms.Button CopyInfoBtn;
-        private System.Windows.Forms.TabPage TestPage;
+        private System.Windows.Forms.TabPage AutomatedTestPage;
         private System.Windows.Forms.ToolStripMenuItem hardwareToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem;
@@ -1328,13 +1253,6 @@
         private System.Windows.Forms.Label EndAirTempLabel2;
         private System.Windows.Forms.TextBox EndAirTempInput;
         private System.Windows.Forms.Label EndAirTempLabel1;
-        private System.Windows.Forms.CheckBox ThrottleEnable;
-        private System.Windows.Forms.TextBox StartThrottleInput;
-        private System.Windows.Forms.Label StartThrottleLabel1;
-        private System.Windows.Forms.Label StartThrottleLabel2;
-        private System.Windows.Forms.Label EndThrottleLabel2;
-        private System.Windows.Forms.TextBox EndThrottleInput;
-        private System.Windows.Forms.Label EndThrottleLabel1;
         private System.Windows.Forms.TextBox StartStarterInput;
         private System.Windows.Forms.Label StartStarterLabel1;
         private System.Windows.Forms.Label StartStarterLabel2;

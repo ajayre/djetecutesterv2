@@ -741,14 +741,14 @@ static void GetAirWiperForResistance
 
   *pWiper = -1;
 
-  Serial_printf("Getting air wiper for resistance=%d", Resistance);
+  //Serial_printf("Getting air wiper for resistance=%d", Resistance);
 
   // smaller than the lowest value so use the lowest value
   memcpy_P(&TableEntry, &Table[0], sizeof(airpotvalue_t));
   if (Resistance <= TableEntry.Resistance)
   {
     *pWiper = TableEntry.Wiper;
-    Serial_printf("Matched R=%d", TableEntry.Resistance);
+    //Serial_printf("Matched R=%d", TableEntry.Resistance);
     return;
   }
 
@@ -759,7 +759,7 @@ static void GetAirWiperForResistance
     if (Resistance <= TableEntry.Resistance)
     {
       *pWiper = TableEntry.Wiper;
-      Serial_printf("Matched R=%d", TableEntry.Resistance);
+      //Serial_printf("Matched R=%d", TableEntry.Resistance);
       return;
     }
   }
@@ -770,7 +770,7 @@ static void GetAirWiperForResistance
   {
     memcpy_P(&TableEntry, &Table[NumTableEntries - 1], sizeof(airpotvalue_t));
     *pWiper = TableEntry.Wiper;
-    Serial_printf("Matched R=%d", TableEntry.Resistance);
+    //Serial_printf("Matched R=%d", TableEntry.Resistance);
   }
 }
 
@@ -790,18 +790,18 @@ static void GetCoolantWiperForResistance
 
   *pWiper1 = *pWiper2 = -1;
 
-  Serial_printf("Getting coolant wipers for resistance=%d", Resistance);
+  //Serial_printf("Getting coolant wipers for resistance=%d", Resistance);
 
-  Serial_printf("Lowest R=%d NumTableEntries=%d", Table[0].Resistance, NumTableEntries);
+  //Serial_printf("Lowest R=%d NumTableEntries=%d", Table[0].Resistance, NumTableEntries);
 
   // smaller than the lowest value so use the lowest value
   memcpy_P(&TableEntry, &Table[0], sizeof(coolantpotvalue_t));
   if (Resistance <= TableEntry.Resistance)
   {
-    Serial_printf("%d <= %d", Resistance, TableEntry.Resistance);
+    //Serial_printf("%d <= %d", Resistance, TableEntry.Resistance);
     *pWiper1 = TableEntry.Wiper1;
     *pWiper2 = TableEntry.Wiper2;
-    Serial_printf("Matched R=%d (0)", TableEntry.Resistance);
+    //Serial_printf("Matched R=%d (0)", TableEntry.Resistance);
     return;
   }
 
@@ -813,10 +813,10 @@ static void GetCoolantWiperForResistance
     {
       //Serial_printf("%d", Table[t].Resistance);
       //Serial_printf("%d", Table[t].Resistance);
-      Serial_printf("%d <= %d", Resistance, TableEntry.Resistance);
+      //Serial_printf("%d <= %d", Resistance, TableEntry.Resistance);
       *pWiper1 = TableEntry.Wiper1;
       *pWiper2 = TableEntry.Wiper2;
-      Serial_printf("Matched R=%d (%d) Wiper1=%d Wiper2=%d", TableEntry.Resistance, t, *pWiper1, *pWiper2);
+      //Serial_printf("Matched R=%d (%d) Wiper1=%d Wiper2=%d", TableEntry.Resistance, t, *pWiper1, *pWiper2);
       return;
     }
   }
@@ -825,11 +825,11 @@ static void GetCoolantWiperForResistance
   // so use the largest value
   if (*pWiper1 == -1)
   {
-    Serial_printf("No match, use largest value");
+    //Serial_printf("No match, use largest value");
     memcpy_P(&TableEntry, &Table[NumTableEntries - 1], sizeof(coolantpotvalue_t));
     *pWiper1 = TableEntry.Wiper1;
     *pWiper2 = TableEntry.Wiper2;
-    Serial_printf("Matched R=%d (%d)", TableEntry.Resistance, NumTableEntries - 1);
+    //Serial_printf("Matched R=%d (%d)", TableEntry.Resistance, NumTableEntries - 1);
   }
 }
 
@@ -1085,15 +1085,15 @@ void Engine_SetAirTempF
 
   AirTempF = NewAirTempF;
 
-  Serial_printf("airtemp=%d", AirTempF);
+  //Serial_printf("airtemp=%d", AirTempF);
 
   int R = AirTempSensor_GetResistance(AirTempF);
 
-  Serial_printf("Calc R = %d", R);
+  //Serial_printf("Calc R = %d", R);
 
   GetAirWiperForResistance(AirTempTable, sizeof(AirTempTable) / sizeof(airpotvalue_t), R, &Wiper);
 
-  Serial_printf("Wiper=%d", Wiper);
+  //Serial_printf("Wiper=%d", Wiper);
 
   AirTempPot->set(Wiper);
 }
@@ -1113,15 +1113,15 @@ void Engine_SetCoolantTempF
 
   CoolantTempF = NewCoolantTempF;
 
-  Serial_printf("coolanttemp=%d", CoolantTempF);
+  //Serial_printf("coolanttemp=%d", CoolantTempF);
 
   R = CoolantTempSensor_GetResistance(CoolantTempF);
 
-  Serial_printf("Calc R = %d", R);
+  //Serial_printf("Calc R = %d", R);
 
   GetCoolantWiperForResistance(CoolantTempTable, sizeof(CoolantTempTable) / sizeof(coolantpotvalue_t), R, &Wiper1, &Wiper2);
 
-  Serial_printf("Wiper1=%d Wiper2=%d", Wiper1, Wiper2);
+  //Serial_printf("Wiper1=%d Wiper2=%d", Wiper1, Wiper2);
 
   CoolantTempPot1->set(Wiper1);
   CoolantTempPot2->set(Wiper2);
@@ -1204,6 +1204,15 @@ void Engine_SetManifoldPressure
   )
 {
    Pressure = NewPressure;
+}
+
+// gets thje state of the starter motor
+bool Engine_GetStarterMotor
+  (
+  void  
+  )
+{
+  return START_STATE > 0 ? true : false;
 }
 
 // sets the state of the starter motor
@@ -1473,6 +1482,25 @@ void Engine_Process
         Engine_SetAirTempF((int)(EngineDynamicTest.StartAirTemp + (((float)EngineDynamicTest.StepNumber * (float)EngineDynamicTest.AirTempStep) / (float)100)));
       }
 
+      if (EngineDynamicTest.CoolantTempStep != 0)
+      {
+        Engine_SetCoolantTempF((int)(EngineDynamicTest.StartCoolantTemp + (((float)EngineDynamicTest.StepNumber * (float)EngineDynamicTest.CoolantTempStep) / (float)100)));
+      }
+
+      if (EngineDynamicTest.StartStarter != 0xFFFF && EngineDynamicTest.EndStarter != 0xFFFF)
+      {
+        if (((EngineDynamicTest.StepNumber * EngineDynamicTest.StepTimeMs) >= EngineDynamicTest.StartStarter) && !Engine_GetStarterMotor())
+        {
+          Engine_SetStarterMotor(true);
+          Serial_printf("Starter on");
+        }
+        if (((EngineDynamicTest.StepNumber * EngineDynamicTest.StepTimeMs) >= EngineDynamicTest.EndStarter) && Engine_GetStarterMotor())
+        {
+          Engine_SetStarterMotor(false);
+          Serial_printf("Starter off");
+        }
+      }
+ 
       if (EngineDynamicTest.StepNumber == EngineDynamicTest.Steps)
       {
         // end of test

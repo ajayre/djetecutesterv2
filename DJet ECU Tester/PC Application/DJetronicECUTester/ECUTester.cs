@@ -321,12 +321,6 @@ namespace DJetronicStudio
                 if (Settings.EndSpeed > MAX_ENGINE_SPEED_RPM) Settings.EndSpeed = MAX_ENGINE_SPEED_RPM;
             }
 
-            if (Settings.UseThrottle)
-            {
-                if (Settings.StartThrottle > 100) Settings.StartThrottle = 100;
-                if (Settings.EndThrottle > 100) Settings.EndThrottle = 100;
-            }
-
             if (Settings.UseAirTemp)
             {
                 if (Settings.StartAirTemp < MIN_AIR_TEMP_F) Settings.StartAirTemp = MIN_AIR_TEMP_F;

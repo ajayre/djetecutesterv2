@@ -315,6 +315,8 @@ namespace DJetronicStudio
                 if (Page == DebugOutputPage) continue;
                 if (Page == DocumentationPage) continue;
 
+                if ((Page == AutomatedTestPage) && Tester.IsConnected) continue;
+
                 foreach (Control Ctl in Page.Controls)
                 {
                     Ctl.Enabled = Connected;
@@ -362,13 +364,6 @@ namespace DJetronicStudio
             EndCoolantTempLabel1.Enabled = CoolantTempEnable.Checked;
             StartCoolantTempLabel2.Enabled = CoolantTempEnable.Checked;
             EndCoolantTempLabel2.Enabled = CoolantTempEnable.Checked;
-
-            StartThrottleInput.Enabled = ThrottleEnable.Checked;
-            EndThrottleInput.Enabled = ThrottleEnable.Checked;
-            StartThrottleLabel1.Enabled = ThrottleEnable.Checked;
-            EndThrottleLabel1.Enabled = ThrottleEnable.Checked;
-            StartThrottleLabel2.Enabled = ThrottleEnable.Checked;
-            EndThrottleLabel2.Enabled = ThrottleEnable.Checked;
 
             StartStarterInput.Enabled = StarterEnable.Checked;
             EndStarterInput.Enabled = StarterEnable.Checked;
@@ -530,7 +525,6 @@ namespace DJetronicStudio
             Settings.UseSpeed = SpeedEnable.Checked;
             Settings.UseAirTemp = AirTempEnable.Checked;
             Settings.UseCoolantTemp = CoolantTempEnable.Checked;
-            Settings.UseThrottle = ThrottleEnable.Checked;
             Settings.UseStarter = StarterEnable.Checked;
 
             Settings.StartSpeed = 0;
@@ -539,8 +533,6 @@ namespace DJetronicStudio
             Settings.EndAirTemp = 0;
             Settings.StartCoolantTemp = 0;
             Settings.EndCoolantTemp = 0;
-            Settings.StartThrottle = 0;
-            Settings.EndThrottle = 0;
             Settings.StartStarter = 0;
             Settings.EndStarter = 0;
 
@@ -560,14 +552,6 @@ namespace DJetronicStudio
             {
                 if (!int.TryParse(StartCoolantTempInput.Text, out Settings.StartCoolantTemp)) Settings.UseCoolantTemp = false;
                 if (!int.TryParse(EndCoolantTempInput.Text, out Settings.EndCoolantTemp)) Settings.UseCoolantTemp = false;
-            }
-
-            if (ThrottleEnable.Checked)
-            {
-                if (!uint.TryParse(StartThrottleInput.Text, out Settings.StartThrottle)) Settings.UseThrottle = false;
-                if (!uint.TryParse(EndThrottleInput.Text, out Settings.EndThrottle)) Settings.UseThrottle = false;
-
-                // fixme - to do - if using throttle then duration must be at least <throttle change %> x 10 x resolution - ask user to confirm increase in duration or greater resolution
             }
 
             if (StarterEnable.Checked)

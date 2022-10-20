@@ -28,9 +28,6 @@ typedef struct _dynamic_test_t
   int16_t StartCoolantTemp;
   int16_t CoolantTempStep;
 
-  uint16_t StartThrottle;
-  uint16_t ThrottleStep;
-
   uint16_t StartStarter;
   uint16_t EndStarter;
 
@@ -95,6 +92,12 @@ extern void Engine_SetManifoldPressure
 extern void Engine_SetStarterMotor
   (
   bool Running  // true if starter is running
+  );
+
+// gets thje state of the starter motor
+extern bool Engine_GetStarterMotor
+  (
+  void  
   );
 
 // set new engine parameters

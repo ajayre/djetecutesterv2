@@ -61,17 +61,23 @@ static void StartDynamic
   byte *argv
   )
 {
-  EngineDynamicTest.Steps      = (uint16_t)((argv[0] | ((uint16_t)argv[1] << 8)));
-  EngineDynamicTest.StepTimeMs = (uint16_t)((argv[2] | ((uint16_t)argv[3] << 8)));
+  EngineDynamicTest.Steps            = (uint16_t)((argv[0] | ((uint16_t)argv[1] << 8)));
+  EngineDynamicTest.StepTimeMs       = (uint16_t)((argv[2] | ((uint16_t)argv[3] << 8)));
 
-  EngineDynamicTest.StartSpeed = (uint16_t)((argv[4] | ((int16_t)argv[5] << 8)));
-  EngineDynamicTest.SpeedStep  = (int16_t)((argv[6] | ((int16_t)argv[7] << 8)));
+  EngineDynamicTest.StartSpeed       = (uint16_t)((argv[4] | ((int16_t)argv[5] << 8)));
+  EngineDynamicTest.SpeedStep        = (int16_t)((argv[6] | ((int16_t)argv[7] << 8)));
 
-  EngineDynamicTest.StartAirTemp = (uint16_t)((argv[8] | ((int16_t)argv[9] << 8)));
-  EngineDynamicTest.AirTempStep  = (int16_t)((argv[10] | ((int16_t)argv[11] << 8)));
+  EngineDynamicTest.StartAirTemp     = (uint16_t)((argv[8] | ((int16_t)argv[9] << 8)));
+  EngineDynamicTest.AirTempStep      = (int16_t)((argv[10] | ((int16_t)argv[11] << 8)));
 
-  Serial_printf("Steps=%u StepTimeMs=%u StartSpeed=%u SpeedStep=%d", EngineDynamicTest.Steps,
-    EngineDynamicTest.StepTimeMs, EngineDynamicTest.StartSpeed, EngineDynamicTest.SpeedStep);
+  EngineDynamicTest.StartCoolantTemp = (uint16_t)((argv[12] | ((int16_t)argv[13] << 8)));
+  EngineDynamicTest.CoolantTempStep  = (int16_t)((argv[14] | ((int16_t)argv[15] << 8)));
+
+  EngineDynamicTest.StartStarter     = (uint16_t)((argv[16] | ((int16_t)argv[17] << 8)));
+  EngineDynamicTest.EndStarter       = (uint16_t)((argv[18] | ((int16_t)argv[19] << 8)));
+
+  //Serial_printf("Steps=%u StepTimeMs=%u StartThrottle=%u ThrottleStep=%d", EngineDynamicTest.Steps,
+  //  EngineDynamicTest.StepTimeMs, EngineDynamicTest.StartThrottle, EngineDynamicTest.ThrottleStep);
 
   Engine_StartDynamicTest();
 }
