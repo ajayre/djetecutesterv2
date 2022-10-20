@@ -33,6 +33,8 @@
             this.CustomSettingsApplyBtn = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.ConnectionStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.EngineNameLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Tabs = new System.Windows.Forms.TabControl();
             this.StaticPage = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -58,6 +60,7 @@
             this.PresetSelector = new System.Windows.Forms.ComboBox();
             this.DynamicPage = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.DynamicProgressBar = new System.Windows.Forms.ProgressBar();
             this.DynamicResolutionInput = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -109,6 +112,7 @@
             this.EngineTestBtn = new System.Windows.Forms.Button();
             this.OutputBox = new System.Windows.Forms.TextBox();
             this.DocumentationPage = new System.Windows.Forms.TabPage();
+            this.Gallery = new DJetronicStudio.Gallery();
             this.TesterInfoBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,10 +136,6 @@
             this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.PressureValue = new System.Windows.Forms.Label();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.EngineNameLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.DynamicProgressBar = new System.Windows.Forms.ProgressBar();
-            this.Gallery = new DJetronicStudio.Gallery();
             this.statusStrip1.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.StaticPage.SuspendLayout();
@@ -177,9 +177,22 @@
             // 
             // ConnectionStatus
             // 
+            this.ConnectionStatus.Image = global::DJetronicStudio.Properties.Resources.tester_24;
             this.ConnectionStatus.Name = "ConnectionStatus";
-            this.ConnectionStatus.Size = new System.Drawing.Size(101, 17);
+            this.ConnectionStatus.Size = new System.Drawing.Size(117, 17);
             this.ConnectionStatus.Text = "ConnectionStatus";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(744, 17);
+            this.toolStripStatusLabel1.Spring = true;
+            // 
+            // EngineNameLabel
+            // 
+            this.EngineNameLabel.Name = "EngineNameLabel";
+            this.EngineNameLabel.Size = new System.Drawing.Size(103, 17);
+            this.EngineNameLabel.Text = "EngineNameLabel";
             // 
             // Tabs
             // 
@@ -490,6 +503,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Linear";
             // 
+            // DynamicProgressBar
+            // 
+            this.DynamicProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.DynamicProgressBar.Enabled = false;
+            this.DynamicProgressBar.Location = new System.Drawing.Point(726, 181);
+            this.DynamicProgressBar.Name = "DynamicProgressBar";
+            this.DynamicProgressBar.Size = new System.Drawing.Size(142, 19);
+            this.DynamicProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.DynamicProgressBar.TabIndex = 58;
+            // 
             // DynamicResolutionInput
             // 
             this.DynamicResolutionInput.Location = new System.Drawing.Point(178, 45);
@@ -570,9 +593,9 @@
             this.StartStarterLabel2.AutoSize = true;
             this.StartStarterLabel2.Location = new System.Drawing.Point(284, 178);
             this.StartStarterLabel2.Name = "StartStarterLabel2";
-            this.StartStarterLabel2.Size = new System.Drawing.Size(12, 13);
+            this.StartStarterLabel2.Size = new System.Drawing.Size(20, 13);
             this.StartStarterLabel2.TabIndex = 51;
-            this.StartStarterLabel2.Text = "s";
+            this.StartStarterLabel2.Text = "ms";
             // 
             // EndSpeedLabel2
             // 
@@ -588,9 +611,9 @@
             this.EndStarterLabel2.AutoSize = true;
             this.EndStarterLabel2.Location = new System.Drawing.Point(470, 178);
             this.EndStarterLabel2.Name = "EndStarterLabel2";
-            this.EndStarterLabel2.Size = new System.Drawing.Size(12, 13);
+            this.EndStarterLabel2.Size = new System.Drawing.Size(20, 13);
             this.EndStarterLabel2.TabIndex = 54;
-            this.EndStarterLabel2.Text = "s";
+            this.EndStarterLabel2.Text = "ms";
             // 
             // StartSpeedLabel2
             // 
@@ -629,11 +652,11 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(106, 22);
+            this.label18.Location = new System.Drawing.Point(112, 22);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(66, 13);
+            this.label18.Size = new System.Drawing.Size(60, 13);
             this.label18.TabIndex = 24;
-            this.label18.Text = "Time Period:";
+            this.label18.Text = "Total Time:";
             // 
             // StarterEnable
             // 
@@ -954,6 +977,14 @@
             this.DocumentationPage.Text = "Documentation";
             this.DocumentationPage.UseVisualStyleBackColor = true;
             // 
+            // Gallery
+            // 
+            this.Gallery.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Gallery.Location = new System.Drawing.Point(3, 3);
+            this.Gallery.Name = "Gallery";
+            this.Gallery.Size = new System.Drawing.Size(965, 507);
+            this.Gallery.TabIndex = 0;
+            // 
             // TesterInfoBox
             // 
             this.TesterInfoBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(81)))), ((int)(((byte)(0)))));
@@ -1004,14 +1035,14 @@
             this.connectToolStripMenuItem,
             this.disconnectToolStripMenuItem});
             this.hardwareToolStripMenuItem.Name = "hardwareToolStripMenuItem";
-            this.hardwareToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.hardwareToolStripMenuItem.Text = "&Hardware";
+            this.hardwareToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.hardwareToolStripMenuItem.Text = "&System";
             // 
             // connectToolStripMenuItem
             // 
             this.connectToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.connect;
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-            this.connectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.connectToolStripMenuItem.Text = "&Connect";
             this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
@@ -1019,7 +1050,7 @@
             // 
             this.disconnectToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.disconnect;
             this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
-            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.disconnectToolStripMenuItem.Text = "&Disconnect";
             this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
             // 
@@ -1038,7 +1069,7 @@
             this.startRecordingDataToolStripMenuItem.Name = "startRecordingDataToolStripMenuItem";
             this.startRecordingDataToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.startRecordingDataToolStripMenuItem.Text = "Start &Recording Data";
-            this.startRecordingDataToolStripMenuItem.Click += new System.EventHandler(this.startRecordingPulseWidthsToolStripMenuItem_Click);
+            this.startRecordingDataToolStripMenuItem.Click += new System.EventHandler(this.startRecordingDataToolStripMenuItem_Click);
             // 
             // stopRecordingDataToolStripMenuItem
             // 
@@ -1085,7 +1116,7 @@
             this.ConnectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ConnectBtn.Name = "ConnectBtn";
             this.ConnectBtn.Size = new System.Drawing.Size(36, 36);
-            this.ConnectBtn.Text = "Connect to tester";
+            this.ConnectBtn.Text = "Connect to tester or simulator";
             this.ConnectBtn.Click += new System.EventHandler(this.ConnectBtn_Click);
             // 
             // DisconnectBtn
@@ -1095,7 +1126,7 @@
             this.DisconnectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DisconnectBtn.Name = "DisconnectBtn";
             this.DisconnectBtn.Size = new System.Drawing.Size(36, 36);
-            this.DisconnectBtn.Text = "Disconnect from tester";
+            this.DisconnectBtn.Text = "Disconnect from tester or simulator";
             this.DisconnectBtn.Click += new System.EventHandler(this.DisconnectBtn_Click);
             // 
             // toolStripSeparator1
@@ -1169,36 +1200,6 @@
             this.PressureValue.TabIndex = 9;
             this.PressureValue.Text = "15";
             this.PressureValue.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(760, 17);
-            this.toolStripStatusLabel1.Spring = true;
-            // 
-            // EngineNameLabel
-            // 
-            this.EngineNameLabel.Name = "EngineNameLabel";
-            this.EngineNameLabel.Size = new System.Drawing.Size(103, 17);
-            this.EngineNameLabel.Text = "EngineNameLabel";
-            // 
-            // DynamicProgressBar
-            // 
-            this.DynamicProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DynamicProgressBar.Enabled = false;
-            this.DynamicProgressBar.Location = new System.Drawing.Point(726, 181);
-            this.DynamicProgressBar.Name = "DynamicProgressBar";
-            this.DynamicProgressBar.Size = new System.Drawing.Size(142, 19);
-            this.DynamicProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.DynamicProgressBar.TabIndex = 58;
-            // 
-            // Gallery
-            // 
-            this.Gallery.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Gallery.Location = new System.Drawing.Point(3, 3);
-            this.Gallery.Name = "Gallery";
-            this.Gallery.Size = new System.Drawing.Size(965, 507);
-            this.Gallery.TabIndex = 0;
             // 
             // MainForm
             // 

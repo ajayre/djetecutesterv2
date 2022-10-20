@@ -17,6 +17,7 @@ namespace DJetronicStudio
         private const int DEFAULT_DYNAMIC_RESOLUTION_MS = 50;
 
         private ECUTester Tester = new ECUTester();
+        private Simulator Sim = new Simulator();
 
         private Color Orange = Color.FromArgb(202, 81, 0);
         private bool FirstStatus = true;
@@ -24,7 +25,6 @@ namespace DJetronicStudio
         public MainForm()
         {
             InitializeComponent();
-
 
             Tester.OnConnected += Tester_OnConnected;
             Tester.OnDisconnected += Tester_OnDisconnected;
@@ -34,7 +34,11 @@ namespace DJetronicStudio
             Tester.OnDynamicTestStarted += Tester_OnDynamicTestStarted;
             Tester.OnDynamicTestStopped += Tester_OnDynamicTestStopped;
 
+            Sim.OnConnected += Sim_OnConnected;
+            Sim.OnDisconnected += Sim_OnDisconnected;
+
             ConnectionStatus.Text = "Not connected";
+            ConnectionStatus.Image = null;
             TesterInfoBox.Text = "";
             EngineNameLabel.Text = "";
 
@@ -138,13 +142,14 @@ namespace DJetronicStudio
                 return;
             }
 
-            string StatusText = string.Format("Air temp={0}°F, Coolant temp={1}°F, Eng speed={2}RPM, Throttle={3}% PG Angle={4}°, Vacuum={5}inHg, Fuel pump={6}, Starter motor={7}",
+            string StatusText = string.Format("Air temp={0}°F, Coolant temp={1}°F, Eng speed={2}RPM, Throttle={3}% PG Angle={4}°, Vacuum={5}inHg, Starter motor={6}",
                 CurrentStatus.AirTemperature, CurrentStatus.CoolantTemperature, CurrentStatus.EngineSpeed, CurrentStatus.Throttle,
-                CurrentStatus.DwellAngle, CurrentStatus.Pressure, CurrentStatus.FuelPumpOn ? "on" : "off", CurrentStatus.StartSignal ? "on" : "off");
+                CurrentStatus.DwellAngle, CurrentStatus.Pressure, CurrentStatus.StartSignal ? "on" : "off");
 
             UInt32 AveragePulseWidth = (UInt32)((CurrentStatus.PulseWidth_I + CurrentStatus.PulseWidth_II + CurrentStatus.PulseWidth_III + CurrentStatus.PulseWidth_IV) / 4.0);
 
-            StatusText += Environment.NewLine + string.Format("Pulse widths I={0:N2}ms II={1:N2}ms III={2:N2}ms IV={3:N2}ms Ave={4:N2}ms",
+            StatusText += Environment.NewLine + string.Format("Fuel pump={0}, Pulse widths I={1:N2}ms II={2:N2}ms III={3:N2}ms IV={4:N2}ms Ave={5:N2}ms",
+                CurrentStatus.FuelPumpOn ? "on" : "off",
                 CurrentStatus.PulseWidth_I / 1000.0, CurrentStatus.PulseWidth_II / 1000.0, CurrentStatus.PulseWidth_III / 1000.0, CurrentStatus.PulseWidth_IV / 1000.0,
                 AveragePulseWidth / 1000.0);
 
@@ -190,6 +195,7 @@ namespace DJetronicStudio
         private void Tester_OnDisconnected(object sender)
         {
             ConnectionStatus.Text = "Not connected";
+            ConnectionStatus.Image = null;
             EngineNameLabel.Text = "";
             UpdateUI();
         }
@@ -203,28 +209,74 @@ namespace DJetronicStudio
         private void Tester_OnConnected(object sender, string PortName, int Baudrate, int MajorVersion, int MinorVersion)
         {
             ConnectionStatus.Text = string.Format("Connected to ECU tester V{0}.{1} on {2} at {3} baud", MajorVersion, MinorVersion, PortName, Baudrate);
+            ConnectionStatus.Image = Properties.Resources.tester_24;
             Tester.UsePreset_EngineOff();
             PresetSelector.SelectedIndex = PresetSelector.Items.IndexOf("Engine Off");
             UpdateUI();
         }
 
         /// <summary>
+        /// Called when connected to the simulator
+        /// </summary>
+        /// <param name="sender">Simulation object</param>
+        private void Sim_OnDisconnected(object sender)
+        {
+            ConnectionStatus.Text = "Not connected";
+            ConnectionStatus.Image = null;
+            EngineNameLabel.Text = "";
+            UpdateUI();
+        }
+
+        /// <summary>
+        /// Called when connected to the simulator
+        /// </summary>
+        /// <param name="sender">Simulation object</param>
+        private void Sim_OnConnected(object sender)
+        {
+            ConnectionStatus.Text = string.Format("Connected to simulator");
+            ConnectionStatus.Image = Properties.Resources.simulation_24;
+            UpdateUI();
+        }
+
+        /// <summary>
         /// Called when user clicks on connect button
-        /// Finds and connects to tester
+        /// Finds and connects to tester or simulation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ConnectBtn_Click(object sender, EventArgs e)
         {
-            try
+            Connect();
+        }
+
+        /// <summary>
+        /// Prompts the user to choose what to connect to
+        /// </summary>
+        private void Connect
+            (
+            )
+        {
+            ConnectForm CForm = new ConnectForm();
+            if (CForm.ShowDialog() == DialogResult.OK)
             {
-                TesterInfoBox.Text = "";
-                OutputBox.Text = "";
-                Tester.Connect();
-            }
-            catch (Exception Exc)
-            {
-                MessageBox.Show(Exc.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                try
+                {
+                    TesterInfoBox.Text = "";
+                    OutputBox.Text = "";
+
+                    if (CForm.UseTester == true)
+                    {
+                        Tester.Connect();
+                    }
+                    else if (CForm.UseSimulation == true)
+                    {
+                        Sim.Connect();
+                    }
+                }
+                catch (Exception Exc)
+                {
+                    MessageBox.Show(Exc.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
         }
 
@@ -236,6 +288,7 @@ namespace DJetronicStudio
         private void DisconnectBtn_Click(object sender, EventArgs e)
         {
             Tester.Disconnect();
+            Sim.Disconnect();
             TesterInfoBox.Text = "";
             UpdateUI();
         }
@@ -247,11 +300,14 @@ namespace DJetronicStudio
             (
             )
         {
-            ConnectBtn.Enabled = !Tester.IsConnected;
-            connectToolStripMenuItem.Enabled = !Tester.IsConnected;
-            DisconnectBtn.Enabled = Tester.IsConnected;
-            disconnectToolStripMenuItem.Enabled = Tester.IsConnected;
-            CopyInfoBtn.Enabled = Tester.IsConnected;
+            bool Connected = false;
+            if (Tester.IsConnected || Sim.IsConnected) Connected = true;
+
+            ConnectBtn.Enabled = !Connected;
+            connectToolStripMenuItem.Enabled = !Connected;
+            DisconnectBtn.Enabled = Connected;
+            disconnectToolStripMenuItem.Enabled = Connected;
+            CopyInfoBtn.Enabled = Connected;
 
             foreach (TabPage Page in Tabs.TabPages)
             {
@@ -261,23 +317,30 @@ namespace DJetronicStudio
 
                 foreach (Control Ctl in Page.Controls)
                 {
-                    Ctl.Enabled = Tester.IsConnected;
+                    Ctl.Enabled = Connected;
                 }
             }
 
-            if (Tester.IsConnected)
+            if (Connected)
             {
-                TesterInfoBoxPanel.BackColor = TesterInfoBox.BackColor = Orange;
+                if (Tester.IsConnected)
+                {
+                    TesterInfoBoxPanel.BackColor = TesterInfoBox.BackColor = Orange;
+                }
+                else if (Sim.IsConnected)
+                {
+                    TesterInfoBoxPanel.BackColor = TesterInfoBox.BackColor = Color.CornflowerBlue;
+                }
             }
             else
             {
                 TesterInfoBoxPanel.BackColor = TesterInfoBox.BackColor = Color.LightGray;
             }
 
-            RecordBtn.Enabled = Tester.IsConnected;
-            startRecordingDataToolStripMenuItem.Enabled = Tester.IsConnected;
-            StopBtn.Enabled = Tester.IsConnected;
-            stopRecordingDataToolStripMenuItem.Enabled = Tester.IsConnected;
+            RecordBtn.Enabled = Connected;
+            startRecordingDataToolStripMenuItem.Enabled = Connected;
+            StopBtn.Enabled = Connected;
+            stopRecordingDataToolStripMenuItem.Enabled = Connected;
 
             StartSpeedInput.Enabled = SpeedEnable.Checked;
             EndSpeedInput.Enabled = SpeedEnable.Checked;
@@ -387,16 +450,7 @@ namespace DJetronicStudio
         /// <param name="e"></param>
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                TesterInfoBox.Text = "";
-                OutputBox.Text = "";
-                Tester.Connect();
-            }
-            catch (Exception Exc)
-            {
-                MessageBox.Show(Exc.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+            Connect();
         }
 
         /// <summary>
@@ -407,6 +461,7 @@ namespace DJetronicStudio
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Tester.Disconnect();
+            Sim.Disconnect();
         }
 
         /// <summary>
@@ -420,7 +475,7 @@ namespace DJetronicStudio
             Clipboard.SetText(TesterInfoBox.Text);
         }
 
-        private void startRecordingPulseWidthsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void startRecordingDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
