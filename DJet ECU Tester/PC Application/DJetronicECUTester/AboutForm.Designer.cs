@@ -37,6 +37,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,7 +63,7 @@
             // CloseBtn
             // 
             this.CloseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CloseBtn.Location = new System.Drawing.Point(316, 115);
+            this.CloseBtn.Location = new System.Drawing.Point(384, 127);
             this.CloseBtn.Name = "CloseBtn";
             this.CloseBtn.Size = new System.Drawing.Size(75, 23);
             this.CloseBtn.TabIndex = 2;
@@ -74,7 +75,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 120);
+            this.label2.Location = new System.Drawing.Point(12, 117);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(229, 13);
             this.label2.TabIndex = 3;
@@ -102,7 +103,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 104);
+            this.label4.Location = new System.Drawing.Point(12, 102);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(109, 13);
             this.label4.TabIndex = 6;
@@ -117,11 +118,22 @@
             this.label5.TabIndex = 7;
             this.label5.Text = "Simulation by Brad Cushman and Andy Ayre";
             // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 133);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(355, 13);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International";
+            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(403, 150);
+            this.ClientSize = new System.Drawing.Size(471, 162);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -130,6 +142,7 @@
             this.Controls.Add(this.CloseBtn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -153,5 +166,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }
