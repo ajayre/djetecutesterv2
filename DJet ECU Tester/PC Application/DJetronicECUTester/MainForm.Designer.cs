@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.CustomSettingsApplyBtn = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.ConnectionStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.EngineNameLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Tabs = new System.Windows.Forms.TabControl();
@@ -97,10 +96,7 @@
             this.EndCoolantTempInput = new System.Windows.Forms.TextBox();
             this.EndCoolantTempLabel2 = new System.Windows.Forms.Label();
             this.AutomatedTestPage = new System.Windows.Forms.TabPage();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.ChartPage = new System.Windows.Forms.TabPage();
-            this.cartesianChart1 = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
             this.DebugOutputPage = new System.Windows.Forms.TabPage();
             this.EngineTestBtn = new System.Windows.Forms.Button();
             this.OutputBox = new System.Windows.Forms.TextBox();
@@ -108,26 +104,36 @@
             this.TesterInfoBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hardwareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.startRecordingDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stopRecordingDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.ConnectBtn = new System.Windows.Forms.ToolStripButton();
-            this.DisconnectBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.RecordBtn = new System.Windows.Forms.ToolStripButton();
-            this.StopBtn = new System.Windows.Forms.ToolStripButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.CopyInfoBtn = new System.Windows.Forms.Button();
             this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.PressureValue = new System.Windows.Forms.Label();
+            this.ExportCSVDialog = new System.Windows.Forms.SaveFileDialog();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.CopyInfoBtn = new System.Windows.Forms.Button();
+            this.ConnectBtn = new System.Windows.Forms.ToolStripButton();
+            this.DisconnectBtn = new System.Windows.Forms.ToolStripButton();
+            this.RecordBtn = new System.Windows.Forms.ToolStripButton();
+            this.StopBtn = new System.Windows.Forms.ToolStripButton();
+            this.ConnectionStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.BufferStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startRecordingDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopRecordingDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExportCSVBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.Chart = new DJetronicStudio.DJetChart();
             this.Gallery = new DJetronicStudio.Gallery();
             this.statusStrip1.SuspendLayout();
             this.Tabs.SuspendLayout();
@@ -160,6 +166,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ConnectionStatus,
+            this.BufferStatus,
             this.toolStripStatusLabel1,
             this.EngineNameLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 640);
@@ -168,17 +175,10 @@
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "StatusStrip";
             // 
-            // ConnectionStatus
-            // 
-            this.ConnectionStatus.Image = global::DJetronicStudio.Properties.Resources.tester_24;
-            this.ConnectionStatus.Name = "ConnectionStatus";
-            this.ConnectionStatus.Size = new System.Drawing.Size(117, 17);
-            this.ConnectionStatus.Text = "ConnectionStatus";
-            // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(744, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(657, 17);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // EngineNameLabel
@@ -816,28 +816,9 @@
             this.AutomatedTestPage.Text = "Automated Testing";
             this.AutomatedTestPage.UseVisualStyleBackColor = true;
             // 
-            // button3
-            // 
-            this.button3.Image = global::DJetronicStudio.Properties.Resources.stop_64;
-            this.button3.Location = new System.Drawing.Point(94, 6);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(80, 80);
-            this.button3.TabIndex = 2;
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Image = global::DJetronicStudio.Properties.Resources.examine_64;
-            this.button1.Location = new System.Drawing.Point(8, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(80, 80);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // ChartPage
             // 
-            this.ChartPage.Controls.Add(this.cartesianChart1);
+            this.ChartPage.Controls.Add(this.Chart);
             this.ChartPage.Location = new System.Drawing.Point(4, 22);
             this.ChartPage.Name = "ChartPage";
             this.ChartPage.Padding = new System.Windows.Forms.Padding(3);
@@ -845,16 +826,6 @@
             this.ChartPage.TabIndex = 5;
             this.ChartPage.Text = "Charting";
             this.ChartPage.UseVisualStyleBackColor = true;
-            // 
-            // cartesianChart1
-            // 
-            this.cartesianChart1.AllowPanning = true;
-            this.cartesianChart1.BackColor = System.Drawing.Color.White;
-            this.cartesianChart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cartesianChart1.Location = new System.Drawing.Point(3, 3);
-            this.cartesianChart1.Name = "cartesianChart1";
-            this.cartesianChart1.Size = new System.Drawing.Size(965, 507);
-            this.cartesianChart1.TabIndex = 0;
             // 
             // DebugOutputPage
             // 
@@ -930,19 +901,35 @@
             this.menuStrip1.Size = new System.Drawing.Size(979, 24);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportCSVToolStripMenuItem,
+            this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
+            // exportCSVToolStripMenuItem
+            // 
+            this.exportCSVToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.csv_24;
+            this.exportCSVToolStripMenuItem.Name = "exportCSVToolStripMenuItem";
+            this.exportCSVToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.exportCSVToolStripMenuItem.Text = "&Export CSV...";
+            this.exportCSVToolStripMenuItem.Click += new System.EventHandler(this.exportCSVToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(138, 6);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -955,22 +942,6 @@
             this.hardwareToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.hardwareToolStripMenuItem.Text = "&System";
             // 
-            // connectToolStripMenuItem
-            // 
-            this.connectToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.connect;
-            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-            this.connectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.connectToolStripMenuItem.Text = "&Connect";
-            this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
-            // 
-            // disconnectToolStripMenuItem
-            // 
-            this.disconnectToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.disconnect;
-            this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
-            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.disconnectToolStripMenuItem.Text = "&Disconnect";
-            this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
-            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -979,21 +950,6 @@
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "&Options";
-            // 
-            // startRecordingDataToolStripMenuItem
-            // 
-            this.startRecordingDataToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.record;
-            this.startRecordingDataToolStripMenuItem.Name = "startRecordingDataToolStripMenuItem";
-            this.startRecordingDataToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.startRecordingDataToolStripMenuItem.Text = "Start &Recording Data";
-            this.startRecordingDataToolStripMenuItem.Click += new System.EventHandler(this.startRecordingDataToolStripMenuItem_Click);
-            // 
-            // stopRecordingDataToolStripMenuItem
-            // 
-            this.stopRecordingDataToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.stop;
-            this.stopRecordingDataToolStripMenuItem.Name = "stopRecordingDataToolStripMenuItem";
-            this.stopRecordingDataToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.stopRecordingDataToolStripMenuItem.Text = "&Stop Recording Data";
             // 
             // helpToolStripMenuItem
             // 
@@ -1019,67 +975,19 @@
             this.DisconnectBtn,
             this.toolStripSeparator1,
             this.RecordBtn,
-            this.StopBtn});
+            this.StopBtn,
+            this.toolStripSeparator3,
+            this.ExportCSVBtn});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(979, 39);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // ConnectBtn
-            // 
-            this.ConnectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ConnectBtn.Image = global::DJetronicStudio.Properties.Resources.connect;
-            this.ConnectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ConnectBtn.Name = "ConnectBtn";
-            this.ConnectBtn.Size = new System.Drawing.Size(36, 36);
-            this.ConnectBtn.Text = "Connect to tester or simulator";
-            this.ConnectBtn.Click += new System.EventHandler(this.ConnectBtn_Click);
-            // 
-            // DisconnectBtn
-            // 
-            this.DisconnectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.DisconnectBtn.Image = global::DJetronicStudio.Properties.Resources.disconnect;
-            this.DisconnectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.DisconnectBtn.Name = "DisconnectBtn";
-            this.DisconnectBtn.Size = new System.Drawing.Size(36, 36);
-            this.DisconnectBtn.Text = "Disconnect from tester or simulator";
-            this.DisconnectBtn.Click += new System.EventHandler(this.DisconnectBtn_Click);
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
-            // 
-            // RecordBtn
-            // 
-            this.RecordBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.RecordBtn.Image = global::DJetronicStudio.Properties.Resources.record;
-            this.RecordBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.RecordBtn.Name = "RecordBtn";
-            this.RecordBtn.Size = new System.Drawing.Size(36, 36);
-            this.RecordBtn.Text = "Start recording data";
-            // 
-            // StopBtn
-            // 
-            this.StopBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.StopBtn.Image = global::DJetronicStudio.Properties.Resources.stop;
-            this.StopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.StopBtn.Name = "StopBtn";
-            this.StopBtn.Size = new System.Drawing.Size(36, 36);
-            this.StopBtn.Text = "Stop recording data";
-            // 
-            // CopyInfoBtn
-            // 
-            this.CopyInfoBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CopyInfoBtn.Image = global::DJetronicStudio.Properties.Resources.copy;
-            this.CopyInfoBtn.Location = new System.Drawing.Point(867, 5);
-            this.CopyInfoBtn.Name = "CopyInfoBtn";
-            this.CopyInfoBtn.Size = new System.Drawing.Size(30, 30);
-            this.CopyInfoBtn.TabIndex = 8;
-            this.toolTip1.SetToolTip(this.CopyInfoBtn, "Copy to clipboard");
-            this.CopyInfoBtn.UseVisualStyleBackColor = true;
-            this.CopyInfoBtn.Click += new System.EventHandler(this.CopyInfoBtn_Click);
             // 
             // TesterInfoBoxPanel
             // 
@@ -1117,6 +1025,153 @@
             this.PressureValue.TabIndex = 9;
             this.PressureValue.Text = "15";
             this.PressureValue.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // ExportCSVDialog
+            // 
+            this.ExportCSVDialog.DefaultExt = "csv";
+            this.ExportCSVDialog.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*";
+            this.ExportCSVDialog.Title = "Export Data to CSV";
+            // 
+            // button3
+            // 
+            this.button3.Image = global::DJetronicStudio.Properties.Resources.stop_64;
+            this.button3.Location = new System.Drawing.Point(94, 6);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(80, 80);
+            this.button3.TabIndex = 2;
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Image = global::DJetronicStudio.Properties.Resources.examine_64;
+            this.button1.Location = new System.Drawing.Point(8, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(80, 80);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // CopyInfoBtn
+            // 
+            this.CopyInfoBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CopyInfoBtn.Image = global::DJetronicStudio.Properties.Resources.copy;
+            this.CopyInfoBtn.Location = new System.Drawing.Point(867, 5);
+            this.CopyInfoBtn.Name = "CopyInfoBtn";
+            this.CopyInfoBtn.Size = new System.Drawing.Size(30, 30);
+            this.CopyInfoBtn.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.CopyInfoBtn, "Copy to clipboard");
+            this.CopyInfoBtn.UseVisualStyleBackColor = true;
+            this.CopyInfoBtn.Click += new System.EventHandler(this.CopyInfoBtn_Click);
+            // 
+            // ConnectBtn
+            // 
+            this.ConnectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ConnectBtn.Image = global::DJetronicStudio.Properties.Resources.connect;
+            this.ConnectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ConnectBtn.Name = "ConnectBtn";
+            this.ConnectBtn.Size = new System.Drawing.Size(36, 36);
+            this.ConnectBtn.Text = "Connect to tester or simulator";
+            this.ConnectBtn.Click += new System.EventHandler(this.ConnectBtn_Click);
+            // 
+            // DisconnectBtn
+            // 
+            this.DisconnectBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.DisconnectBtn.Image = global::DJetronicStudio.Properties.Resources.disconnect;
+            this.DisconnectBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DisconnectBtn.Name = "DisconnectBtn";
+            this.DisconnectBtn.Size = new System.Drawing.Size(36, 36);
+            this.DisconnectBtn.Text = "Disconnect from tester or simulator";
+            this.DisconnectBtn.Click += new System.EventHandler(this.DisconnectBtn_Click);
+            // 
+            // RecordBtn
+            // 
+            this.RecordBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RecordBtn.Image = global::DJetronicStudio.Properties.Resources.record;
+            this.RecordBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RecordBtn.Name = "RecordBtn";
+            this.RecordBtn.Size = new System.Drawing.Size(36, 36);
+            this.RecordBtn.Text = "Start recording data";
+            this.RecordBtn.Click += new System.EventHandler(this.RecordBtn_Click);
+            // 
+            // StopBtn
+            // 
+            this.StopBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.StopBtn.Image = global::DJetronicStudio.Properties.Resources.stop;
+            this.StopBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.StopBtn.Name = "StopBtn";
+            this.StopBtn.Size = new System.Drawing.Size(36, 36);
+            this.StopBtn.Text = "Stop recording data";
+            this.StopBtn.Click += new System.EventHandler(this.StopBtn_Click);
+            // 
+            // ConnectionStatus
+            // 
+            this.ConnectionStatus.Image = global::DJetronicStudio.Properties.Resources.tester_24;
+            this.ConnectionStatus.Name = "ConnectionStatus";
+            this.ConnectionStatus.Size = new System.Drawing.Size(117, 17);
+            this.ConnectionStatus.Text = "ConnectionStatus";
+            // 
+            // BufferStatus
+            // 
+            this.BufferStatus.Image = global::DJetronicStudio.Properties.Resources.database_24;
+            this.BufferStatus.Name = "BufferStatus";
+            this.BufferStatus.Size = new System.Drawing.Size(87, 17);
+            this.BufferStatus.Text = "BufferStatus";
+            // 
+            // connectToolStripMenuItem
+            // 
+            this.connectToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.connect;
+            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.connectToolStripMenuItem.Text = "&Connect";
+            this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
+            // 
+            // disconnectToolStripMenuItem
+            // 
+            this.disconnectToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.disconnect;
+            this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
+            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.disconnectToolStripMenuItem.Text = "&Disconnect";
+            this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
+            // 
+            // startRecordingDataToolStripMenuItem
+            // 
+            this.startRecordingDataToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.record;
+            this.startRecordingDataToolStripMenuItem.Name = "startRecordingDataToolStripMenuItem";
+            this.startRecordingDataToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.startRecordingDataToolStripMenuItem.Text = "Start &Recording Data";
+            this.startRecordingDataToolStripMenuItem.Click += new System.EventHandler(this.startRecordingDataToolStripMenuItem_Click);
+            // 
+            // stopRecordingDataToolStripMenuItem
+            // 
+            this.stopRecordingDataToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.stop;
+            this.stopRecordingDataToolStripMenuItem.Name = "stopRecordingDataToolStripMenuItem";
+            this.stopRecordingDataToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.stopRecordingDataToolStripMenuItem.Text = "&Stop Recording Data";
+            this.stopRecordingDataToolStripMenuItem.Click += new System.EventHandler(this.stopRecordingDataToolStripMenuItem_Click);
+            // 
+            // ExportCSVBtn
+            // 
+            this.ExportCSVBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ExportCSVBtn.Image = global::DJetronicStudio.Properties.Resources.csv_32;
+            this.ExportCSVBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ExportCSVBtn.Name = "ExportCSVBtn";
+            this.ExportCSVBtn.Size = new System.Drawing.Size(36, 36);
+            this.ExportCSVBtn.Text = "Export capture data as a CSV file";
+            this.ExportCSVBtn.Click += new System.EventHandler(this.ExportCSVBtn_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 39);
+            // 
+            // Chart
+            // 
+            this.Chart.Buffer = null;
+            this.Chart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Chart.Location = new System.Drawing.Point(3, 3);
+            this.Chart.Name = "Chart";
+            this.Chart.Size = new System.Drawing.Size(965, 507);
+            this.Chart.TabIndex = 0;
             // 
             // Gallery
             // 
@@ -1200,7 +1255,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TabPage DebugOutputPage;
         private System.Windows.Forms.Panel TesterInfoBoxPanel;
-        private LiveChartsCore.SkiaSharpView.WinForms.CartesianChart cartesianChart1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button ApplyPresetBtn;
         private System.Windows.Forms.Label label1;
@@ -1267,6 +1321,13 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel EngineNameLabel;
         private System.Windows.Forms.ProgressBar DynamicProgressBar;
+        private System.Windows.Forms.ToolStripStatusLabel BufferStatus;
+        private System.Windows.Forms.ToolStripMenuItem exportCSVToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.SaveFileDialog ExportCSVDialog;
+        private DJetChart Chart;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton ExportCSVBtn;
     }
 }
 

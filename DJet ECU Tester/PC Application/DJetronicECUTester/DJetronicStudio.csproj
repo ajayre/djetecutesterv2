@@ -37,6 +37,26 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="LiveChartsCore">
       <HintPath>DLLs\LiveChartsCore.dll</HintPath>
@@ -93,6 +113,13 @@
     <Compile Include="ConnectForm.Designer.cs">
       <DependentUpon>ConnectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataBuffer.cs" />
+    <Compile Include="DJetChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DJetChart.Designer.cs">
+      <DependentUpon>DJetChart.cs</DependentUpon>
+    </Compile>
     <Compile Include="DynamicSettings.cs" />
     <Compile Include="ECUTester.cs" />
     <Compile Include="Gallery.cs">
@@ -122,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConnectForm.resx">
       <DependentUpon>ConnectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DJetChart.resx">
+      <DependentUpon>DJetChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gallery.resx">
       <DependentUpon>Gallery.cs</DependentUpon>
@@ -157,6 +187,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DJetronicStudio.ico" />
+    <None Include="Graphics\csv_64.png" />
+    <None Include="Graphics\csv_48.png" />
+    <None Include="Graphics\csv_32.png" />
+    <None Include="Graphics\csv_24.png" />
+    <None Include="Graphics\database_64.png" />
+    <None Include="Graphics\database_48.png" />
+    <None Include="Graphics\database_32.png" />
+    <None Include="Graphics\database_24.png" />
     <None Include="Graphics\tester_72.png" />
     <None Include="Graphics\tester_64.png" />
     <None Include="Graphics\tester_48.png" />

@@ -19,8 +19,23 @@ namespace DJetronicStudio
         private ECUTester Tester = new ECUTester();
         private Simulator Sim = new Simulator();
 
+        private DataBuffer Buffer = new DataBuffer();
+
         private Color Orange = Color.FromArgb(202, 81, 0);
         private bool FirstStatus = true;
+        private bool Recording = false;
+        private DateTime RecordingStartTime;
+
+        private bool IsConnected
+        {
+            get
+            {
+                if (Tester.IsConnected || Sim.IsConnected)
+                    return true;
+                else
+                    return false;
+            }
+        }
 
         public MainForm()
         {
@@ -52,9 +67,39 @@ namespace DJetronicStudio
 
             DynamicProgressBar.Style = ProgressBarStyle.Continuous;
 
+            Buffer.OnDataAdded += Buffer_OnDataAdded;
+            Buffer.OnDataCleared += Buffer_OnDataCleared;
+
+            Buffer.Clear();
+
+            Chart.Buffer = Buffer;
+
             ShowInitialSettings();
 
             UpdateUI();
+        }
+
+        /// <summary>
+        /// Called when buffer is cleared
+        /// </summary>
+        /// <param name="sender"></param>
+        private void Buffer_OnDataCleared(object sender)
+        {
+            BufferStatus.Text = "Empty";
+            exportCSVToolStripMenuItem.Enabled = false;
+            ExportCSVBtn.Enabled = false;
+        }
+
+        /// <summary>
+        /// Called when data is added to the buffer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="NumPoints"></param>
+        private void Buffer_OnDataAdded(object sender, int NumPoints, DataPoint NewPoint)
+        {
+            BufferStatus.Text = NumPoints.ToString() + " entries";
+            exportCSVToolStripMenuItem.Enabled = true;
+            ExportCSVBtn.Enabled = true;
         }
 
         /// <summary>
@@ -170,6 +215,12 @@ namespace DJetronicStudio
 
                 FirstStatus = false;
             }
+
+            if (Recording)
+            {
+                double Timestamp = (DateTime.Now - RecordingStartTime).TotalMilliseconds;
+                Buffer.Add(Timestamp, CurrentStatus);
+            }
         }
 
         /// <summary>
@@ -208,7 +259,7 @@ namespace DJetronicStudio
         /// <param name="Baudrate">Connection speed in bps</param>
         private void Tester_OnConnected(object sender, string PortName, int Baudrate, int MajorVersion, int MinorVersion)
         {
-            ConnectionStatus.Text = string.Format("Connected to ECU tester V{0}.{1} on {2} at {3} baud", MajorVersion, MinorVersion, PortName, Baudrate);
+            ConnectionStatus.Text = string.Format("Connected to ECU tester V{0}.{1} on {2}", MajorVersion, MinorVersion, PortName);
             ConnectionStatus.Image = Properties.Resources.tester_24;
             Tester.UsePreset_EngineOff();
             PresetSelector.SelectedIndex = PresetSelector.Items.IndexOf("Engine Off");
@@ -263,6 +314,7 @@ namespace DJetronicStudio
                 {
                     TesterInfoBox.Text = "";
                     OutputBox.Text = "";
+                    Buffer.Clear();
 
                     if (CForm.UseTester == true)
                     {
@@ -281,16 +333,27 @@ namespace DJetronicStudio
         }
 
         /// <summary>
+        /// Disconnects from hardware/simulator
+        /// </summary>
+        private void Disconnect
+            (
+            )
+        {
+            Tester.Disconnect();
+            Sim.Disconnect();
+            TesterInfoBox.Text = "";
+            Recording = false;
+            UpdateUI();
+        }
+
+        /// <summary>
         /// Called when user clicks on the disconnect button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DisconnectBtn_Click(object sender, EventArgs e)
         {
-            Tester.Disconnect();
-            Sim.Disconnect();
-            TesterInfoBox.Text = "";
-            UpdateUI();
+            Disconnect();
         }
 
         /// <summary>
@@ -300,14 +363,11 @@ namespace DJetronicStudio
             (
             )
         {
-            bool Connected = false;
-            if (Tester.IsConnected || Sim.IsConnected) Connected = true;
-
-            ConnectBtn.Enabled = !Connected;
-            connectToolStripMenuItem.Enabled = !Connected;
-            DisconnectBtn.Enabled = Connected;
-            disconnectToolStripMenuItem.Enabled = Connected;
-            CopyInfoBtn.Enabled = Connected;
+            ConnectBtn.Enabled = !IsConnected;
+            connectToolStripMenuItem.Enabled = !IsConnected;
+            DisconnectBtn.Enabled = IsConnected;
+            disconnectToolStripMenuItem.Enabled = IsConnected;
+            CopyInfoBtn.Enabled = IsConnected;
 
             foreach (TabPage Page in Tabs.TabPages)
             {
@@ -319,11 +379,11 @@ namespace DJetronicStudio
 
                 foreach (Control Ctl in Page.Controls)
                 {
-                    Ctl.Enabled = Connected;
+                    Ctl.Enabled = IsConnected;
                 }
             }
 
-            if (Connected)
+            if (IsConnected)
             {
                 if (Tester.IsConnected)
                 {
@@ -339,10 +399,10 @@ namespace DJetronicStudio
                 TesterInfoBoxPanel.BackColor = TesterInfoBox.BackColor = Color.LightGray;
             }
 
-            RecordBtn.Enabled = Connected;
-            startRecordingDataToolStripMenuItem.Enabled = Connected;
-            StopBtn.Enabled = Connected;
-            stopRecordingDataToolStripMenuItem.Enabled = Connected;
+            startRecordingDataToolStripMenuItem.Enabled = !Recording && IsConnected;
+            RecordBtn.Enabled = !Recording && IsConnected;
+            stopRecordingDataToolStripMenuItem.Enabled = Recording && IsConnected;
+            StopBtn.Enabled = Recording && IsConnected;
 
             StartSpeedInput.Enabled = SpeedEnable.Checked;
             EndSpeedInput.Enabled = SpeedEnable.Checked;
@@ -422,7 +482,7 @@ namespace DJetronicStudio
         /// <param name="e"></param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Tester.Disconnect();
+            Disconnect();
             Close();
         }
 
@@ -455,8 +515,7 @@ namespace DJetronicStudio
         /// <param name="e"></param>
         private void disconnectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Tester.Disconnect();
-            Sim.Disconnect();
+            Disconnect();
         }
 
         /// <summary>
@@ -472,7 +531,7 @@ namespace DJetronicStudio
 
         private void startRecordingDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            StartRecording();
         }
 
         /// <summary>
@@ -614,6 +673,104 @@ namespace DJetronicStudio
         private void ThrottleEnable_CheckedChanged(object sender, EventArgs e)
         {
             UpdateUI();
+        }
+
+        /// <summary>
+        /// Called when user clicks on the record button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RecordBtn_Click(object sender, EventArgs e)
+        {
+            StartRecording();
+        }
+
+        /// <summary>
+        /// Starts data recording
+        /// </summary>
+        private void StartRecording
+            (
+            )
+        {
+            if (!Recording)
+            {
+                Recording = true;
+                Buffer.Clear();
+                RecordingStartTime = DateTime.Now;
+                UpdateUI();
+            }
+        }
+
+        /// <summary>
+        /// Stops data recording
+        /// </summary>
+        private void StopRecording
+            (
+            )
+        {
+            if (Recording)
+            {
+                Recording = false;
+                UpdateUI();
+            }
+        }
+
+        /// <summary>
+        /// Called when user chooses to stop recording from the menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void stopRecordingDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StopRecording();
+        }
+
+        /// <summary>
+        /// Called when user clicks on the stop recording button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StopBtn_Click(object sender, EventArgs e)
+        {
+            StopRecording();
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Exports the recorded data as a CSV file
+        /// </summary>
+        private void ExportCSV
+            (
+            )
+        {
+            if (ExportCSVDialog.ShowDialog() == DialogResult.OK)
+            {
+                Buffer.ExportCSV(ExportCSVDialog.FileName);
+            }
+        }
+
+        /// <summary>
+        /// Called when user chooses the export csv menu option
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void exportCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExportCSV();
+        }
+
+        /// <summary>
+        /// Called when user clicks on the export csv button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExportCSVBtn_Click(object sender, EventArgs e)
+        {
+            ExportCSV();
         }
     }
 }
