@@ -187,6 +187,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DJetronicStudio.ico" />
+    <None Include="Graphics\clipboard_32.png" />
+    <None Include="Graphics\clipboard_24.png" />
+    <None Include="Graphics\car_32.png" />
+    <None Include="Graphics\car_24.png" />
+    <None Include="Graphics\engine_32.png" />
+    <None Include="Graphics\engine_24.png" />
+    <None Include="Graphics\edit_32.png" />
+    <None Include="Graphics\edit_24.png" />
+    <None Include="Graphics\exportimage_32.png" />
+    <None Include="Graphics\exportimage_24.png" />
+    <None Include="Graphics\clear_32.png" />
+    <None Include="Graphics\clear_24.png" />
     <None Include="Graphics\csv_64.png" />
     <None Include="Graphics\csv_48.png" />
     <None Include="Graphics\csv_32.png" />

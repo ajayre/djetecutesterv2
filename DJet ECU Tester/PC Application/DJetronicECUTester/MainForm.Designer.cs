@@ -32,8 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.CustomSettingsApplyBtn = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.EngineNameLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Tabs = new System.Windows.Forms.TabControl();
             this.StaticPage = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -104,7 +102,6 @@
             this.TesterInfoBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hardwareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,11 +110,14 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.TesterInfoBoxPanel = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.PressureValue = new System.Windows.Forms.Label();
             this.ExportCSVDialog = new System.Windows.Forms.SaveFileDialog();
+            this.Chart = new DJetronicStudio.DJetChart();
+            this.Gallery = new DJetronicStudio.Gallery();
             this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.CopyInfoBtn = new System.Windows.Forms.Button();
@@ -125,16 +125,15 @@
             this.DisconnectBtn = new System.Windows.Forms.ToolStripButton();
             this.RecordBtn = new System.Windows.Forms.ToolStripButton();
             this.StopBtn = new System.Windows.Forms.ToolStripButton();
+            this.ExportCSVBtn = new System.Windows.Forms.ToolStripButton();
             this.ConnectionStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.EngineNameLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.BufferStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.exportCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startRecordingDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopRecordingDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ExportCSVBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.Chart = new DJetronicStudio.DJetChart();
-            this.Gallery = new DJetronicStudio.Gallery();
             this.statusStrip1.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.StaticPage.SuspendLayout();
@@ -166,26 +165,13 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ConnectionStatus,
-            this.BufferStatus,
-            this.toolStripStatusLabel1,
-            this.EngineNameLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 640);
+            this.EngineNameLabel,
+            this.BufferStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 633);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(979, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(979, 29);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "StatusStrip";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(657, 17);
-            this.toolStripStatusLabel1.Spring = true;
-            // 
-            // EngineNameLabel
-            // 
-            this.EngineNameLabel.Name = "EngineNameLabel";
-            this.EngineNameLabel.Size = new System.Drawing.Size(103, 17);
-            this.EngineNameLabel.Text = "EngineNameLabel";
             // 
             // Tabs
             // 
@@ -199,7 +185,7 @@
             this.Tabs.Location = new System.Drawing.Point(0, 101);
             this.Tabs.Name = "Tabs";
             this.Tabs.SelectedIndex = 0;
-            this.Tabs.Size = new System.Drawing.Size(979, 539);
+            this.Tabs.Size = new System.Drawing.Size(979, 532);
             this.Tabs.TabIndex = 2;
             // 
             // StaticPage
@@ -209,7 +195,7 @@
             this.StaticPage.Location = new System.Drawing.Point(4, 22);
             this.StaticPage.Name = "StaticPage";
             this.StaticPage.Padding = new System.Windows.Forms.Padding(3);
-            this.StaticPage.Size = new System.Drawing.Size(971, 513);
+            this.StaticPage.Size = new System.Drawing.Size(971, 506);
             this.StaticPage.TabIndex = 0;
             this.StaticPage.Text = "Static";
             this.StaticPage.UseVisualStyleBackColor = true;
@@ -437,7 +423,7 @@
             this.DynamicPage.Location = new System.Drawing.Point(4, 22);
             this.DynamicPage.Name = "DynamicPage";
             this.DynamicPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DynamicPage.Size = new System.Drawing.Size(971, 513);
+            this.DynamicPage.Size = new System.Drawing.Size(971, 506);
             this.DynamicPage.TabIndex = 1;
             this.DynamicPage.Text = "Dynamic";
             this.DynamicPage.UseVisualStyleBackColor = true;
@@ -811,7 +797,7 @@
             this.AutomatedTestPage.Location = new System.Drawing.Point(4, 22);
             this.AutomatedTestPage.Name = "AutomatedTestPage";
             this.AutomatedTestPage.Padding = new System.Windows.Forms.Padding(3);
-            this.AutomatedTestPage.Size = new System.Drawing.Size(971, 513);
+            this.AutomatedTestPage.Size = new System.Drawing.Size(971, 506);
             this.AutomatedTestPage.TabIndex = 2;
             this.AutomatedTestPage.Text = "Automated Testing";
             this.AutomatedTestPage.UseVisualStyleBackColor = true;
@@ -822,7 +808,7 @@
             this.ChartPage.Location = new System.Drawing.Point(4, 22);
             this.ChartPage.Name = "ChartPage";
             this.ChartPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ChartPage.Size = new System.Drawing.Size(971, 513);
+            this.ChartPage.Size = new System.Drawing.Size(971, 506);
             this.ChartPage.TabIndex = 5;
             this.ChartPage.Text = "Charting";
             this.ChartPage.UseVisualStyleBackColor = true;
@@ -834,7 +820,7 @@
             this.DebugOutputPage.Location = new System.Drawing.Point(4, 22);
             this.DebugOutputPage.Name = "DebugOutputPage";
             this.DebugOutputPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DebugOutputPage.Size = new System.Drawing.Size(971, 513);
+            this.DebugOutputPage.Size = new System.Drawing.Size(971, 506);
             this.DebugOutputPage.TabIndex = 3;
             this.DebugOutputPage.Text = "Tester Debug Output";
             this.DebugOutputPage.UseVisualStyleBackColor = true;
@@ -842,7 +828,7 @@
             // EngineTestBtn
             // 
             this.EngineTestBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.EngineTestBtn.Location = new System.Drawing.Point(8, 484);
+            this.EngineTestBtn.Location = new System.Drawing.Point(8, 477);
             this.EngineTestBtn.Name = "EngineTestBtn";
             this.EngineTestBtn.Size = new System.Drawing.Size(75, 23);
             this.EngineTestBtn.TabIndex = 1;
@@ -859,7 +845,7 @@
             this.OutputBox.Multiline = true;
             this.OutputBox.Name = "OutputBox";
             this.OutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.OutputBox.Size = new System.Drawing.Size(965, 475);
+            this.OutputBox.Size = new System.Drawing.Size(965, 468);
             this.OutputBox.TabIndex = 0;
             // 
             // DocumentationPage
@@ -868,7 +854,7 @@
             this.DocumentationPage.Location = new System.Drawing.Point(4, 22);
             this.DocumentationPage.Name = "DocumentationPage";
             this.DocumentationPage.Padding = new System.Windows.Forms.Padding(3);
-            this.DocumentationPage.Size = new System.Drawing.Size(971, 513);
+            this.DocumentationPage.Size = new System.Drawing.Size(971, 506);
             this.DocumentationPage.TabIndex = 4;
             this.DocumentationPage.Text = "Documentation";
             this.DocumentationPage.UseVisualStyleBackColor = true;
@@ -901,7 +887,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(979, 24);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
@@ -912,14 +897,6 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
-            // 
-            // exportCSVToolStripMenuItem
-            // 
-            this.exportCSVToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.csv_24;
-            this.exportCSVToolStripMenuItem.Name = "exportCSVToolStripMenuItem";
-            this.exportCSVToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
-            this.exportCSVToolStripMenuItem.Text = "&Export CSV...";
-            this.exportCSVToolStripMenuItem.Click += new System.EventHandler(this.exportCSVToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -989,6 +966,11 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 39);
+            // 
             // TesterInfoBoxPanel
             // 
             this.TesterInfoBoxPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(202)))), ((int)(((byte)(81)))), ((int)(((byte)(0)))));
@@ -1032,6 +1014,23 @@
             this.ExportCSVDialog.Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*";
             this.ExportCSVDialog.Title = "Export Data to CSV";
             // 
+            // Chart
+            // 
+            this.Chart.Buffer = null;
+            this.Chart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Chart.Location = new System.Drawing.Point(3, 3);
+            this.Chart.Name = "Chart";
+            this.Chart.Size = new System.Drawing.Size(965, 500);
+            this.Chart.TabIndex = 0;
+            // 
+            // Gallery
+            // 
+            this.Gallery.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Gallery.Location = new System.Drawing.Point(3, 3);
+            this.Gallery.Name = "Gallery";
+            this.Gallery.Size = new System.Drawing.Size(965, 500);
+            this.Gallery.TabIndex = 0;
+            // 
             // button3
             // 
             this.button3.Image = global::DJetronicStudio.Properties.Resources.stop_64;
@@ -1054,7 +1053,7 @@
             // CopyInfoBtn
             // 
             this.CopyInfoBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CopyInfoBtn.Image = global::DJetronicStudio.Properties.Resources.copy;
+            this.CopyInfoBtn.Image = global::DJetronicStudio.Properties.Resources.clipboard_24;
             this.CopyInfoBtn.Location = new System.Drawing.Point(867, 5);
             this.CopyInfoBtn.Name = "CopyInfoBtn";
             this.CopyInfoBtn.Size = new System.Drawing.Size(30, 30);
@@ -1103,19 +1102,47 @@
             this.StopBtn.Text = "Stop recording data";
             this.StopBtn.Click += new System.EventHandler(this.StopBtn_Click);
             // 
+            // ExportCSVBtn
+            // 
+            this.ExportCSVBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.ExportCSVBtn.Image = global::DJetronicStudio.Properties.Resources.csv_32;
+            this.ExportCSVBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ExportCSVBtn.Name = "ExportCSVBtn";
+            this.ExportCSVBtn.Size = new System.Drawing.Size(36, 36);
+            this.ExportCSVBtn.Text = "Export capture data as a CSV file";
+            this.ExportCSVBtn.Click += new System.EventHandler(this.ExportCSVBtn_Click);
+            // 
             // ConnectionStatus
             // 
             this.ConnectionStatus.Image = global::DJetronicStudio.Properties.Resources.tester_24;
+            this.ConnectionStatus.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.ConnectionStatus.Name = "ConnectionStatus";
-            this.ConnectionStatus.Size = new System.Drawing.Size(117, 17);
+            this.ConnectionStatus.Size = new System.Drawing.Size(125, 24);
             this.ConnectionStatus.Text = "ConnectionStatus";
+            // 
+            // EngineNameLabel
+            // 
+            this.EngineNameLabel.Image = global::DJetronicStudio.Properties.Resources.car_24;
+            this.EngineNameLabel.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.EngineNameLabel.Name = "EngineNameLabel";
+            this.EngineNameLabel.Size = new System.Drawing.Size(127, 24);
+            this.EngineNameLabel.Text = "EngineNameLabel";
             // 
             // BufferStatus
             // 
             this.BufferStatus.Image = global::DJetronicStudio.Properties.Resources.database_24;
+            this.BufferStatus.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.BufferStatus.Name = "BufferStatus";
-            this.BufferStatus.Size = new System.Drawing.Size(87, 17);
+            this.BufferStatus.Size = new System.Drawing.Size(95, 24);
             this.BufferStatus.Text = "BufferStatus";
+            // 
+            // exportCSVToolStripMenuItem
+            // 
+            this.exportCSVToolStripMenuItem.Image = global::DJetronicStudio.Properties.Resources.csv_24;
+            this.exportCSVToolStripMenuItem.Name = "exportCSVToolStripMenuItem";
+            this.exportCSVToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.exportCSVToolStripMenuItem.Text = "&Export CSV...";
+            this.exportCSVToolStripMenuItem.Click += new System.EventHandler(this.exportCSVToolStripMenuItem_Click);
             // 
             // connectToolStripMenuItem
             // 
@@ -1148,38 +1175,6 @@
             this.stopRecordingDataToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.stopRecordingDataToolStripMenuItem.Text = "&Stop Recording Data";
             this.stopRecordingDataToolStripMenuItem.Click += new System.EventHandler(this.stopRecordingDataToolStripMenuItem_Click);
-            // 
-            // ExportCSVBtn
-            // 
-            this.ExportCSVBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.ExportCSVBtn.Image = global::DJetronicStudio.Properties.Resources.csv_32;
-            this.ExportCSVBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ExportCSVBtn.Name = "ExportCSVBtn";
-            this.ExportCSVBtn.Size = new System.Drawing.Size(36, 36);
-            this.ExportCSVBtn.Text = "Export capture data as a CSV file";
-            this.ExportCSVBtn.Click += new System.EventHandler(this.ExportCSVBtn_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 39);
-            // 
-            // Chart
-            // 
-            this.Chart.Buffer = null;
-            this.Chart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Chart.Location = new System.Drawing.Point(3, 3);
-            this.Chart.Name = "Chart";
-            this.Chart.Size = new System.Drawing.Size(965, 507);
-            this.Chart.TabIndex = 0;
-            // 
-            // Gallery
-            // 
-            this.Gallery.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Gallery.Location = new System.Drawing.Point(3, 3);
-            this.Gallery.Name = "Gallery";
-            this.Gallery.Size = new System.Drawing.Size(965, 507);
-            this.Gallery.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -1318,7 +1313,6 @@
         private System.Windows.Forms.TextBox DynamicResolutionInput;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel EngineNameLabel;
         private System.Windows.Forms.ProgressBar DynamicProgressBar;
         private System.Windows.Forms.ToolStripStatusLabel BufferStatus;

@@ -52,10 +52,11 @@ namespace DJetronicStudio
             Sim.OnConnected += Sim_OnConnected;
             Sim.OnDisconnected += Sim_OnDisconnected;
 
-            ConnectionStatus.Text = "Not connected";
-            ConnectionStatus.Image = null;
+            ConnectionStatus.Text = "";
+            ConnectionStatus.Visible = false;
             TesterInfoBox.Text = "";
             EngineNameLabel.Text = "";
+            EngineNameLabel.Visible = false;
 
 #if DEBUG
             Gallery.ImageFolder = Path.GetDirectoryName(Application.ExecutablePath) + @"\..\..\Documentation";
@@ -137,6 +138,7 @@ namespace DJetronicStudio
         private void Tester_OnReceivedEngineName(object sender, string EngineName)
         {
             EngineNameLabel.Text = EngineName;
+            EngineNameLabel.Visible = true;
         }
 
         // from: https://stackoverflow.com/questions/76993/how-to-double-buffer-net-controls-on-a-form
@@ -245,9 +247,10 @@ namespace DJetronicStudio
         /// <param name="sender">Tester object</param>
         private void Tester_OnDisconnected(object sender)
         {
-            ConnectionStatus.Text = "Not connected";
-            ConnectionStatus.Image = null;
+            ConnectionStatus.Text = "";
+            ConnectionStatus.Visible = false;
             EngineNameLabel.Text = "";
+            EngineNameLabel.Visible = false;
             UpdateUI();
         }
 
@@ -261,6 +264,7 @@ namespace DJetronicStudio
         {
             ConnectionStatus.Text = string.Format("Connected to ECU tester V{0}.{1} on {2}", MajorVersion, MinorVersion, PortName);
             ConnectionStatus.Image = Properties.Resources.tester_24;
+            ConnectionStatus.Visible = true;
             Tester.UsePreset_EngineOff();
             PresetSelector.SelectedIndex = PresetSelector.Items.IndexOf("Engine Off");
             UpdateUI();
@@ -272,9 +276,10 @@ namespace DJetronicStudio
         /// <param name="sender">Simulation object</param>
         private void Sim_OnDisconnected(object sender)
         {
-            ConnectionStatus.Text = "Not connected";
-            ConnectionStatus.Image = null;
+            ConnectionStatus.Text = "";
+            ConnectionStatus.Visible = false;
             EngineNameLabel.Text = "";
+            EngineNameLabel.Visible = false;
             UpdateUI();
         }
 
@@ -286,6 +291,7 @@ namespace DJetronicStudio
         {
             ConnectionStatus.Text = string.Format("Connected to simulator");
             ConnectionStatus.Image = Properties.Resources.simulation_24;
+            ConnectionStatus.Visible = true;
             UpdateUI();
         }
 
@@ -735,11 +741,6 @@ namespace DJetronicStudio
             StopRecording();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
         /// <summary>
         /// Exports the recorded data as a CSV file
         /// </summary>
@@ -749,7 +750,7 @@ namespace DJetronicStudio
         {
             if (ExportCSVDialog.ShowDialog() == DialogResult.OK)
             {
-                Buffer.ExportCSV(ExportCSVDialog.FileName);
+                Buffer.ExportCSV(ExportCSVDialog.FileName, Application.ProductName, Application.ProductVersion);
             }
         }
 

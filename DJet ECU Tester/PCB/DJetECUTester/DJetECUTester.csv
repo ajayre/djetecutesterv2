@@ -1,192 +1,47 @@
-"Source:","C:\Users\andy\OneDrive\Documents\DJet ECU Tester V2\trunk\DJet ECU Tester\PCB\DJetECUTester\DJetECUTester.sch"
-"Date:","26/09/2022 21:35:14"
-"Tool:","Eeschema (5.1.12)-1"
-"Generator:","C:\Program Files\KiCad\bin\scripting\plugins/bom_csv_grouped_by_value.py"
-"Component Count:","136"
-
-"Individual Components:"
-
-"Item","Qty","Reference(s)","Value","LibPart","Footprint","Datasheet","manf#","manf2#","psu"
-"","","C1","4.7uF e","Device:CP","Capacitor_SMD:CP_Elec_4x5.8","~","","",""
-"","","C2","100nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C3","1uF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C4","18pF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C5","18pF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C6","1uF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C7","10nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C8","680uF e","Device:CP","Capacitor_SMD:CP_Elec_10x10.5","~","","",""
-"","","C9","100nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C10","220uF e","Device:CP","Capacitor_SMD:CP_Elec_8x6.5","~","","",""
-"","","C11","100nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C12","4.7uF 16V e","Device:CP","Capacitor_SMD:CP_Elec_4x5.8","~","","",""
-"","","C13","100nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C14","100nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C15","100nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C16","100nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C17","100nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C18","100nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C19","100nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","C20","100nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"","","D1","MBR0520LT1G","Device:D","Britishideas:SOD-123","~","","",""
-"","","D2","B360A-13-F","Device:D_Schottky","Diode_SMD:D_SMA","~","B360A-13-F","",""
-"","","D3","PWR","Device:LED","LED_SMD:LED_PLCC-2","~","","",""
-"","","D4","MBR0520LT1G","Device:D","Britishideas:SOD-123","~","MBR0520LT1G","",""
-"","","D5","MBR0520LT1G","Device:D","Britishideas:SOD-123","~","","",""
-"","","D6","MBR0520LT1G","Device:D","Britishideas:SOD-123","~","","",""
-"","","D7","MBR0520LT1G","Device:D","Britishideas:SOD-123","~","","",""
-"","","D8","RED","Device:LED","LED_SMD:LED_PLCC-2","~","","",""
-"","","D9","MBR0520LT1G","Device:D","Britishideas:SOD-123","~","","",""
-"","","D10","MBR0520LT1G","Device:D","Britishideas:SOD-123","~","","",""
-"","","D11","RED","Device:LED","LED_SMD:LED_PLCC-2","~","","",""
-"","","FB1","MI0805K400R-10","Device:Ferrite_Bead","Resistor_SMD:R_0805_2012Metric","~","MI0805K400R-10","",""
-"","","J1","ISP","Connector_Generic:Conn_01x06","Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical","~","","",""
-"","","J2","ECU1","Connector:Screw_Terminal_01x08","Britishideas:PhoenixContact_COMBICON_PT_8","~","1935831","",""
-"","","J3","USB_B_Mini","DJetECUTester-rescue:USB_B_Mini-Connector","Connector_USB:USB_Mini-B_Wuerth_65100516121_Horizontal","~","65100516121","",""
-"","","J4","12V 4A IN (5.5/2.5)","Connector:Barrel_Jack_Switch","Connector_BarrelJack:BarrelJack_Wuerth_6941xx301002","~","694108301002","","https://www.amazon.com/COOLM-Transformer-Doorbell-100-240V-5-5x2-5mm/dp/B07D5BX22W"
-"","","J5","12V IN","Connector:Screw_Terminal_01x02","Britishideas:PhoenixContact_COMBICON_MKDSN_2","~","1729018","",""
-"","","J6","MPS","Connector:Screw_Terminal_01x04","Britishideas:PhoenixContact_COMBICON_PT_4","~","1935792","",""
-"","","J7","Conn_01x01","Connector_Generic:Conn_01x01","Britishideas:tabconnector-63849-1","~","63849-1","",""
-"","","J8","Conn_01x01","Connector_Generic:Conn_01x01","Britishideas:tabconnector-63849-1","~","63849-1","",""
-"","","J9","ECU2","Connector:Screw_Terminal_01x10","Britishideas:PhoenixContact_COMBICON_PT_10","~","1935242","",""
-"","","J10","ECU3","Connector:Screw_Terminal_01x07","Britishideas:PhoenixContact_COMBICON_PT_7","~","1935213","",""
-"","","JP1","COOLANTTEMP","Connector_Generic:Conn_01x02","Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical","~","","",""
-"","","JP2","AIRTEMP","Connector_Generic:Conn_01x02","Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical","~","","",""
-"","","JP3","COOLANTTEMP","Connector_Generic:Conn_01x02","Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical","~","","",""
-"","","L1","33uH","Device:L","Britishideas:Wurth-WE-LQS-Inductor","~","74404063330","",""
-"","","L2","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L3","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L4","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L5","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L6","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L7","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L8","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L9","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L10","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L11","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L12","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L13","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L14","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L15","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L16","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","L17","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"","","Q1","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"","","Q2","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"","","Q3","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"","","Q4","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"","","Q5","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"","","Q6","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"","","Q7","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"","","Q8","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"","","Q9","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"","","Q10","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"","","Q11","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"","","Q12","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"","","R1","1K","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R2","1K","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R3","1K","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R4","1K","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R5","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R6","1K","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R7","1k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R8","1k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R9","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R10","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R11","1k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R12","1k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R13","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R14","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R15","100k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R16","100k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R17","1k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R18","1k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R19","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R20","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R21","1k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R22","1k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R23","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R24","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R25","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R26","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R27","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R28","100k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R29","100k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R30","100k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R31","100k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R32","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R33","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R34","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R35","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R36","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R37","11k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R38","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R39","11k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R40","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R41","11k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R42","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R43","11k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R44","1K","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R45","100k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R46","50","Device:R_POT","Britishideas:Potentometer_Bourns_PV36W","~","PV36W500C01B00","",""
-"","","R47","50","Device:R_POT","Britishideas:Potentometer_Bourns_PV36W","~","PV36W500C01B00","",""
-"","","R48","4k2","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R49","4k2","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R50","50","Device:R_POT","Britishideas:Potentometer_Bourns_PV36W","~","PV36W500C01B00","",""
-"","","R51","50","Device:R_POT","Britishideas:Potentometer_Bourns_PV36W","~","PV36W500C01B00","",""
-"","","R52","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R53","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","R54","2k6","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"","","U1","ATmega328P","BritishIdeas:ATmega328P","Package_QFP:LQFP-32_7x7mm_P0.8mm","","ATMEGA328P-AUR","",""
-"","","U2","LM2596S-5","Regulator_Switching:LM2596S-5","Package_TO_SOT_SMD:TO-263-5_TabPin3","http://www.ti.com/lit/ds/symlink/lm2596.pdf","LM2596S-5.0/NOPB","",""
-"","","U3","FT232RL","Interface_USB:FT232RL","Package_SO:SSOP-28_5.3x10.2mm_P0.65mm","https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT232R.pdf","FT232RL-REEL","",""
-"","","U4","MCP41HV51-502E-ST","BritishIdeas:MCP41HV51-502E-ST","Package_SO:TSSOP-14_4.4x5mm_P0.65mm","","MCP41HV51-502E/ST","MCP41HV31-502E/ST",""
-"","","U5","MCP41HV51-502E-ST","BritishIdeas:MCP41HV51-502E-ST","Package_SO:TSSOP-14_4.4x5mm_P0.65mm","","MCP41HV51-502E/ST","MCP41HV31-502E/ST",""
-"","","U6","MCP23S08T-E_SO","BritishIdeas:MCP23S08T-E_SO","Package_SO:SOIC-18W_7.5x11.6mm_P1.27mm","","","",""
-"","","U7","MCP41HV51-502E-ST","BritishIdeas:MCP41HV51-502E-ST","Package_SO:TSSOP-14_4.4x5mm_P0.65mm","","MCP41HV51-502E/ST","MCP41HV31-502E/ST",""
-"","","Y1","FA-238 16.0000MB-C3","Device:Crystal_GND24","Britishideas:FA-238","~","FA-238 16.0000MB-C3","",""
-
-
-
-"Collated Components:"
-
-"Item","Qty","Reference(s)","Value","LibPart","Footprint","Datasheet","manf#","manf2#","psu"
-"1","1","C1","4.7uF e","Device:CP","Capacitor_SMD:CP_Elec_4x5.8","~","","",""
-"2","11","C2, C9, C11, C13, C14, C15, C16, C17, C18, C19, C20","100nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"3","2","C3, C6","1uF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"4","2","C4, C5","18pF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"5","1","C7","10nF","Device:C","Capacitor_SMD:C_0805_2012Metric","~","","",""
-"6","1","C8","680uF e","Device:CP","Capacitor_SMD:CP_Elec_10x10.5","~","","",""
-"7","1","C10","220uF e","Device:CP","Capacitor_SMD:CP_Elec_8x6.5","~","","",""
-"8","1","C12","4.7uF 16V e","Device:CP","Capacitor_SMD:CP_Elec_4x5.8","~","","",""
-"9","7","D1, D4, D5, D6, D7, D9, D10","MBR0520LT1G","Device:D","Britishideas:SOD-123","~","MBR0520LT1G","",""
-"10","1","D2","B360A-13-F","Device:D_Schottky","Diode_SMD:D_SMA","~","B360A-13-F","",""
-"11","1","D3","PWR","Device:LED","LED_SMD:LED_PLCC-2","~","","",""
-"12","2","D8, D11","RED","Device:LED","LED_SMD:LED_PLCC-2","~","","",""
-"13","1","FB1","MI0805K400R-10","Device:Ferrite_Bead","Resistor_SMD:R_0805_2012Metric","~","MI0805K400R-10","",""
-"14","1","J1","ISP","Connector_Generic:Conn_01x06","Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical","~","","",""
-"15","1","J2","ECU1","Connector:Screw_Terminal_01x08","Britishideas:PhoenixContact_COMBICON_PT_8","~","1935831","",""
-"16","1","J3","USB_B_Mini","DJetECUTester-rescue:USB_B_Mini-Connector","Connector_USB:USB_Mini-B_Wuerth_65100516121_Horizontal","~","65100516121","",""
-"17","1","J4","12V 4A IN (5.5/2.5)","Connector:Barrel_Jack_Switch","Connector_BarrelJack:BarrelJack_Wuerth_6941xx301002","~","694108301002","","https://www.amazon.com/COOLM-Transformer-Doorbell-100-240V-5-5x2-5mm/dp/B07D5BX22W"
-"18","1","J5","12V IN","Connector:Screw_Terminal_01x02","Britishideas:PhoenixContact_COMBICON_MKDSN_2","~","1729018","",""
-"19","1","J6","MPS","Connector:Screw_Terminal_01x04","Britishideas:PhoenixContact_COMBICON_PT_4","~","1935792","",""
-"20","2","J7, J8","Conn_01x01","Connector_Generic:Conn_01x01","Britishideas:tabconnector-63849-1","~","63849-1","",""
-"21","1","J9","ECU2","Connector:Screw_Terminal_01x10","Britishideas:PhoenixContact_COMBICON_PT_10","~","1935242","",""
-"22","1","J10","ECU3","Connector:Screw_Terminal_01x07","Britishideas:PhoenixContact_COMBICON_PT_7","~","1935213","",""
-"23","2","JP1, JP3","COOLANTTEMP","Connector_Generic:Conn_01x02","Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical","~","","",""
-"24","1","JP2","AIRTEMP","Connector_Generic:Conn_01x02","Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical","~","","",""
-"25","1","L1","33uH","Device:L","Britishideas:Wurth-WE-LQS-Inductor","~","74404063330","",""
-"26","16","L2, L3, L4, L5, L6, L7, L8, L9, L10, L11, L12, L13, L14, L15, L16, L17","680uH","Device:L","Britishideas:Inductor-MSS1210-684KED","~","MSS1210-684KED","",""
-"27","12","Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12","MMBT2222ALT1G","Transistor_BJT:MMBT3904","Package_TO_SOT_SMD:SOT-23","https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf","MMBT2222ALT1G","",""
-"28","6","R1, R2, R3, R4, R6, R44","1K","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"29","22","R5, R9, R10, R13, R14, R19, R20, R23, R24, R25, R26, R27, R32, R33, R34, R35, R36, R38, R40, R42, R52, R53","10k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"30","8","R7, R8, R11, R12, R17, R18, R21, R22","1k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"31","7","R15, R16, R28, R29, R30, R31, R45","100k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"32","4","R37, R39, R41, R43","11k","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"33","4","R46, R47, R50, R51","50","Device:R_POT","Britishideas:Potentometer_Bourns_PV36W","~","PV36W500C01B00","",""
-"34","2","R48, R49","4k2","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"35","1","R54","2k6","Device:R","Resistor_SMD:R_0805_2012Metric","~","","",""
-"36","1","U1","ATmega328P","BritishIdeas:ATmega328P","Package_QFP:LQFP-32_7x7mm_P0.8mm","","ATMEGA328P-AUR","",""
-"37","1","U2","LM2596S-5","Regulator_Switching:LM2596S-5","Package_TO_SOT_SMD:TO-263-5_TabPin3","http://www.ti.com/lit/ds/symlink/lm2596.pdf","LM2596S-5.0/NOPB","",""
-"38","1","U3","FT232RL","Interface_USB:FT232RL","Package_SO:SSOP-28_5.3x10.2mm_P0.65mm","https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT232R.pdf","FT232RL-REEL","",""
-"39","3","U4, U5, U7","MCP41HV51-502E-ST","BritishIdeas:MCP41HV51-502E-ST","Package_SO:TSSOP-14_4.4x5mm_P0.65mm","","MCP41HV51-502E/ST","MCP41HV31-502E/ST",""
-"40","1","U6","MCP23S08T-E_SO","BritishIdeas:MCP23S08T-E_SO","Package_SO:SOIC-18W_7.5x11.6mm_P1.27mm","","","",""
-"41","1","Y1","FA-238 16.0000MB-C3","Device:Crystal_GND24","Britishideas:FA-238","~","FA-238 16.0000MB-C3","",""
+Item,Qty,Reference(s),Value,LibPart,Footprint,manf#,manf2#
+1,1,C1,4.7uF e,Device:CP,Capacitor_SMD:CP_Elec_4x5.8,,
+2,11,"C2, C9, C11, C13, C14, C15, C16, C17, C18, C19, C20",100nF,Device:C,Capacitor_SMD:C_0805_2012Metric,,
+3,2,"C3, C6",1uF,Device:C,Capacitor_SMD:C_0805_2012Metric,,
+4,2,"C4, C5",18pF,Device:C,Capacitor_SMD:C_0805_2012Metric,,
+5,1,C7,10nF,Device:C,Capacitor_SMD:C_0805_2012Metric,,
+6,1,C8,680uF e,Device:CP,Capacitor_SMD:CP_Elec_10x10.5,,
+7,1,C10,220uF e,Device:CP,Capacitor_SMD:CP_Elec_8x6.5,,
+8,1,C12,4.7uF 16V e,Device:CP,Capacitor_SMD:CP_Elec_4x5.8,,
+9,6,"D1, D4, D5, D6, D7, D10",MBR0520LT1G,Device:D,Britishideas:SOD-123,MBR0520LT1G,
+10,1,D2,B360A-13-F,Device:D_Schottky,Diode_SMD:D_SMA,B360A-13-F,
+11,1,D3,PWR,Device:LED,LED_SMD:LED_PLCC-2,,
+12,2,"D8, D11",RED,Device:LED,LED_SMD:LED_PLCC-2,,
+13,1,FB1,MI0805K400R-10,Device:Ferrite_Bead,Resistor_SMD:R_0805_2012Metric,MI0805K400R-10,
+14,1,J1,ISP,Connector_Generic:Conn_01x06,Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical,,
+15,1,J2,ECU1,Connector:Screw_Terminal_01x08,Britishideas:PhoenixContact_COMBICON_PT_8,1935831,
+16,1,J3,USB_B_Mini,DJetECUTester-rescue:USB_B_Mini-Connector,Connector_USB:USB_Mini-B_Wuerth_65100516121_Horizontal,65100516121,
+17,1,J4,12V 4A IN (5.5/2.5),Connector:Barrel_Jack_Switch,Connector_BarrelJack:BarrelJack_Wuerth_6941xx301002,6.94108E+11,
+18,1,J5,12V IN,Connector:Screw_Terminal_01x02,Britishideas:PhoenixContact_COMBICON_MKDSN_2,1729018,
+19,1,J6,MPS,Connector:Screw_Terminal_01x04,Britishideas:PhoenixContact_COMBICON_PT_4,1935792,1935187
+20,1,J7,ECU PWR SWITCH,Connector:Screw_Terminal_01x02,Britishideas:PhoenixContact_COMBICON_MKDSN_2,1729018,
+21,1,J8,GPIO,Connector:Screw_Terminal_01x04,Britishideas:PhoenixContact_COMBICON_PT_4,1935792,1935187
+22,1,J9,ECU2,Connector:Screw_Terminal_01x10,Britishideas:PhoenixContact_COMBICON_PT_10,1935242,
+23,1,J10,ECU3,Connector:Screw_Terminal_01x07,Britishideas:PhoenixContact_COMBICON_PT_7,1935213,
+24,2,"JP1, JP3",COOLANTTEMP,Connector_Generic:Conn_01x02,Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical,,
+25,1,JP2,AIRTEMP,Connector_Generic:Conn_01x02,Connector_PinHeader_2.54mm:PinHeader_2x01_P2.54mm_Vertical,,
+26,1,L1,33uH,Device:L,Britishideas:Wurth-WE-LQS-Inductor,74404063330,
+27,16,"L2, L3, L4, L5, L6, L7, L8, L9, L10, L11, L12, L13, L14, L15, L16, L17",680uH,Device:L,Britishideas:Inductor-MSS1210-684KED,MSS1210-684KED,
+28,1,M1,Fan_3pin,BritishIdeas:Fan_3pin,Connector:FanPinHeader_1x03_P2.54mm_Vertical,22-23-2031,
+29,13,"Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13",MMBT2222ALT1G,Transistor_BJT:MMBT3904,Package_TO_SOT_SMD:SOT-23,MMBT2222ALT1G,
+30,1,Q14,MMBT3906LT1G,Device:Q_PNP_BEC,Package_TO_SOT_SMD:SOT-23,MMBT3906LT1G,
+31,7,"R1, R2, R3, R4, R6, R44, R55",1K,Device:R,Resistor_SMD:R_0805_2012Metric,,
+32,23,"R5, R9, R10, R13, R14, R19, R20, R23, R24, R25, R26, R27, R32, R33, R34, R35, R36, R38, R40, R42, R52, R53, R58",10k,Device:R,Resistor_SMD:R_0805_2012Metric,,
+33,10,"R7, R8, R11, R12, R17, R18, R21, R22, R48, R59",1k,Device:R,Resistor_SMD:R_0805_2012Metric,,
+34,7,"R15, R16, R28, R29, R30, R31, R45",100k,Device:R,Resistor_SMD:R_0805_2012Metric,,
+35,4,"R37, R39, R41, R43",11k,Device:R,Resistor_SMD:R_0805_2012Metric,,
+36,4,"R46, R47, R50, R51",50,Device:R_POT,Britishideas:Potentometer_Bourns_PV36W,PV36W500C01B00,
+37,1,R49,4k2,Device:R,Resistor_SMD:R_0805_2012Metric,,
+38,1,R54,2k6,Device:R,Resistor_SMD:R_0805_2012Metric,,
+39,1,R56,100K,Device:R,Resistor_SMD:R_0805_2012Metric,,
+40,2,"R57, R60",680,Device:R,Resistor_SMD:R_1206_3216Metric,CRCW1206680RFKEAHP,
+41,1,U1,ATmega328P,BritishIdeas:ATmega328P,Package_QFP:LQFP-32_7x7mm_P0.8mm,ATMEGA328P-AUR,
+42,1,U2,LM2596S-5,Regulator_Switching:LM2596S-5,Package_TO_SOT_SMD:TO-263-5_TabPin3,LM2596S-5.0/NOPB,
+43,1,U3,FT232RL,Interface_USB:FT232RL,Package_SO:SSOP-28_5.3x10.2mm_P0.65mm,FT232RL-REEL,
+44,3,"U4, U5, U7",MCP41HV51-502E-ST,BritishIdeas:MCP41HV51-502E-ST,Package_SO:TSSOP-14_4.4x5mm_P0.65mm,MCP41HV51-502E/ST,MCP41HV31-502E/ST
+45,1,U6,MCP23S08T-E_SO,BritishIdeas:MCP23S08T-E_SO,Package_SO:SOIC-18W_7.5x11.6mm_P1.27mm,,
+46,1,Y1,FA-238 16.0000MB-C3,Device:Crystal_GND24,Britishideas:FA-238,FA-238 16.0000MB-C3,
