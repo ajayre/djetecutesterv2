@@ -93,7 +93,7 @@
             // EngineSpeedInput
             // 
             this.EngineSpeedInput.AutoSize = true;
-            this.EngineSpeedInput.Location = new System.Drawing.Point(3, 165);
+            this.EngineSpeedInput.Location = new System.Drawing.Point(3, 170);
             this.EngineSpeedInput.Name = "EngineSpeedInput";
             this.EngineSpeedInput.Size = new System.Drawing.Size(93, 17);
             this.EngineSpeedInput.TabIndex = 5;
@@ -103,7 +103,7 @@
             // ThrottleInput
             // 
             this.ThrottleInput.AutoSize = true;
-            this.ThrottleInput.Location = new System.Drawing.Point(3, 188);
+            this.ThrottleInput.Location = new System.Drawing.Point(3, 193);
             this.ThrottleInput.Name = "ThrottleInput";
             this.ThrottleInput.Size = new System.Drawing.Size(62, 17);
             this.ThrottleInput.TabIndex = 6;
@@ -113,7 +113,7 @@
             // StarterMotorInput
             // 
             this.StarterMotorInput.AutoSize = true;
-            this.StarterMotorInput.Location = new System.Drawing.Point(3, 280);
+            this.StarterMotorInput.Location = new System.Drawing.Point(3, 285);
             this.StarterMotorInput.Name = "StarterMotorInput";
             this.StarterMotorInput.Size = new System.Drawing.Size(87, 17);
             this.StarterMotorInput.TabIndex = 7;
@@ -133,7 +133,7 @@
             // AirTempInput
             // 
             this.AirTempInput.AutoSize = true;
-            this.AirTempInput.Location = new System.Drawing.Point(3, 234);
+            this.AirTempInput.Location = new System.Drawing.Point(3, 239);
             this.AirTempInput.Name = "AirTempInput";
             this.AirTempInput.Size = new System.Drawing.Size(68, 17);
             this.AirTempInput.TabIndex = 9;
@@ -143,7 +143,7 @@
             // CoolantTempInput
             // 
             this.CoolantTempInput.AutoSize = true;
-            this.CoolantTempInput.Location = new System.Drawing.Point(3, 211);
+            this.CoolantTempInput.Location = new System.Drawing.Point(3, 216);
             this.CoolantTempInput.Name = "CoolantTempInput";
             this.CoolantTempInput.Size = new System.Drawing.Size(92, 17);
             this.CoolantTempInput.TabIndex = 10;
@@ -153,7 +153,7 @@
             // VacuumInput
             // 
             this.VacuumInput.AutoSize = true;
-            this.VacuumInput.Location = new System.Drawing.Point(3, 257);
+            this.VacuumInput.Location = new System.Drawing.Point(3, 262);
             this.VacuumInput.Name = "VacuumInput";
             this.VacuumInput.Size = new System.Drawing.Size(65, 17);
             this.VacuumInput.TabIndex = 11;

@@ -87,7 +87,7 @@ namespace DJetronicStudio
                 CSVFile.WriteLine("Generated on {0}", DateTime.Now);
                 CSVFile.WriteLine();
 
-                CSVFile.WriteLine("\"Time (ms)\",\"Pulse Width I (ms)\",\"Pulse Width II (ms)\",\"Pulse Width III (ms)\",\"Pulse Width IV (ms)\",\"Air Temperature (F)\",\"Coolant Temperature (F)\",\"Engine Speed (RPM)\",\"Dwell Angle (Degrees)\",\"Manifold Vacuum (inHg)\",\"Throttle (%)\",\"Fuel Pump\",\"Starter Motor\"");
+                CSVFile.WriteLine("\"Time (ms)\",\"Pulse Width I (ms)\",\"Pulse Width II (ms)\",\"Pulse Width III (ms)\",\"Pulse Width IV (ms)\",\"Air Temperature (F)\",\"Coolant Temperature (F)\",\"Engine Speed (RPM)\",\"Dwell Angle (Degrees)\",\"Manifold Vacuum (inHg)\",\"Throttle (%)\",\"Fuel Pump Control (V)\",\"Starter Motor (V)\"");
 
                 foreach (DataPoint DataPoint in Points)
                 {
@@ -103,8 +103,8 @@ namespace DJetronicStudio
                         (DataPoint.Data.DwellAngle).ToString(CultureInfo.CreateSpecificCulture("en-US")),
                         (DataPoint.Data.Vacuum).ToString(CultureInfo.CreateSpecificCulture("en-US")),
                         (DataPoint.Data.Throttle).ToString(CultureInfo.CreateSpecificCulture("en-US")),
-                        (DataPoint.Data.FuelPumpOn ? "1" : "0"),
-                        (DataPoint.Data.StarterMotorOn ? "1" : "0")
+                        (DataPoint.Data.FuelPumpOn ? "0" : "12"),
+                        (DataPoint.Data.StarterMotorOn ? "12" : "0")
                         ));
                 }
             }

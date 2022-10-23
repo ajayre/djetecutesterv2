@@ -111,26 +111,33 @@ namespace DJetronicStudio
                 return;
             }
 
-            Connection = EnhancedSerialConnection.Find();
-            if (Connection == null)
+            try
             {
-                throw new Exception("No ECU tester found. Is it connected to the PC?");
+                Connection = EnhancedSerialConnection.Find();
+                if (Connection == null)
+                {
+                    throw new Exception("No ECU tester found. Is it connected to the PC?");
+                }
+
+                Session = new ArduinoSession(Connection);
+                Session.MessageReceived += Session_MessageReceived;
+
+                var firmware = Session.GetFirmware();
+
+                _DynamicTestRunning = false;
+
+                if (OnConnected != null)
+                {
+                    OnConnected(this, Connection.PortName, Connection.BaudRate, firmware.MajorVersion, firmware.MinorVersion);
+                }
+
+                RequestEngineName();
+                RequestStatus();
             }
-
-            Session = new ArduinoSession(Connection);
-            Session.MessageReceived += Session_MessageReceived;
-
-            var firmware = Session.GetFirmware();
-
-            _DynamicTestRunning = false;
-
-            if (OnConnected != null)
+            catch
             {
-                OnConnected(this, Connection.PortName, Connection.BaudRate, firmware.MajorVersion, firmware.MinorVersion);
+                throw new Exception("Unable to connect to ECU tester. Please try again");
             }
-
-            RequestEngineName();
-            RequestStatus();
         }
 
         /// <summary>

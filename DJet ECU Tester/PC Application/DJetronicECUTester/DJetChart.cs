@@ -51,6 +51,7 @@ namespace DJetronicStudio
 
         private SeriesDescription[] SeriesDescriptions;
         private ObservableCollection<ISeries> Series { get; set; }
+        private ChartSettings Settings = new ChartSettings();
 
         private enum SeriesIndices
         {
@@ -119,23 +120,26 @@ namespace DJetronicStudio
                 new Axis
                 {
                     TextSize = 12,
-                    //MinLimit = 0,
-                    //MaxLimit = 15,
+                    MinLimit = Settings.MinY,
+                    MaxLimit = Settings.MaxY,
                     NameTextSize = 16,
-                    Name = "Pulse Duration (ms)",
-                    Position = AxisPosition.Start
+                    Name = Settings.YAxisTitle,
+                    Position = AxisPosition.Start,
+                    NamePaint = new SolidColorPaint(new SKColor(Settings.YColor.R, Settings.YColor.G, Settings.YColor.B, Settings.YColor.A)),
+                    LabelsPaint = new SolidColorPaint(new SKColor(Settings.YColor.R, Settings.YColor.G, Settings.YColor.B, Settings.YColor.A))
                 },
 
                 new Axis
                 {
                     TextSize = 12,
-                    //MinLimit = 0,
-                    //MaxLimit = 6500,
+                    MinLimit = Settings.SecondYAxisMin,
+                    MaxLimit = Settings.SecondYAxisMax,
                     NameTextSize = 16,
-                    Name = "Engine Speed (RPM)",
+                    Name = Settings.SecondYAxisTitle,
                     Position = AxisPosition.End,
-                    NamePaint = new SolidColorPaint(new SKColor(Color.Orange.R, Color.Orange.G, Color.Orange.B, Color.Orange.A)),
-                    LabelsPaint = new SolidColorPaint(new SKColor(Color.Orange.R, Color.Orange.G, Color.Orange.B, Color.Orange.A))
+                    NamePaint = new SolidColorPaint(new SKColor(Settings.SecondYAxisColor.R, Settings.SecondYAxisColor.G, Settings.SecondYAxisColor.B, Settings.SecondYAxisColor.A)),
+                    LabelsPaint = new SolidColorPaint(new SKColor(Settings.SecondYAxisColor.R, Settings.SecondYAxisColor.G, Settings.SecondYAxisColor.B, Settings.SecondYAxisColor.A)),
+                    IsVisible = Settings.EnableSecondYAxis
                 }
             };
 
@@ -143,7 +147,7 @@ namespace DJetronicStudio
             {
                 Color LineColor = SeriesDescriptions[Ser].LineColor;
 
-                LineSeries <ObservablePoint> NewSeries = new LineSeries<ObservablePoint>();
+                LineSeries<ObservablePoint> NewSeries = new LineSeries<ObservablePoint>();
                 NewSeries.Name = SeriesDescriptions[Ser].Name;
                 NewSeries.LineSmoothness = 0.0;
                 NewSeries.Fill = null;
@@ -151,7 +155,6 @@ namespace DJetronicStudio
                 NewSeries.GeometryStroke = new SolidColorPaint(new SKColor(LineColor.R, LineColor.G, LineColor.B, LineColor.A)) { StrokeThickness = 1.0F };
                 NewSeries.Stroke = new SolidColorPaint(new SKColor(LineColor.R, LineColor.G, LineColor.B, LineColor.A)) { StrokeThickness = 1.0F };
                 NewSeries.Values = new ObservableCollection<ObservablePoint>();
-                NewSeries.ScalesYAt = 1;
                 SeriesDescriptions[Ser].CheckBox.Tag = NewSeries;
                 Series.Add(NewSeries);
             }
@@ -166,9 +169,83 @@ namespace DJetronicStudio
             //LabelGeom.X = (Chart.Width - LabelGeom.Measure(TitleLabel).Width) / 2;
             //TitleLabel.AddGeometryToPaintTask(Canvas, LabelGeom);
             //Canvas.AddDrawableTask(TitleLabel);
+        }
 
-            //((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0].MinLimit = 0;
-            //((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0].MaxLimit = 15;
+        /// <summary>
+        /// Applies the current settings to the chart
+        /// </summary>
+        private void ApplySettings
+            (
+            )
+        {
+            ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0].MinLimit = Settings.MinY;
+            ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0].MaxLimit = Settings.MaxY;
+            ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0].Name = Settings.YAxisTitle;
+
+            ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[1].MinLimit = Settings.SecondYAxisMin;
+            ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[1].MaxLimit = Settings.SecondYAxisMax;
+            ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[1].Name = Settings.SecondYAxisTitle;
+            ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[1].IsVisible = Settings.EnableSecondYAxis;
+
+            foreach (ISeries Ser in Series)
+            {
+                LineSeries<ObservablePoint> SerObj = Ser as LineSeries<ObservablePoint>;
+
+                if ((SerObj.Name == "Pulse Width I") && Settings.SecondYAxisShowPulseWidthI && Settings.EnableSecondYAxis)
+                    SerObj.ScalesYAt = 1;
+                else
+                    SerObj.ScalesYAt = 0;
+
+                if ((SerObj.Name == "Pulse Width II") && Settings.SecondYAxisShowPulseWidthII && Settings.EnableSecondYAxis)
+                    SerObj.ScalesYAt = 1;
+                else
+                    SerObj.ScalesYAt = 0;
+
+                if ((SerObj.Name == "Pulse Width III") && Settings.SecondYAxisShowPulseWidthIII && Settings.EnableSecondYAxis)
+                    SerObj.ScalesYAt = 1;
+                else
+                    SerObj.ScalesYAt = 0;
+
+                if ((SerObj.Name == "Pulse Width IV") && Settings.SecondYAxisShowPulseWidthIV && Settings.EnableSecondYAxis)
+                    SerObj.ScalesYAt = 1;
+                else
+                    SerObj.ScalesYAt = 0;
+
+                if ((SerObj.Name == "Fuel Pump") && Settings.SecondYAxisShowFuelPump && Settings.EnableSecondYAxis)
+                    SerObj.ScalesYAt = 1;
+                else
+                    SerObj.ScalesYAt = 0;
+
+                if ((SerObj.Name == "Engine Speed") && Settings.SecondYAxisShowEngineSpeed && Settings.EnableSecondYAxis)
+                    SerObj.ScalesYAt = 1;
+                else
+                    SerObj.ScalesYAt = 0;
+
+                if ((SerObj.Name == "Throttle") && Settings.SecondYAxisShowThrottle && Settings.EnableSecondYAxis)
+                    SerObj.ScalesYAt = 1;
+                else
+                    SerObj.ScalesYAt = 0;
+
+                if ((SerObj.Name == "Coolant Temperature") && Settings.SecondYAxisShowCoolantTemperature && Settings.EnableSecondYAxis)
+                    SerObj.ScalesYAt = 1;
+                else
+                    SerObj.ScalesYAt = 0;
+
+                if ((SerObj.Name == "Air Temperature") && Settings.SecondYAxisShowAirTemperature && Settings.EnableSecondYAxis)
+                    SerObj.ScalesYAt = 1;
+                else
+                    SerObj.ScalesYAt = 0;
+
+                if ((SerObj.Name == "Vacuum") && Settings.SecondYAxisShowVacuum && Settings.EnableSecondYAxis)
+                    SerObj.ScalesYAt = 1;
+                else
+                    SerObj.ScalesYAt = 0;
+
+                if ((SerObj.Name == "Starter Motor") && Settings.SecondYAxisShowStaterMotor && Settings.EnableSecondYAxis)
+                    SerObj.ScalesYAt = 1;
+                else
+                    SerObj.ScalesYAt = 0;
+            }
         }
 
         /// <summary>
@@ -231,7 +308,7 @@ namespace DJetronicStudio
 
             if (SeriesDescriptions[(int)SeriesIndices.FuelPump].CheckBox.Checked)
             {
-                ObservablePoint NewData = new ObservablePoint((int)(NewPoint.Timestamp), NewPoint.Data.FuelPumpOn ? 1 : 0);
+                ObservablePoint NewData = new ObservablePoint((int)(NewPoint.Timestamp), NewPoint.Data.FuelPumpOn ? 0 : 12);
                 ((ObservableCollection<ObservablePoint>)Series[(int)SeriesIndices.FuelPump].Values).Add(NewData);
             }
 
@@ -261,7 +338,7 @@ namespace DJetronicStudio
 
             if (SeriesDescriptions[(int)SeriesIndices.StarterMotor].CheckBox.Checked)
             {
-                ObservablePoint NewData = new ObservablePoint((int)(NewPoint.Timestamp), NewPoint.Data.StarterMotorOn ? 1 : 0);
+                ObservablePoint NewData = new ObservablePoint((int)(NewPoint.Timestamp), NewPoint.Data.StarterMotorOn ? 12 : 0);
                 ((ObservableCollection<ObservablePoint>)Series[(int)SeriesIndices.StarterMotor].Values).Add(NewData);
             }
         }
@@ -330,10 +407,12 @@ namespace DJetronicStudio
             )
         {
             ChartSettingsForm SettingsForm = new ChartSettingsForm();
+            SettingsForm.Settings = Settings;
 
             if (SettingsForm.ShowDialog() == DialogResult.OK)
             {
-
+                Settings = SettingsForm.Settings;
+                ApplySettings();
             }
         }
 
