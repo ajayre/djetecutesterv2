@@ -101,10 +101,10 @@ namespace DJetronicStudio
                         (DataPoint.Data.CoolantTemperature).ToString(CultureInfo.CreateSpecificCulture("en-US")),
                         (DataPoint.Data.EngineSpeed).ToString(CultureInfo.CreateSpecificCulture("en-US")),
                         (DataPoint.Data.DwellAngle).ToString(CultureInfo.CreateSpecificCulture("en-US")),
-                        (DataPoint.Data.Pressure).ToString(CultureInfo.CreateSpecificCulture("en-US")),
+                        (DataPoint.Data.Vacuum).ToString(CultureInfo.CreateSpecificCulture("en-US")),
                         (DataPoint.Data.Throttle).ToString(CultureInfo.CreateSpecificCulture("en-US")),
                         (DataPoint.Data.FuelPumpOn ? "1" : "0"),
-                        (DataPoint.Data.StartSignal ? "1" : "0")
+                        (DataPoint.Data.StarterMotorOn ? "1" : "0")
                         ));
                 }
             }

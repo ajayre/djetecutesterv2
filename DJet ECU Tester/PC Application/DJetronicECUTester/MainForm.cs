@@ -191,7 +191,7 @@ namespace DJetronicStudio
 
             string StatusText = string.Format("Air temp={0}°F, Coolant temp={1}°F, Eng speed={2}RPM, Throttle={3}% PG Angle={4}°, Vacuum={5}inHg, Starter motor={6}",
                 CurrentStatus.AirTemperature, CurrentStatus.CoolantTemperature, CurrentStatus.EngineSpeed, CurrentStatus.Throttle,
-                CurrentStatus.DwellAngle, CurrentStatus.Pressure, CurrentStatus.StartSignal ? "on" : "off");
+                CurrentStatus.DwellAngle, CurrentStatus.Vacuum, CurrentStatus.StarterMotorOn ? "on" : "off");
 
             UInt32 AveragePulseWidth = (UInt32)((CurrentStatus.PulseWidth_I + CurrentStatus.PulseWidth_II + CurrentStatus.PulseWidth_III + CurrentStatus.PulseWidth_IV) / 4.0);
 
@@ -200,7 +200,7 @@ namespace DJetronicStudio
                 CurrentStatus.PulseWidth_I / 1000.0, CurrentStatus.PulseWidth_II / 1000.0, CurrentStatus.PulseWidth_III / 1000.0, CurrentStatus.PulseWidth_IV / 1000.0,
                 AveragePulseWidth / 1000.0);
 
-            PressureValue.Text = CurrentStatus.Pressure.ToString();
+            PressureValue.Text = CurrentStatus.Vacuum.ToString();
 
             if (Tester.IsConnected)
             {

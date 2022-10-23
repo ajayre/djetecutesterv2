@@ -28,136 +28,137 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.checkBox8 = new System.Windows.Forms.CheckBox();
-            this.checkBox9 = new System.Windows.Forms.CheckBox();
-            this.checkBox10 = new System.Windows.Forms.CheckBox();
-            this.checkBox11 = new System.Windows.Forms.CheckBox();
+            this.PulseWidthIInput = new System.Windows.Forms.CheckBox();
+            this.PulseWidthIIInput = new System.Windows.Forms.CheckBox();
+            this.PulseWidthIIIInput = new System.Windows.Forms.CheckBox();
+            this.PulseWidthIVInput = new System.Windows.Forms.CheckBox();
+            this.EngineSpeedInput = new System.Windows.Forms.CheckBox();
+            this.ThrottleInput = new System.Windows.Forms.CheckBox();
+            this.StarterMotorInput = new System.Windows.Forms.CheckBox();
+            this.FuelPumpInput = new System.Windows.Forms.CheckBox();
+            this.AirTempInput = new System.Windows.Forms.CheckBox();
+            this.CoolantTempInput = new System.Windows.Forms.CheckBox();
+            this.VacuumInput = new System.Windows.Forms.CheckBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ClearBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ExportImageBtn = new System.Windows.Forms.ToolStripButton();
-            this.EditTitleBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.SettingsBtn = new System.Windows.Forms.ToolStripButton();
             this.Chart = new LiveChartsCore.SkiaSharpView.WinForms.CartesianChart();
+            this.ExportImageDialog = new System.Windows.Forms.SaveFileDialog();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // checkBox1
+            // PulseWidthIInput
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(3, 42);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(89, 17);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "Pulse Width I";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.PulseWidthIInput.AutoSize = true;
+            this.PulseWidthIInput.Location = new System.Drawing.Point(3, 42);
+            this.PulseWidthIInput.Name = "PulseWidthIInput";
+            this.PulseWidthIInput.Size = new System.Drawing.Size(89, 17);
+            this.PulseWidthIInput.TabIndex = 1;
+            this.PulseWidthIInput.Text = "Pulse Width I";
+            this.PulseWidthIInput.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // PulseWidthIIInput
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(3, 65);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(92, 17);
-            this.checkBox2.TabIndex = 2;
-            this.checkBox2.Text = "Pulse Width II";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.PulseWidthIIInput.AutoSize = true;
+            this.PulseWidthIIInput.Location = new System.Drawing.Point(3, 65);
+            this.PulseWidthIIInput.Name = "PulseWidthIIInput";
+            this.PulseWidthIIInput.Size = new System.Drawing.Size(92, 17);
+            this.PulseWidthIIInput.TabIndex = 2;
+            this.PulseWidthIIInput.Text = "Pulse Width II";
+            this.PulseWidthIIInput.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // PulseWidthIIIInput
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(3, 88);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(95, 17);
-            this.checkBox3.TabIndex = 3;
-            this.checkBox3.Text = "Pulse Width III";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.PulseWidthIIIInput.AutoSize = true;
+            this.PulseWidthIIIInput.Location = new System.Drawing.Point(3, 88);
+            this.PulseWidthIIIInput.Name = "PulseWidthIIIInput";
+            this.PulseWidthIIIInput.Size = new System.Drawing.Size(95, 17);
+            this.PulseWidthIIIInput.TabIndex = 3;
+            this.PulseWidthIIIInput.Text = "Pulse Width III";
+            this.PulseWidthIIIInput.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // PulseWidthIVInput
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(3, 111);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(96, 17);
-            this.checkBox4.TabIndex = 4;
-            this.checkBox4.Text = "Pulse Width IV";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.PulseWidthIVInput.AutoSize = true;
+            this.PulseWidthIVInput.Location = new System.Drawing.Point(3, 111);
+            this.PulseWidthIVInput.Name = "PulseWidthIVInput";
+            this.PulseWidthIVInput.Size = new System.Drawing.Size(96, 17);
+            this.PulseWidthIVInput.TabIndex = 4;
+            this.PulseWidthIVInput.Text = "Pulse Width IV";
+            this.PulseWidthIVInput.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // EngineSpeedInput
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(3, 165);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(93, 17);
-            this.checkBox5.TabIndex = 5;
-            this.checkBox5.Text = "Engine Speed";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.EngineSpeedInput.AutoSize = true;
+            this.EngineSpeedInput.Location = new System.Drawing.Point(3, 165);
+            this.EngineSpeedInput.Name = "EngineSpeedInput";
+            this.EngineSpeedInput.Size = new System.Drawing.Size(93, 17);
+            this.EngineSpeedInput.TabIndex = 5;
+            this.EngineSpeedInput.Text = "Engine Speed";
+            this.EngineSpeedInput.UseVisualStyleBackColor = true;
             // 
-            // checkBox6
+            // ThrottleInput
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Location = new System.Drawing.Point(3, 188);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(62, 17);
-            this.checkBox6.TabIndex = 6;
-            this.checkBox6.Text = "Throttle";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            this.ThrottleInput.AutoSize = true;
+            this.ThrottleInput.Location = new System.Drawing.Point(3, 188);
+            this.ThrottleInput.Name = "ThrottleInput";
+            this.ThrottleInput.Size = new System.Drawing.Size(62, 17);
+            this.ThrottleInput.TabIndex = 6;
+            this.ThrottleInput.Text = "Throttle";
+            this.ThrottleInput.UseVisualStyleBackColor = true;
             // 
-            // checkBox7
+            // StarterMotorInput
             // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Location = new System.Drawing.Point(3, 280);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(87, 17);
-            this.checkBox7.TabIndex = 7;
-            this.checkBox7.Text = "Starter Motor";
-            this.checkBox7.UseVisualStyleBackColor = true;
+            this.StarterMotorInput.AutoSize = true;
+            this.StarterMotorInput.Location = new System.Drawing.Point(3, 280);
+            this.StarterMotorInput.Name = "StarterMotorInput";
+            this.StarterMotorInput.Size = new System.Drawing.Size(87, 17);
+            this.StarterMotorInput.TabIndex = 7;
+            this.StarterMotorInput.Text = "Starter Motor";
+            this.StarterMotorInput.UseVisualStyleBackColor = true;
             // 
-            // checkBox8
+            // FuelPumpInput
             // 
-            this.checkBox8.AutoSize = true;
-            this.checkBox8.Location = new System.Drawing.Point(3, 134);
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Size = new System.Drawing.Size(76, 17);
-            this.checkBox8.TabIndex = 8;
-            this.checkBox8.Text = "Fuel Pump";
-            this.checkBox8.UseVisualStyleBackColor = true;
+            this.FuelPumpInput.AutoSize = true;
+            this.FuelPumpInput.Location = new System.Drawing.Point(3, 134);
+            this.FuelPumpInput.Name = "FuelPumpInput";
+            this.FuelPumpInput.Size = new System.Drawing.Size(76, 17);
+            this.FuelPumpInput.TabIndex = 8;
+            this.FuelPumpInput.Text = "Fuel Pump";
+            this.FuelPumpInput.UseVisualStyleBackColor = true;
             // 
-            // checkBox9
+            // AirTempInput
             // 
-            this.checkBox9.AutoSize = true;
-            this.checkBox9.Location = new System.Drawing.Point(3, 234);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Size = new System.Drawing.Size(68, 17);
-            this.checkBox9.TabIndex = 9;
-            this.checkBox9.Text = "Air Temp";
-            this.checkBox9.UseVisualStyleBackColor = true;
+            this.AirTempInput.AutoSize = true;
+            this.AirTempInput.Location = new System.Drawing.Point(3, 234);
+            this.AirTempInput.Name = "AirTempInput";
+            this.AirTempInput.Size = new System.Drawing.Size(68, 17);
+            this.AirTempInput.TabIndex = 9;
+            this.AirTempInput.Text = "Air Temp";
+            this.AirTempInput.UseVisualStyleBackColor = true;
             // 
-            // checkBox10
+            // CoolantTempInput
             // 
-            this.checkBox10.AutoSize = true;
-            this.checkBox10.Location = new System.Drawing.Point(3, 211);
-            this.checkBox10.Name = "checkBox10";
-            this.checkBox10.Size = new System.Drawing.Size(92, 17);
-            this.checkBox10.TabIndex = 10;
-            this.checkBox10.Text = "Coolant Temp";
-            this.checkBox10.UseVisualStyleBackColor = true;
+            this.CoolantTempInput.AutoSize = true;
+            this.CoolantTempInput.Location = new System.Drawing.Point(3, 211);
+            this.CoolantTempInput.Name = "CoolantTempInput";
+            this.CoolantTempInput.Size = new System.Drawing.Size(92, 17);
+            this.CoolantTempInput.TabIndex = 10;
+            this.CoolantTempInput.Text = "Coolant Temp";
+            this.CoolantTempInput.UseVisualStyleBackColor = true;
             // 
-            // checkBox11
+            // VacuumInput
             // 
-            this.checkBox11.AutoSize = true;
-            this.checkBox11.Location = new System.Drawing.Point(3, 257);
-            this.checkBox11.Name = "checkBox11";
-            this.checkBox11.Size = new System.Drawing.Size(65, 17);
-            this.checkBox11.TabIndex = 11;
-            this.checkBox11.Text = "Vacuum";
-            this.checkBox11.UseVisualStyleBackColor = true;
+            this.VacuumInput.AutoSize = true;
+            this.VacuumInput.Location = new System.Drawing.Point(3, 257);
+            this.VacuumInput.Name = "VacuumInput";
+            this.VacuumInput.Size = new System.Drawing.Size(65, 17);
+            this.VacuumInput.TabIndex = 11;
+            this.VacuumInput.Text = "Vacuum";
+            this.VacuumInput.UseVisualStyleBackColor = true;
             // 
             // toolStrip1
             // 
@@ -168,22 +169,12 @@
             this.toolStripSeparator1,
             this.ExportImageBtn,
             this.toolStripSeparator2,
-            this.EditTitleBtn});
+            this.SettingsBtn});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(911, 39);
             this.toolStrip1.TabIndex = 12;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
             // 
             // ClearBtn
             // 
@@ -193,6 +184,12 @@
             this.ClearBtn.Name = "ClearBtn";
             this.ClearBtn.Size = new System.Drawing.Size(36, 36);
             this.ClearBtn.Text = "Clear chart";
+            this.ClearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
             // 
             // ExportImageBtn
             // 
@@ -202,15 +199,22 @@
             this.ExportImageBtn.Name = "ExportImageBtn";
             this.ExportImageBtn.Size = new System.Drawing.Size(36, 36);
             this.ExportImageBtn.Text = "Export image";
+            this.ExportImageBtn.Click += new System.EventHandler(this.ExportImageBtn_Click);
             // 
-            // EditTitleBtn
+            // toolStripSeparator2
             // 
-            this.EditTitleBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.EditTitleBtn.Image = global::DJetronicStudio.Properties.Resources.edit_32;
-            this.EditTitleBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.EditTitleBtn.Name = "EditTitleBtn";
-            this.EditTitleBtn.Size = new System.Drawing.Size(36, 36);
-            this.EditTitleBtn.Text = "Edit title";
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
+            // 
+            // SettingsBtn
+            // 
+            this.SettingsBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.SettingsBtn.Image = global::DJetronicStudio.Properties.Resources.edit_32;
+            this.SettingsBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SettingsBtn.Name = "SettingsBtn";
+            this.SettingsBtn.Size = new System.Drawing.Size(36, 36);
+            this.SettingsBtn.Text = "Edit settings";
+            this.SettingsBtn.Click += new System.EventHandler(this.SettingsBtn_Click);
             // 
             // Chart
             // 
@@ -224,22 +228,28 @@
             this.Chart.Size = new System.Drawing.Size(803, 482);
             this.Chart.TabIndex = 0;
             // 
+            // ExportImageDialog
+            // 
+            this.ExportImageDialog.DefaultExt = "png";
+            this.ExportImageDialog.Filter = "PNG Files (*.png)|*.png|JPEG Files (*.jpg)|*.jpg|All Files (*.*)|*.*";
+            this.ExportImageDialog.Title = "Export Chart as Image";
+            // 
             // DJetChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.checkBox11);
-            this.Controls.Add(this.checkBox10);
-            this.Controls.Add(this.checkBox9);
-            this.Controls.Add(this.checkBox8);
-            this.Controls.Add(this.checkBox7);
-            this.Controls.Add(this.checkBox6);
-            this.Controls.Add(this.checkBox5);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.VacuumInput);
+            this.Controls.Add(this.CoolantTempInput);
+            this.Controls.Add(this.AirTempInput);
+            this.Controls.Add(this.FuelPumpInput);
+            this.Controls.Add(this.StarterMotorInput);
+            this.Controls.Add(this.ThrottleInput);
+            this.Controls.Add(this.EngineSpeedInput);
+            this.Controls.Add(this.PulseWidthIVInput);
+            this.Controls.Add(this.PulseWidthIIIInput);
+            this.Controls.Add(this.PulseWidthIIInput);
+            this.Controls.Add(this.PulseWidthIInput);
             this.Controls.Add(this.Chart);
             this.Name = "DJetChart";
             this.Size = new System.Drawing.Size(911, 527);
@@ -253,22 +263,23 @@
         #endregion
 
         private LiveChartsCore.SkiaSharpView.WinForms.CartesianChart Chart;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
-        private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.CheckBox checkBox8;
-        private System.Windows.Forms.CheckBox checkBox9;
-        private System.Windows.Forms.CheckBox checkBox10;
-        private System.Windows.Forms.CheckBox checkBox11;
+        private System.Windows.Forms.CheckBox PulseWidthIInput;
+        private System.Windows.Forms.CheckBox PulseWidthIIInput;
+        private System.Windows.Forms.CheckBox PulseWidthIIIInput;
+        private System.Windows.Forms.CheckBox PulseWidthIVInput;
+        private System.Windows.Forms.CheckBox EngineSpeedInput;
+        private System.Windows.Forms.CheckBox ThrottleInput;
+        private System.Windows.Forms.CheckBox StarterMotorInput;
+        private System.Windows.Forms.CheckBox FuelPumpInput;
+        private System.Windows.Forms.CheckBox AirTempInput;
+        private System.Windows.Forms.CheckBox CoolantTempInput;
+        private System.Windows.Forms.CheckBox VacuumInput;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton ClearBtn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton ExportImageBtn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton EditTitleBtn;
+        private System.Windows.Forms.ToolStripButton SettingsBtn;
+        private System.Windows.Forms.SaveFileDialog ExportImageDialog;
     }
 }

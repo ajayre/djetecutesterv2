@@ -435,7 +435,7 @@ namespace DJetronicStudio
                         CurrentStatus.AirTemperature = (int)BitConverter.ToInt32(Buffer, 9);
                         CurrentStatus.Throttle = (uint)BitConverter.ToInt32(Buffer, 13);
                         CurrentStatus.DwellAngle = (uint)BitConverter.ToInt32(Buffer, 17);
-                        CurrentStatus.Pressure = (uint)BitConverter.ToInt32(Buffer, 21);
+                        CurrentStatus.Vacuum = (uint)BitConverter.ToInt32(Buffer, 21);
 
                         if (OnReceivedStatus != null)
                         {
@@ -453,7 +453,7 @@ namespace DJetronicStudio
                 }
                 else if ((Buffer[0] == (byte)MessageIds.CurrentStarterMotorState) && (Buffer.Length == 2))
                 {
-                    CurrentStatus.StartSignal = Buffer[1] > 0 ? true : false;
+                    CurrentStatus.StarterMotorOn = Buffer[1] > 0 ? true : false;
                     if (OnReceivedStatus != null)
                     {
                         OnReceivedStatus(this, CurrentStatus);

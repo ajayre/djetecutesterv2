@@ -15,7 +15,7 @@
 using namespace icecave::arduino;
 
 // define to 1 to simulate reporting of ECU data
-#define SIMULATE 1
+#define SIMULATE 0
 
 // special value to indicate no manifold pressure required
 #define NO_PRESSURE -1
@@ -104,7 +104,7 @@ using namespace icecave::arduino;
 #define IOCS_DEASSERT           digitalWrite(PIN_IOCS,           HIGH);
 
 #define START_ASSERT            IOExpander.write(PIN_START, 1)
-#define START_DEASSERT          IOExpander.write(PIN_START, 1)
+#define START_DEASSERT          IOExpander.write(PIN_START, 0)
 #define START_STATE             IOExpander.read(PIN_START)
 
 #define FUEL_PUMP_ACTIVE        !IOExpander.read(PIN_FUELPUMP)
