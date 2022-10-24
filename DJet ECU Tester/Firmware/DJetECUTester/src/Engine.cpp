@@ -37,6 +37,9 @@ using namespace icecave::arduino;
 // engine speed during cranking - taken from measurement of starter motor
 #define DEFAULT_CRANKING_RPM 215
 
+// engine speed during slow cranking
+#define DEFAULT_SLOW_CRANKING_RPM 50
+
 // time between changes in RPM during cranking
 #define CRANKING_RPM_CHANGE_PERIOD_MS 200
 
@@ -69,8 +72,8 @@ using namespace icecave::arduino;
 #define PORT_TRIGGERGROUP4 PORTD
 
 #define PIN_TRIGGERGROUP1 1
-#define PIN_TRIGGERGROUP2 6
-#define PIN_TRIGGERGROUP3 5
+#define PIN_TRIGGERGROUP2 5
+#define PIN_TRIGGERGROUP3 6
 #define PIN_TRIGGERGROUP4 3
 
 #define DIR_TRIGGERGROUP1 DDRB
@@ -1322,7 +1325,7 @@ void Engine_Cranking
   )
 {
   UnstableCrankingRPM = false;
-  Engine_Set(DEFAULT_CRANKING_RPM, DEFAULT_AIRTEMPF, 0, 0);
+  Engine_Set(DEFAULT_SLOW_CRANKING_RPM, DEFAULT_AIRTEMPF, 0, 0);
   START_ASSERT;
 }
 

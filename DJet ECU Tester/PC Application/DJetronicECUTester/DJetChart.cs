@@ -99,7 +99,7 @@ namespace DJetronicStudio
                 new SeriesDescription("Coolant Temperature", CoolantTempInput,   Color.HotPink),
                 new SeriesDescription("Air Temperature",     AirTempInput,       Color.Violet),
                 new SeriesDescription("Vacuum",              VacuumInput,        Color.SlateBlue),
-                new SeriesDescription("Starter Motor",       StarterMotorInput,  Color.SandyBrown)
+                new SeriesDescription("Starter Motor",       StarterMotorInput,  Color.MediumVioletRed)
             };
 
         Series = new ObservableCollection<ISeries> { };
@@ -151,9 +151,9 @@ namespace DJetronicStudio
                 NewSeries.Name = SeriesDescriptions[Ser].Name;
                 NewSeries.LineSmoothness = 0.0;
                 NewSeries.Fill = null;
-                NewSeries.GeometrySize = 3.0;
+                NewSeries.GeometrySize = 0.0;
                 NewSeries.GeometryStroke = new SolidColorPaint(new SKColor(LineColor.R, LineColor.G, LineColor.B, LineColor.A)) { StrokeThickness = 1.0F };
-                NewSeries.Stroke = new SolidColorPaint(new SKColor(LineColor.R, LineColor.G, LineColor.B, LineColor.A)) { StrokeThickness = 1.0F };
+                NewSeries.Stroke = new SolidColorPaint(new SKColor(LineColor.R, LineColor.G, LineColor.B, LineColor.A)) { StrokeThickness = 2.0F };
                 NewSeries.Values = new ObservableCollection<ObservablePoint>();
                 SeriesDescriptions[Ser].CheckBox.Tag = NewSeries;
                 Series.Add(NewSeries);
@@ -169,6 +169,10 @@ namespace DJetronicStudio
             //LabelGeom.X = (Chart.Width - LabelGeom.Measure(TitleLabel).Width) / 2;
             //TitleLabel.AddGeometryToPaintTask(Canvas, LabelGeom);
             //Canvas.AddDrawableTask(TitleLabel);
+
+            //var m = new Margin();
+            //m.Top = LabelGeom.Measure(TitleLabel).Height;
+            //((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).DrawMarginSize = null;
         }
 
         /// <summary>
@@ -181,11 +185,15 @@ namespace DJetronicStudio
             ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0].MinLimit = Settings.MinY;
             ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0].MaxLimit = Settings.MaxY;
             ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0].Name = Settings.YAxisTitle;
+            ((Axis)((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0]).NamePaint = new SolidColorPaint(new SKColor(Settings.YColor.R, Settings.YColor.G, Settings.YColor.B, Settings.YColor.A));
+            ((Axis)((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0]).LabelsPaint = new SolidColorPaint(new SKColor(Settings.YColor.R, Settings.YColor.G, Settings.YColor.B, Settings.YColor.A));
 
             ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[1].MinLimit = Settings.SecondYAxisMin;
             ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[1].MaxLimit = Settings.SecondYAxisMax;
             ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[1].Name = Settings.SecondYAxisTitle;
             ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[1].IsVisible = Settings.EnableSecondYAxis;
+            ((Axis)((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[1]).NamePaint = new SolidColorPaint(new SKColor(Settings.SecondYAxisColor.R, Settings.SecondYAxisColor.G, Settings.SecondYAxisColor.B, Settings.SecondYAxisColor.A));
+            ((Axis)((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[1]).LabelsPaint = new SolidColorPaint(new SKColor(Settings.SecondYAxisColor.R, Settings.SecondYAxisColor.G, Settings.SecondYAxisColor.B, Settings.SecondYAxisColor.A));
 
             foreach (ISeries Ser in Series)
             {
