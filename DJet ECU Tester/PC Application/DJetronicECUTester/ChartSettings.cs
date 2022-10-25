@@ -9,6 +9,8 @@ namespace DJetronicStudio
 {
     public class ChartSettings
     {
+        public string Title;
+
         public string YAxisTitle;
         public double MinY;
         public double MaxY;
@@ -35,6 +37,8 @@ namespace DJetronicStudio
             (
             )
         {
+            Title = "Chart";
+
             YAxisTitle = "Value";
             MinY = 0;
             MaxY = 15;

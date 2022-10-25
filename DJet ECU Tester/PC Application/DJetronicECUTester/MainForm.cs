@@ -62,6 +62,7 @@ namespace DJetronicStudio
             Gallery.ImageFolder = Path.GetDirectoryName(Application.ExecutablePath) + @"\..\..\Documentation";
 #else
             Tabs.TabPages.Remove(DebugOutputPage);
+            Tabs.TabPages.Remove(AutomatedTestPage);
             Gallery.ImageFolder = Path.GetDirectoryName(Application.ExecutablePath) + @"\Documentation";
 #endif
             Gallery.OnShowImage += Gallery_OnShowImage;

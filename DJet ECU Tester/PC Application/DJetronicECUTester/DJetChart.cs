@@ -20,6 +20,8 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Drawing;
 using LiveChartsCore.SkiaSharpView.SKCharts;
 using LiveChartsCore.SkiaSharpView.Drawing.Geometries;
+using LiveChartsCore.SkiaSharpView.VisualElements;
+using LiveChartsCore.VisualElements;
 using LiveChartsCore.Drawing;
 using SkiaSharp;
 using SkiaSharp.Internals;
@@ -162,18 +164,25 @@ namespace DJetronicStudio
             Chart.Series = Series;
             Chart.AnimationsSpeed = TimeSpan.FromMilliseconds(300);
             Chart.EasingFunction = null;
+            Chart.Title = new LabelVisual
+            {
+                Text = "Chart",
+                TextSize = 18,
+                Padding = new LiveChartsCore.Drawing.Padding(15),
+                Paint = new SolidColorPaint(SKColors.Black)
+            };
 
-            //MotionCanvas<SkiaSharpDrawingContext> Canvas = Chart.CoreCanvas;
-            //IPaint<SkiaSharpDrawingContext> TitleLabel = new SolidColorPaint(new SKColor(0, 0, 0)) { ZIndex = int.MaxValue - 1 };
-            //LabelGeometry LabelGeom = new LabelGeometry { X = 0, Y = 30, Text = "Chart Title", TextSize = 16 };
-            //LabelGeom.X = (Chart.Width - LabelGeom.Measure(TitleLabel).Width) / 2;
-            //TitleLabel.AddGeometryToPaintTask(Canvas, LabelGeom);
-            //Canvas.AddDrawableTask(TitleLabel);
+        //MotionCanvas<SkiaSharpDrawingContext> Canvas = Chart.CoreCanvas;
+        //IPaint<SkiaSharpDrawingContext> TitleLabel = new SolidColorPaint(new SKColor(0, 0, 0)) { ZIndex = int.MaxValue - 1 };
+        //LabelGeometry LabelGeom = new LabelGeometry { X = 0, Y = 30, Text = "Chart Title", TextSize = 16 };
+        //LabelGeom.X = (Chart.Width - LabelGeom.Measure(TitleLabel).Width) / 2;
+        //TitleLabel.AddGeometryToPaintTask(Canvas, LabelGeom);
+        //Canvas.AddDrawableTask(TitleLabel);
 
-            //var m = new Margin();
-            //m.Top = LabelGeom.Measure(TitleLabel).Height;
-            //((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).DrawMarginSize = null;
-        }
+        //var m = new Margin();
+        //m.Top = LabelGeom.Measure(TitleLabel).Height;
+        //((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).DrawMarginSize = null;
+    }
 
         /// <summary>
         /// Applies the current settings to the chart
@@ -182,6 +191,15 @@ namespace DJetronicStudio
             (
             )
         {
+            LabelVisual Title = (LabelVisual)Chart.Title;
+
+            Title.Text = Settings.Title;
+            //var titleSize = Title.Measure(Chart.CoreChart, null, null);
+            //Title.AlignToTopLeftCorner();
+            //Title.X = ControlSize.Width * 0.5f - titleSize.Width * 0.5f;
+            //Title.Y = 0;
+            //RegisterAndInvalidateVisual(title);
+
             ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0].MinLimit = Settings.MinY;
             ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0].MaxLimit = Settings.MaxY;
             ((CartesianChart<SkiaSharpDrawingContext>)Chart.CoreChart).YAxes[0].Name = Settings.YAxisTitle;
@@ -254,6 +272,8 @@ namespace DJetronicStudio
                 else
                     SerObj.ScalesYAt = 0;
             }
+
+            Chart.Invalidate();
         }
 
         /// <summary>
@@ -384,6 +404,8 @@ namespace DJetronicStudio
             if (ExportImageDialog.ShowDialog() == DialogResult.OK)
             {
                 var Ch = new SKCartesianChart(Chart);
+                //Ch.Width = 1000;
+                //Ch.Height = 300;
                 var Img = Ch.GetImage();
 
                 SKEncodedImageFormat Format = SKEncodedImageFormat.Png;

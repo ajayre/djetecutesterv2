@@ -105,6 +105,8 @@ namespace DJetronicStudio
         {
             if (Settings == null) return;
 
+            TitleInput.Text = Settings.Title;
+
             YAxisTitleInput.Text = Settings.YAxisTitle;
             YAxisMinInput.Text = Settings.MinY.ToString();
             YAxisMaxInput.Text = Settings.MaxY.ToString();
@@ -138,6 +140,8 @@ namespace DJetronicStudio
             )
         {
             if (Settings == null) return;
+
+            Settings.Title = TitleInput.Text;
 
             Settings.YAxisTitle = YAxisTitleInput.Text;
             if (!double.TryParse(YAxisMinInput.Text, out Settings.MinY)) Settings.MinY = 0;

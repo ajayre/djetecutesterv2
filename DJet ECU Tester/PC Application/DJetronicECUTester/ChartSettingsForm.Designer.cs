@@ -60,16 +60,18 @@
             this.YAxisColorInput = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.ColorDialog = new System.Windows.Forms.ColorDialog();
+            this.label2 = new System.Windows.Forms.Label();
+            this.TitleInput = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // OKBtn
             // 
             this.OKBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.OKBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.OKBtn.Location = new System.Drawing.Point(444, 275);
+            this.OKBtn.Location = new System.Drawing.Point(444, 300);
             this.OKBtn.Name = "OKBtn";
             this.OKBtn.Size = new System.Drawing.Size(75, 23);
-            this.OKBtn.TabIndex = 20;
+            this.OKBtn.TabIndex = 21;
             this.OKBtn.Text = "OK";
             this.OKBtn.UseVisualStyleBackColor = true;
             // 
@@ -77,20 +79,20 @@
             // 
             this.CancelBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.CancelBtn.Location = new System.Drawing.Point(363, 275);
+            this.CancelBtn.Location = new System.Drawing.Point(363, 300);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(75, 23);
-            this.CancelBtn.TabIndex = 21;
+            this.CancelBtn.TabIndex = 22;
             this.CancelBtn.Text = "Cancel";
             this.CancelBtn.UseVisualStyleBackColor = true;
             // 
             // EnableSecondYAxisInput
             // 
             this.EnableSecondYAxisInput.AutoSize = true;
-            this.EnableSecondYAxisInput.Location = new System.Drawing.Point(12, 101);
+            this.EnableSecondYAxisInput.Location = new System.Drawing.Point(12, 127);
             this.EnableSecondYAxisInput.Name = "EnableSecondYAxisInput";
             this.EnableSecondYAxisInput.Size = new System.Drawing.Size(128, 17);
-            this.EnableSecondYAxisInput.TabIndex = 4;
+            this.EnableSecondYAxisInput.TabIndex = 5;
             this.EnableSecondYAxisInput.Text = "Enable second Y axis";
             this.EnableSecondYAxisInput.UseVisualStyleBackColor = true;
             this.EnableSecondYAxisInput.CheckedChanged += new System.EventHandler(this.EnableSecondYAxisInput_CheckedChanged);
@@ -99,15 +101,15 @@
             // 
             this.YAxisTitleInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.YAxisTitleInput.Location = new System.Drawing.Point(131, 12);
+            this.YAxisTitleInput.Location = new System.Drawing.Point(131, 38);
             this.YAxisTitleInput.Name = "YAxisTitleInput";
             this.YAxisTitleInput.Size = new System.Drawing.Size(388, 20);
-            this.YAxisTitleInput.TabIndex = 0;
+            this.YAxisTitleInput.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(63, 15);
+            this.label1.Location = new System.Drawing.Point(63, 41);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(62, 13);
             this.label1.TabIndex = 4;
@@ -115,15 +117,15 @@
             // 
             // SecondYAxisMinInput
             // 
-            this.SecondYAxisMinInput.Location = new System.Drawing.Point(131, 150);
+            this.SecondYAxisMinInput.Location = new System.Drawing.Point(131, 176);
             this.SecondYAxisMinInput.Name = "SecondYAxisMinInput";
             this.SecondYAxisMinInput.Size = new System.Drawing.Size(82, 20);
-            this.SecondYAxisMinInput.TabIndex = 6;
+            this.SecondYAxisMinInput.TabIndex = 7;
             // 
             // SecondYAxisMinLabel
             // 
             this.SecondYAxisMinLabel.AutoSize = true;
-            this.SecondYAxisMinLabel.Location = new System.Drawing.Point(44, 153);
+            this.SecondYAxisMinLabel.Location = new System.Drawing.Point(44, 179);
             this.SecondYAxisMinLabel.Name = "SecondYAxisMinLabel";
             this.SecondYAxisMinLabel.Size = new System.Drawing.Size(81, 13);
             this.SecondYAxisMinLabel.TabIndex = 6;
@@ -132,7 +134,7 @@
             // SecondYAxisMaxLabel
             // 
             this.SecondYAxisMaxLabel.AutoSize = true;
-            this.SecondYAxisMaxLabel.Location = new System.Drawing.Point(254, 153);
+            this.SecondYAxisMaxLabel.Location = new System.Drawing.Point(254, 179);
             this.SecondYAxisMaxLabel.Name = "SecondYAxisMaxLabel";
             this.SecondYAxisMaxLabel.Size = new System.Drawing.Size(84, 13);
             this.SecondYAxisMaxLabel.TabIndex = 8;
@@ -140,15 +142,15 @@
             // 
             // SecondYAxisMaxInput
             // 
-            this.SecondYAxisMaxInput.Location = new System.Drawing.Point(341, 150);
+            this.SecondYAxisMaxInput.Location = new System.Drawing.Point(341, 176);
             this.SecondYAxisMaxInput.Name = "SecondYAxisMaxInput";
             this.SecondYAxisMaxInput.Size = new System.Drawing.Size(82, 20);
-            this.SecondYAxisMaxInput.TabIndex = 7;
+            this.SecondYAxisMaxInput.TabIndex = 8;
             // 
             // SecondYAxisColorLabel
             // 
             this.SecondYAxisColorLabel.AutoSize = true;
-            this.SecondYAxisColorLabel.Location = new System.Drawing.Point(91, 179);
+            this.SecondYAxisColorLabel.Location = new System.Drawing.Point(91, 205);
             this.SecondYAxisColorLabel.Name = "SecondYAxisColorLabel";
             this.SecondYAxisColorLabel.Size = new System.Drawing.Size(34, 13);
             this.SecondYAxisColorLabel.TabIndex = 10;
@@ -158,16 +160,16 @@
             // 
             this.SecondYAxisColorInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.SecondYAxisColorInput.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SecondYAxisColorInput.Location = new System.Drawing.Point(131, 176);
+            this.SecondYAxisColorInput.Location = new System.Drawing.Point(131, 202);
             this.SecondYAxisColorInput.Name = "SecondYAxisColorInput";
             this.SecondYAxisColorInput.Size = new System.Drawing.Size(82, 20);
-            this.SecondYAxisColorInput.TabIndex = 8;
+            this.SecondYAxisColorInput.TabIndex = 9;
             this.SecondYAxisColorInput.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SecondYAxisColorInput_MouseClick);
             // 
             // ShowOnYAxisLabel
             // 
             this.ShowOnYAxisLabel.AutoSize = true;
-            this.ShowOnYAxisLabel.Location = new System.Drawing.Point(49, 203);
+            this.ShowOnYAxisLabel.Location = new System.Drawing.Point(49, 229);
             this.ShowOnYAxisLabel.Name = "ShowOnYAxisLabel";
             this.ShowOnYAxisLabel.Size = new System.Drawing.Size(76, 13);
             this.ShowOnYAxisLabel.TabIndex = 12;
@@ -176,117 +178,117 @@
             // ShowPulseWidthIInput
             // 
             this.ShowPulseWidthIInput.AutoSize = true;
-            this.ShowPulseWidthIInput.Location = new System.Drawing.Point(131, 202);
+            this.ShowPulseWidthIInput.Location = new System.Drawing.Point(131, 228);
             this.ShowPulseWidthIInput.Name = "ShowPulseWidthIInput";
             this.ShowPulseWidthIInput.Size = new System.Drawing.Size(89, 17);
-            this.ShowPulseWidthIInput.TabIndex = 9;
+            this.ShowPulseWidthIInput.TabIndex = 10;
             this.ShowPulseWidthIInput.Text = "Pulse Width I";
             this.ShowPulseWidthIInput.UseVisualStyleBackColor = true;
             // 
             // ShowPulseWidthIIInput
             // 
             this.ShowPulseWidthIIInput.AutoSize = true;
-            this.ShowPulseWidthIIInput.Location = new System.Drawing.Point(229, 202);
+            this.ShowPulseWidthIIInput.Location = new System.Drawing.Point(229, 228);
             this.ShowPulseWidthIIInput.Name = "ShowPulseWidthIIInput";
             this.ShowPulseWidthIIInput.Size = new System.Drawing.Size(92, 17);
-            this.ShowPulseWidthIIInput.TabIndex = 10;
+            this.ShowPulseWidthIIInput.TabIndex = 11;
             this.ShowPulseWidthIIInput.Text = "Pulse Width II";
             this.ShowPulseWidthIIInput.UseVisualStyleBackColor = true;
             // 
             // ShowPulseWidthIIIInput
             // 
             this.ShowPulseWidthIIIInput.AutoSize = true;
-            this.ShowPulseWidthIIIInput.Location = new System.Drawing.Point(327, 202);
+            this.ShowPulseWidthIIIInput.Location = new System.Drawing.Point(327, 228);
             this.ShowPulseWidthIIIInput.Name = "ShowPulseWidthIIIInput";
             this.ShowPulseWidthIIIInput.Size = new System.Drawing.Size(95, 17);
-            this.ShowPulseWidthIIIInput.TabIndex = 11;
+            this.ShowPulseWidthIIIInput.TabIndex = 12;
             this.ShowPulseWidthIIIInput.Text = "Pulse Width III";
             this.ShowPulseWidthIIIInput.UseVisualStyleBackColor = true;
             // 
             // ShowPulseWidthIVInput
             // 
             this.ShowPulseWidthIVInput.AutoSize = true;
-            this.ShowPulseWidthIVInput.Location = new System.Drawing.Point(428, 202);
+            this.ShowPulseWidthIVInput.Location = new System.Drawing.Point(428, 228);
             this.ShowPulseWidthIVInput.Name = "ShowPulseWidthIVInput";
             this.ShowPulseWidthIVInput.Size = new System.Drawing.Size(96, 17);
-            this.ShowPulseWidthIVInput.TabIndex = 12;
+            this.ShowPulseWidthIVInput.TabIndex = 13;
             this.ShowPulseWidthIVInput.Text = "Pulse Width IV";
             this.ShowPulseWidthIVInput.UseVisualStyleBackColor = true;
             // 
             // ShowFuelPumpInput
             // 
             this.ShowFuelPumpInput.AutoSize = true;
-            this.ShowFuelPumpInput.Location = new System.Drawing.Point(131, 225);
+            this.ShowFuelPumpInput.Location = new System.Drawing.Point(131, 251);
             this.ShowFuelPumpInput.Name = "ShowFuelPumpInput";
             this.ShowFuelPumpInput.Size = new System.Drawing.Size(76, 17);
-            this.ShowFuelPumpInput.TabIndex = 13;
+            this.ShowFuelPumpInput.TabIndex = 14;
             this.ShowFuelPumpInput.Text = "Fuel Pump";
             this.ShowFuelPumpInput.UseVisualStyleBackColor = true;
             // 
             // ShowEngineSpeedInput
             // 
             this.ShowEngineSpeedInput.AutoSize = true;
-            this.ShowEngineSpeedInput.Location = new System.Drawing.Point(229, 225);
+            this.ShowEngineSpeedInput.Location = new System.Drawing.Point(229, 251);
             this.ShowEngineSpeedInput.Name = "ShowEngineSpeedInput";
             this.ShowEngineSpeedInput.Size = new System.Drawing.Size(93, 17);
-            this.ShowEngineSpeedInput.TabIndex = 14;
+            this.ShowEngineSpeedInput.TabIndex = 15;
             this.ShowEngineSpeedInput.Text = "Engine Speed";
             this.ShowEngineSpeedInput.UseVisualStyleBackColor = true;
             // 
             // ShowThrottleInput
             // 
             this.ShowThrottleInput.AutoSize = true;
-            this.ShowThrottleInput.Location = new System.Drawing.Point(327, 225);
+            this.ShowThrottleInput.Location = new System.Drawing.Point(327, 251);
             this.ShowThrottleInput.Name = "ShowThrottleInput";
             this.ShowThrottleInput.Size = new System.Drawing.Size(62, 17);
-            this.ShowThrottleInput.TabIndex = 15;
+            this.ShowThrottleInput.TabIndex = 16;
             this.ShowThrottleInput.Text = "Throttle";
             this.ShowThrottleInput.UseVisualStyleBackColor = true;
             // 
             // ShowCoolantTempInput
             // 
             this.ShowCoolantTempInput.AutoSize = true;
-            this.ShowCoolantTempInput.Location = new System.Drawing.Point(428, 225);
+            this.ShowCoolantTempInput.Location = new System.Drawing.Point(428, 251);
             this.ShowCoolantTempInput.Name = "ShowCoolantTempInput";
             this.ShowCoolantTempInput.Size = new System.Drawing.Size(92, 17);
-            this.ShowCoolantTempInput.TabIndex = 16;
+            this.ShowCoolantTempInput.TabIndex = 17;
             this.ShowCoolantTempInput.Text = "Coolant Temp";
             this.ShowCoolantTempInput.UseVisualStyleBackColor = true;
             // 
             // ShowAirTempInput
             // 
             this.ShowAirTempInput.AutoSize = true;
-            this.ShowAirTempInput.Location = new System.Drawing.Point(131, 248);
+            this.ShowAirTempInput.Location = new System.Drawing.Point(131, 274);
             this.ShowAirTempInput.Name = "ShowAirTempInput";
             this.ShowAirTempInput.Size = new System.Drawing.Size(68, 17);
-            this.ShowAirTempInput.TabIndex = 17;
+            this.ShowAirTempInput.TabIndex = 18;
             this.ShowAirTempInput.Text = "Air Temp";
             this.ShowAirTempInput.UseVisualStyleBackColor = true;
             // 
             // ShowVacuumInput
             // 
             this.ShowVacuumInput.AutoSize = true;
-            this.ShowVacuumInput.Location = new System.Drawing.Point(229, 248);
+            this.ShowVacuumInput.Location = new System.Drawing.Point(229, 274);
             this.ShowVacuumInput.Name = "ShowVacuumInput";
             this.ShowVacuumInput.Size = new System.Drawing.Size(65, 17);
-            this.ShowVacuumInput.TabIndex = 18;
+            this.ShowVacuumInput.TabIndex = 19;
             this.ShowVacuumInput.Text = "Vacuum";
             this.ShowVacuumInput.UseVisualStyleBackColor = true;
             // 
             // ShowStarterMotorInput
             // 
             this.ShowStarterMotorInput.AutoSize = true;
-            this.ShowStarterMotorInput.Location = new System.Drawing.Point(327, 248);
+            this.ShowStarterMotorInput.Location = new System.Drawing.Point(327, 274);
             this.ShowStarterMotorInput.Name = "ShowStarterMotorInput";
             this.ShowStarterMotorInput.Size = new System.Drawing.Size(87, 17);
-            this.ShowStarterMotorInput.TabIndex = 19;
+            this.ShowStarterMotorInput.TabIndex = 20;
             this.ShowStarterMotorInput.Text = "Starter Motor";
             this.ShowStarterMotorInput.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(219, 41);
+            this.label4.Location = new System.Drawing.Point(219, 67);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(116, 13);
             this.label4.TabIndex = 27;
@@ -294,15 +296,15 @@
             // 
             // YAxisMaxInput
             // 
-            this.YAxisMaxInput.Location = new System.Drawing.Point(341, 38);
+            this.YAxisMaxInput.Location = new System.Drawing.Point(341, 64);
             this.YAxisMaxInput.Name = "YAxisMaxInput";
             this.YAxisMaxInput.Size = new System.Drawing.Size(82, 20);
-            this.YAxisMaxInput.TabIndex = 2;
+            this.YAxisMaxInput.TabIndex = 3;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 41);
+            this.label5.Location = new System.Drawing.Point(12, 67);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(113, 13);
             this.label5.TabIndex = 25;
@@ -310,15 +312,15 @@
             // 
             // YAxisMinInput
             // 
-            this.YAxisMinInput.Location = new System.Drawing.Point(131, 38);
+            this.YAxisMinInput.Location = new System.Drawing.Point(131, 64);
             this.YAxisMinInput.Name = "YAxisMinInput";
             this.YAxisMinInput.Size = new System.Drawing.Size(82, 20);
-            this.YAxisMinInput.TabIndex = 1;
+            this.YAxisMinInput.TabIndex = 2;
             // 
             // SecondYAxisTitleLabel
             // 
             this.SecondYAxisTitleLabel.AutoSize = true;
-            this.SecondYAxisTitleLabel.Location = new System.Drawing.Point(73, 127);
+            this.SecondYAxisTitleLabel.Location = new System.Drawing.Point(73, 153);
             this.SecondYAxisTitleLabel.Name = "SecondYAxisTitleLabel";
             this.SecondYAxisTitleLabel.Size = new System.Drawing.Size(52, 13);
             this.SecondYAxisTitleLabel.TabIndex = 29;
@@ -328,25 +330,25 @@
             // 
             this.SecondYAxisTitleInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SecondYAxisTitleInput.Location = new System.Drawing.Point(131, 124);
+            this.SecondYAxisTitleInput.Location = new System.Drawing.Point(131, 150);
             this.SecondYAxisTitleInput.Name = "SecondYAxisTitleInput";
             this.SecondYAxisTitleInput.Size = new System.Drawing.Size(388, 20);
-            this.SecondYAxisTitleInput.TabIndex = 5;
+            this.SecondYAxisTitleInput.TabIndex = 6;
             // 
             // YAxisColorInput
             // 
             this.YAxisColorInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.YAxisColorInput.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.YAxisColorInput.Location = new System.Drawing.Point(131, 64);
+            this.YAxisColorInput.Location = new System.Drawing.Point(131, 90);
             this.YAxisColorInput.Name = "YAxisColorInput";
             this.YAxisColorInput.Size = new System.Drawing.Size(82, 20);
-            this.YAxisColorInput.TabIndex = 3;
+            this.YAxisColorInput.TabIndex = 4;
             this.YAxisColorInput.MouseClick += new System.Windows.Forms.MouseEventHandler(this.YAxisColorInput_MouseClick);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(91, 67);
+            this.label7.Location = new System.Drawing.Point(91, 93);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(34, 13);
             this.label7.TabIndex = 12;
@@ -356,11 +358,31 @@
             // 
             this.ColorDialog.AnyColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(95, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(30, 13);
+            this.label2.TabIndex = 31;
+            this.label2.Text = "Title:";
+            // 
+            // TitleInput
+            // 
+            this.TitleInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TitleInput.Location = new System.Drawing.Point(131, 12);
+            this.TitleInput.Name = "TitleInput";
+            this.TitleInput.Size = new System.Drawing.Size(388, 20);
+            this.TitleInput.TabIndex = 0;
+            // 
             // ChartSettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(531, 310);
+            this.ClientSize = new System.Drawing.Size(531, 335);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.TitleInput);
             this.Controls.Add(this.YAxisColorInput);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.SecondYAxisTitleLabel);
@@ -439,5 +461,7 @@
         private System.Windows.Forms.Panel YAxisColorInput;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ColorDialog ColorDialog;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox TitleInput;
     }
 }
