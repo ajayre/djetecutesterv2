@@ -11,6 +11,9 @@
 // sysex message identifiers
 typedef enum _messageids_t
 {
+  RequestProductUID = 0xF0,
+  CurrentProductUID = 0xF1,
+
   RequestStatus = 0x01,
   EngineOff = 0x02,
   Cranking = 0x03,
@@ -53,6 +56,7 @@ typedef struct _status_t
 
 // the name of the engine
 static char *CurrentEngineName;
+static byte OurProductUID;
 
 // starts the dynamic test
 static void StartDynamic
@@ -99,6 +103,19 @@ static void SendEngineName
   Firmata.sendSysex(EngineName, strlen(CurrentEngineName), (byte *)CurrentEngineName);
 }
 
+// sends the product uid
+static void SendProductUID
+  (
+  void
+  )
+{
+  byte Buffer[1];
+
+  Buffer[0] = CurrentProductUID;
+
+  Firmata.sendSysex(CurrentProductUID, 1, Buffer);
+}
+
 // called when a sysex message is received
 // processes the message
 static void sysexCallback(byte command, byte argc, byte *argv)
@@ -111,6 +128,10 @@ static void sysexCallback(byte command, byte argc, byte *argv)
 
   switch (command)
   {
+    case RequestProductUID:
+      SendProductUID();
+      break;
+
     case EngineTest:
       Engine_Test();
       break;
@@ -294,11 +315,14 @@ void Serial_Init
   (
   int FirmwareMajorVersion,
   int FirmwareMinorVersion,
+  byte ProductUID,
   char *EngineName
   )
 {
   // store name to send later
   CurrentEngineName = EngineName;
+
+  OurProductUID = ProductUID;
 
   Firmata.setFirmwareVersion(FirmwareMajorVersion, FirmwareMinorVersion);
   //Firmata.attach(STRING_DATA, stringCallback);

@@ -6,12 +6,13 @@
 #include "Serial.h"
 
 #define MAJOR_VERSION 2
-#define MINOR_VERSION 1
+#define MINOR_VERSION 2
 #define ENGINE_NAME "Mercedes V8"
+#define PRODUCT_UID   0x01   // ECU Tester
 
 // initialization
 void setup() {
-  Serial_Init(MAJOR_VERSION, MINOR_VERSION, ENGINE_NAME);
+  Serial_Init(MAJOR_VERSION, MINOR_VERSION, PRODUCT_UID, ENGINE_NAME);
   Engine_Init();
 }
 

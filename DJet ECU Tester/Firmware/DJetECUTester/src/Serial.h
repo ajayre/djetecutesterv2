@@ -9,6 +9,7 @@ extern void Serial_Init
   (
   int FirmwareMajorVersion,
   int FirmwareMinorVersion,
+  byte ProductUID,
   char *EngineName
   );
 
