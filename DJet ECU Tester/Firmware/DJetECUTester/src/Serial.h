@@ -7,8 +7,8 @@
 // initializes the module
 extern void Serial_Init
   (
-  int FirmwareMajorVersion,
-  int FirmwareMinorVersion,
+  byte FirmwareMajorVersion,
+  byte FirmwareMinorVersion,
   byte ProductUID,
   char *EngineName
   );
