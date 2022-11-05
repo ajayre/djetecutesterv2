@@ -111,7 +111,7 @@ static void SendProductUID
 {
   byte Buffer[1];
 
-  Buffer[0] = CurrentProductUID;
+  Buffer[0] = OurProductUID;
 
   Firmata.sendSysex(CurrentProductUID, 1, Buffer);
 }
