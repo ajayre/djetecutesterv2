@@ -193,6 +193,7 @@ static unsigned long ECUOutputsSampleTimestamp;
 static bool PulseState_I = false, PulseState_II = false, PulseState_III = false, PulseState_IV = false;
 static unsigned long PulseStart_I, PulseStart_II, PulseStart_III, PulseStart_IV;
 static uint16_t Width_I, Width_II, Width_III, Width_IV;
+static unsigned long LastPulseStartTime_I = 0, LastPulseStartTime_II = 0, LastPulseStartTime_III = 0, LastPulseStartTime_IV = 0;
 static unsigned long CrankingUnstableRPMTimestamp;
 static bool UnstableCrankingRPM = false;
 
@@ -840,6 +841,7 @@ static void MeasurePulse
   (
   bool *pPulseState,
   unsigned long *pPulseStart,
+  unsigned long *pLastPulseStartTime,
   uint8_t Pin,
   uint16_t *pWidth
   )
@@ -852,16 +854,29 @@ static void MeasurePulse
 #else
   uint16_t Measurement;
 
+  // waiting for start of pulse
   if (!*pPulseState)
   {
+    // got start of pulse
     if (!digitalRead(Pin))
     {
       *pPulseStart = micros();
       *pPulseState = true;
+      *pLastPulseStartTime = GetTime();
+    }
+
+    // waited too long for a pulse so no pulse
+    // fixme - replace 1000
+    if (IsTimeExpired(*pLastPulseStartTime + 1000))
+    {
+      *pWidth = 0;
+      *pLastPulseStartTime = GetTime();
     }
   }
+  // waiting for end of pulse
   else
   {
+    // got end of pulse
     if (digitalRead(Pin))
     {
       *pPulseState = false;
@@ -1188,13 +1203,24 @@ void Engine_SetThrottle
     TPS_ACCEL1_DEASSERT;
     TPS_ACCEL2_DEASSERT;
 
-    UpdateThrottleSwitches(NewThrottlePosition * 10);
-
-    // back to starting condition for enrichment
-    if (NewThrottlePosition == 0)
+    // decrease throttle 0.1% at a time
+    for (Throttle = ThrottlePosition * 10; Throttle >= NewThrottlePosition * 10; Throttle--)
     {
-      UpdateThrottleEnrichment(NewThrottlePosition);
+      UpdateThrottleSwitches(Throttle);
+
+      Timestamp = GetTime();
+      while (!IsTimeExpired(Timestamp + THROTTLE_STEP_TIME_MS))
+      {
+        Serial_Process();
+        Engine_Process();
+      }
+
+      Serial_SendThrottle(Throttle / 10);
+      Serial_Process();
     }
+    
+    Serial_SendThrottle(NewThrottlePosition);
+    UpdateThrottleEnrichment(NewThrottlePosition);
   }
 
   ThrottlePosition = NewThrottlePosition;
@@ -1434,10 +1460,10 @@ void Engine_Process
     }
   }
 
-  MeasurePulse(&PulseState_I,   &PulseStart_I,   PIN_INJECTOR_I,   &Width_I);
-  MeasurePulse(&PulseState_II,  &PulseStart_II,  PIN_INJECTOR_II,  &Width_II);
-  MeasurePulse(&PulseState_III, &PulseStart_III, PIN_INJECTOR_III, &Width_III);
-  MeasurePulse(&PulseState_IV,  &PulseStart_IV,  PIN_INJECTOR_IV,  &Width_IV);
+  MeasurePulse(&PulseState_I,   &PulseStart_I,   &LastPulseStartTime_I,   PIN_INJECTOR_I,   &Width_I);
+  MeasurePulse(&PulseState_II,  &PulseStart_II,  &LastPulseStartTime_II,  PIN_INJECTOR_II,  &Width_II);
+  MeasurePulse(&PulseState_III, &PulseStart_III, &LastPulseStartTime_III, PIN_INJECTOR_III, &Width_III);
+  MeasurePulse(&PulseState_IV,  &PulseStart_IV,  &LastPulseStartTime_IV,  PIN_INJECTOR_IV,  &Width_IV);
 
   // sample ecu outputs
   if (IsTimeExpired(ECUOutputsSampleTimestamp))
