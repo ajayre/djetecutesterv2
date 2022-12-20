@@ -28,6 +28,9 @@ typedef struct _dynamic_test_t
   int16_t StartCoolantTemp;
   int16_t CoolantTempStep;
 
+  uint16_t StartThrottle;
+  int16_t ThrottleStep;
+
   uint16_t StartStarter;
   uint16_t EndStarter;
 

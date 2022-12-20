@@ -131,8 +131,8 @@ using namespace icecave::arduino;
 // macro to check if engine is on
 #define IS_ENGINE_ON (EngineSpeed > 0)
 
-// number of milliseconds between 1% increase in throttle
-#define THROTTLE_STEP_TIME_MS 3
+// number of milliseconds between 0.1% increase in throttle and 1% decrease in throttle
+#define THROTTLE_STEP_TIME_MS 12
 
 // resolution of pulse generator timer in microseconds
 #define PG_TIMER_PERIOD_US 1000
@@ -170,7 +170,7 @@ dynamic_test_t EngineDynamicTest;
 static int EngineSpeed;                                    // RPM
 static int AirTempF;
 static int CoolantTempF;
-static int ThrottlePosition;                               // %
+static int ThrottlePosition;                               // %x10
 static throttledirection_t ThrottleDirection;
 static int Pressure;                                       // manifold, inHg
 static MCP4XXX *AirTempPot;
@@ -196,6 +196,11 @@ static uint16_t Width_I, Width_II, Width_III, Width_IV;
 static unsigned long LastPulseStartTime_I = 0, LastPulseStartTime_II = 0, LastPulseStartTime_III = 0, LastPulseStartTime_IV = 0;
 static unsigned long CrankingUnstableRPMTimestamp;
 static bool UnstableCrankingRPM = false;
+static int PulseGeneratorPeriodMs;
+static bool IncreaseThrottle = false;
+static bool DecreaseThrottle = false;
+static unsigned long NextThrottleChangeTimestamp;
+static int TargetThrottle;
 
 // this table represents the fingers inside the throttle
 // position sensor. As the throttle is increased the
@@ -866,8 +871,7 @@ static void MeasurePulse
     }
 
     // waited too long for a pulse so no pulse
-    // fixme - replace 1000
-    if (IsTimeExpired(*pLastPulseStartTime + 1000))
+    if (IsTimeExpired(*pLastPulseStartTime + (int)((PulseGeneratorPeriodMs * 4))))
     {
       *pWidth = 0;
       *pLastPulseStartTime = GetTime();
@@ -892,6 +896,23 @@ static void MeasurePulse
 #endif
 }
 
+// sets the throttle position immediately to a new value
+// stops any current throttle change
+static void SetThrottleImmediate
+  (
+  int NewThrottlePosition                                  // new throttle position 0% -> 100%  
+  )
+{
+  IncreaseThrottle = false;
+  DecreaseThrottle = false;
+
+  ThrottlePosition = NewThrottlePosition * 10;
+
+  UpdateThrottleEnrichment(ThrottlePosition);
+  UpdateThrottleSwitches(ThrottlePosition);
+  Serial_SendThrottle(ThrottlePosition / 10);
+}
+
 /////////////////////////////////////////////////////////////////////
 // PUBLIC FUNCTIONS
 
@@ -913,10 +934,10 @@ void Engine_StartDynamicTest
   EngineDynamicTest.SendStatusTimestamp = GetTime() + DYNAMIC_TEST_STATUS_PERIOD_MS;
   EngineDynamicTest.StepNumber = 0;
 
-  if (EngineDynamicTest.SpeedStep != 0)
-  {
-    Engine_SetEngineSpeed(EngineDynamicTest.StartSpeed);
-  }
+  if (EngineDynamicTest.SpeedStep       != 0) Engine_SetEngineSpeed(EngineDynamicTest.StartSpeed);
+  if (EngineDynamicTest.AirTempStep     != 0) Engine_SetAirTempF(EngineDynamicTest.StartAirTemp);
+  if (EngineDynamicTest.CoolantTempStep != 0) Engine_SetCoolantTempF(EngineDynamicTest.StartCoolantTemp);
+  if (EngineDynamicTest.ThrottleStep    != 0) SetThrottleImmediate(EngineDynamicTest.StartThrottle);
 }
 
 // stops the dynamic test
@@ -959,7 +980,7 @@ void Engine_Get
 {
   *pEngineSpeed       = EngineSpeed;
   *pCoolantTempF      = CoolantTempF;
-  *pThrottlePosition  = ThrottlePosition;
+  *pThrottlePosition  = ThrottlePosition / 10;
   *pThrottleDirection = ThrottleDirection;
   *pPressure          = Pressure;
   *pAirTempF          = AirTempF;
@@ -995,6 +1016,8 @@ void Engine_SetEngineSpeed
   int NewSpeed                                             // new speed in RPM
   )
 {
+  float DistributorRotationsPerSec;
+
   // stop pulse generation
   Timer1.stop();
   TRIGGERGROUP1_HIGH;
@@ -1013,6 +1036,10 @@ void Engine_SetEngineSpeed
     Timer1.setPeriod(PG_TIMER_PERIOD_US);
     Timer1.start();
   }
+
+  // re-calculate pulse generator period in milliseconds
+  DistributorRotationsPerSec = EngineSpeed / 2.0F / 60.0F;
+  PulseGeneratorPeriodMs = (int)((1 / DistributorRotationsPerSec) * 1000);
 }
 
 // test function for debugging
@@ -1151,79 +1178,40 @@ void Engine_SetThrottle
   int NewThrottlePosition                                  // new throttle position 0% -> 100%
   )
 {
-  int Throttle;
-  unsigned long Timestamp;
-
   // if no change in throttle
-  if (NewThrottlePosition == ThrottlePosition)
+  if (NewThrottlePosition * 10 == ThrottlePosition)
   {
     // special case - if no throttle then always go back to
     // starting enrichment state
     if (NewThrottlePosition == 0)
     {
-      UpdateThrottleEnrichment(NewThrottlePosition);
+      UpdateThrottleEnrichment(NewThrottlePosition * 10);
     }
 
     UpdateThrottleSwitches(NewThrottlePosition * 10);
     return;
   }
 
+  Serial_printf("th new=%d cur=%d", NewThrottlePosition * 10, ThrottlePosition);
   // work out direction of throttle movement
-  if (NewThrottlePosition > ThrottlePosition)
+  if ((NewThrottlePosition * 10) > ThrottlePosition)
   {
-    ThrottleDirection = THROTTLE_ACCELERATING;
+    IncreaseThrottle = true;
+    DecreaseThrottle = false;
   }
   else
   {
-    ThrottleDirection = THROTTLE_DECELERATING;
-  }
+    IncreaseThrottle = false;
+    DecreaseThrottle = true;
 
-  if (ThrottleDirection == THROTTLE_ACCELERATING)
-  {
-    // increase throttle 0.1% at a time to generate all of the enrichment pulses
-    for (Throttle = ThrottlePosition * 10; Throttle <= NewThrottlePosition * 10; Throttle++)
-    {
-      UpdateThrottleSwitches(Throttle);
-      UpdateThrottleEnrichment(Throttle);
-
-      Timestamp = GetTime();
-      while (!IsTimeExpired(Timestamp + THROTTLE_STEP_TIME_MS))
-      {
-        Serial_Process();
-        Engine_Process();
-      }
-
-      Serial_SendThrottle(Throttle / 10);
-      Serial_Process();
-    }
-  }
-  else
-  {
     // no pulses when decelerating
     TPS_ACCEL1_DEASSERT;
     TPS_ACCEL2_DEASSERT;
-
-    // decrease throttle 0.1% at a time
-    for (Throttle = ThrottlePosition * 10; Throttle >= NewThrottlePosition * 10; Throttle--)
-    {
-      UpdateThrottleSwitches(Throttle);
-
-      Timestamp = GetTime();
-      while (!IsTimeExpired(Timestamp + THROTTLE_STEP_TIME_MS))
-      {
-        Serial_Process();
-        Engine_Process();
-      }
-
-      Serial_SendThrottle(Throttle / 10);
-      Serial_Process();
-    }
-    
-    Serial_SendThrottle(NewThrottlePosition);
-    UpdateThrottleEnrichment(NewThrottlePosition);
   }
 
-  ThrottlePosition = NewThrottlePosition;
+  TargetThrottle = NewThrottlePosition;
+  NextThrottleChangeTimestamp = GetTime() + THROTTLE_STEP_TIME_MS;
+  Serial_printf("target th=%d", TargetThrottle);
 }
 
 // sets the new pressure level from the manifold
@@ -1417,6 +1405,8 @@ void Engine_Init
   PulseAngle = DEFAULT_PULSEANGLE;
 
   ThrottlePosition = 0;
+  IncreaseThrottle = false;
+  DecreaseThrottle = false;
 
   UnstableCrankingRPM = false;
 
@@ -1487,6 +1477,39 @@ void Engine_Process
     }
   }
 
+  // change throttle
+  if ((IncreaseThrottle || DecreaseThrottle) && IsTimeExpired(NextThrottleChangeTimestamp))
+  {
+    if (IncreaseThrottle)
+    {
+      // increase by 0.1%
+      ThrottlePosition++;
+
+      UpdateThrottleEnrichment(ThrottlePosition);
+    }
+    else
+    {
+      // decrease by 1%
+      ThrottlePosition -= 10;
+      if (ThrottlePosition < (TargetThrottle * 10)) ThrottlePosition = TargetThrottle * 10;
+    }
+
+    // reached target so stop
+    if (ThrottlePosition == TargetThrottle * 10)
+    {
+      IncreaseThrottle = false;
+      DecreaseThrottle = false;
+    }
+    // still changing, get time of next change
+    else
+    {
+      NextThrottleChangeTimestamp = GetTime() + THROTTLE_STEP_TIME_MS;
+    }
+
+    UpdateThrottleSwitches(ThrottlePosition);
+    Serial_SendThrottle(ThrottlePosition / 10);
+  }
+
   // run the dynamic test
   if (EngineDynamicTest.Running)
   {
@@ -1516,7 +1539,12 @@ void Engine_Process
         Engine_SetCoolantTempF((int)(EngineDynamicTest.StartCoolantTemp + (((float)EngineDynamicTest.StepNumber * (float)EngineDynamicTest.CoolantTempStep) / (float)100)));
       }
 
-      if (EngineDynamicTest.StartStarter != 0xFFFF && EngineDynamicTest.EndStarter != 0xFFFF)
+      if (EngineDynamicTest.ThrottleStep != 0)
+      {
+        SetThrottleImmediate((int)(EngineDynamicTest.StartThrottle + (((float)EngineDynamicTest.StepNumber * (float)EngineDynamicTest.ThrottleStep) / (float)100)));
+      }
+
+      if ((EngineDynamicTest.StartStarter != 0xFFFF) && (EngineDynamicTest.EndStarter != 0xFFFF))
       {
         if (((EngineDynamicTest.StepNumber * EngineDynamicTest.StepTimeMs) >= EngineDynamicTest.StartStarter) && !Engine_GetStarterMotor())
         {

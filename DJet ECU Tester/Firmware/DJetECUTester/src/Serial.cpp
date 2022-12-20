@@ -67,20 +67,23 @@ static void StartDynamic
   byte *argv
   )
 {
-  EngineDynamicTest.Steps            = (uint16_t)((argv[0] | ((uint16_t)argv[1] << 8)));
-  EngineDynamicTest.StepTimeMs       = (uint16_t)((argv[2] | ((uint16_t)argv[3] << 8)));
+  EngineDynamicTest.Steps            = (uint16_t)(argv[0] | (argv[1] << 7) | ((uint16_t)argv[2] << 8) | ((uint16_t)(argv[3] << 7) << 8));
+  EngineDynamicTest.StepTimeMs       = (uint16_t)(argv[4] | (argv[5] << 7) | ((uint16_t)argv[6] << 8) | ((uint16_t)(argv[7] << 7) << 8));
 
-  EngineDynamicTest.StartSpeed       = (uint16_t)((argv[4] | ((int16_t)argv[5] << 8)));
-  EngineDynamicTest.SpeedStep        = (int16_t)((argv[6] | ((int16_t)argv[7] << 8)));
+  EngineDynamicTest.StartSpeed       = (uint16_t)(argv[8] | (argv[9] << 7) | ((uint16_t)argv[10] << 8) | ((uint16_t)(argv[11] << 7) << 8));
+  EngineDynamicTest.SpeedStep        = (int16_t)(argv[12] | (argv[13] << 7) | ((uint16_t)argv[14] << 8) | ((uint16_t)(argv[15] << 7) << 8));
 
-  EngineDynamicTest.StartAirTemp     = (uint16_t)((argv[8] | ((int16_t)argv[9] << 8)));
-  EngineDynamicTest.AirTempStep      = (int16_t)((argv[10] | ((int16_t)argv[11] << 8)));
+  EngineDynamicTest.StartAirTemp     = (uint16_t)(argv[16] | (argv[17] << 7) | ((uint16_t)argv[18] << 8) | ((uint16_t)(argv[19] << 7) << 8));
+  EngineDynamicTest.AirTempStep      = (int16_t)(argv[20] | (argv[21] << 7) | ((uint16_t)argv[22] << 8) | ((uint16_t)(argv[23] << 7) << 8));
 
-  EngineDynamicTest.StartCoolantTemp = (uint16_t)((argv[12] | ((int16_t)argv[13] << 8)));
-  EngineDynamicTest.CoolantTempStep  = (int16_t)((argv[14] | ((int16_t)argv[15] << 8)));
+  EngineDynamicTest.StartCoolantTemp = (uint16_t)(argv[24] | (argv[25] << 7) | ((uint16_t)argv[26] << 8) | ((uint16_t)(argv[27] << 7) << 8));
+  EngineDynamicTest.CoolantTempStep  = (int16_t)(argv[28] | (argv[29] << 7) | ((uint16_t)argv[30] << 8) | ((uint16_t)(argv[31] << 7) << 8));
 
-  EngineDynamicTest.StartStarter     = (uint16_t)((argv[16] | ((int16_t)argv[17] << 8)));
-  EngineDynamicTest.EndStarter       = (uint16_t)((argv[18] | ((int16_t)argv[19] << 8)));
+  EngineDynamicTest.StartStarter     = (uint16_t)(argv[32] | (argv[33] << 7) | ((uint16_t)argv[34] << 8) | ((uint16_t)(argv[35] << 7) << 8));
+  EngineDynamicTest.EndStarter       = (int16_t)(argv[36] | (argv[37] << 7) | ((uint16_t)argv[38] << 8) | ((uint16_t)(argv[39] << 7) << 8));
+
+  EngineDynamicTest.StartThrottle    = (uint16_t)(argv[40] | (argv[41] << 7) | ((uint16_t)argv[42] << 8) | ((uint16_t)(argv[43] << 7) << 8));
+  EngineDynamicTest.ThrottleStep     = (int16_t)(argv[44] | (argv[45] << 7) | ((uint16_t)argv[46] << 8) | ((uint16_t)(argv[47] << 7) << 8));
 
   //Serial_printf("Steps=%u StepTimeMs=%u StartThrottle=%u ThrottleStep=%d", EngineDynamicTest.Steps,
   //  EngineDynamicTest.StepTimeMs, EngineDynamicTest.StartThrottle, EngineDynamicTest.ThrottleStep);
@@ -251,8 +254,15 @@ static void sysexCallback(byte command, byte argc, byte *argv)
       break;
 
     case StartDynamicTest:
-      StartDynamic(argc, argv);
-      Serial_printf("Running dynamic test");
+      if (argc == 48)
+      {
+        StartDynamic(argc, argv);
+        Serial_printf("Running dynamic test");
+      }
+      else
+      {
+        Serial_printf("Invalid num parameters for dynamic test - %d", argc);
+      }
       Serial_SendStatus();
       break;
 
@@ -292,7 +302,7 @@ static void SendStatus
 /////////////////////////////////////////////////////////////////////
 // PUBLIC FUNCTIONS
 
-// func: debug_printf
+// func: Serial_printf
 // desc: outputs a debug line and has the same prototype as printf
 int Serial_printf
   (
