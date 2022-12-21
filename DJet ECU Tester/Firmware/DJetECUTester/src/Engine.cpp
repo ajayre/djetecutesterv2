@@ -903,6 +903,9 @@ static void SetThrottleImmediate
   int NewThrottlePosition                                  // new throttle position 0% -> 100%  
   )
 {
+  if (NewThrottlePosition < 0) return;
+  if (NewThrottlePosition > 100) return;
+
   IncreaseThrottle = false;
   DecreaseThrottle = false;
 
