@@ -14,7 +14,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L BritishIdeas:ATmega328P U1
+L DJetECUTester-rescue:ATmega328P-BritishIdeas U1
 U 1 1 5FE91942
 P 3000 3400
 F 0 "U1" H 3050 3350 50  0000 C CNN
@@ -1000,7 +1000,7 @@ Text Label 4750 2500 0    50   ~ 0
 MCU_INJGROUP4-6
 NoConn ~ 10100 6100
 $Comp
-L BritishIdeas:MCP23S08T-E_SO U6
+L DJetECUTester-rescue:MCP23S08T-E_SO-BritishIdeas U6
 U 1 1 6328F4DE
 P 6750 4400
 F 0 "U6" H 6800 4350 50  0000 C CNN
@@ -1449,7 +1449,7 @@ Wire Wire Line
 	4700 5750 4700 5500
 NoConn ~ 4400 5200
 $Comp
-L BritishIdeas:Fan_3pin M1
+L DJetECUTester-rescue:Fan_3pin-BritishIdeas M1
 U 1 1 63504226
 P 4700 5200
 F 0 "M1" H 4858 5196 50  0000 L CNN

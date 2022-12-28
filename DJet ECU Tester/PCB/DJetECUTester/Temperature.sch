@@ -40,7 +40,7 @@ F 3 "" H 3950 2500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L BritishIdeas:MCP41HV51-502E-ST U4
+L DJetECUTester-rescue:MCP41HV51-502E-ST-BritishIdeas U4
 U 1 1 6045CA2E
 P 4150 2200
 F 0 "U4" H 4450 3165 50  0000 C CNN
@@ -194,7 +194,7 @@ F 3 "" H 3950 4800 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L BritishIdeas:MCP41HV51-502E-ST U5
+L DJetECUTester-rescue:MCP41HV51-502E-ST-BritishIdeas U5
 U 1 1 60474591
 P 4150 4500
 F 0 "U5" H 4450 5465 50  0000 C CNN
@@ -509,7 +509,7 @@ F 3 "~" H 2000 1750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L BritishIdeas:MCP41HV51-502E-ST U7
+L DJetECUTester-rescue:MCP41HV51-502E-ST-BritishIdeas U7
 U 1 1 632D874D
 P 4150 6450
 F 0 "U7" H 4450 7415 50  0000 C CNN
