@@ -6,7 +6,7 @@
 #include "Serial.h"
 
 #define MAJOR_VERSION 2
-#define MINOR_VERSION 2
+#define MINOR_VERSION 3
 #define ENGINE_NAME "Mercedes V8"
 #define PRODUCT_UID   0x01   // ECU Tester
 
